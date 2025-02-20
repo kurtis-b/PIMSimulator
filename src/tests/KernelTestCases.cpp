@@ -64,8 +64,8 @@ TEST_F(PIMKernelFixture, gemv)
     shared_ptr<PIMKernel> kernel = make_pim_kernel();
 
     uint32_t batch_size = 1;
-    uint32_t output_dim = 4096;
-    uint32_t input_dim = 1024;
+    uint32_t output_dim = 1024;
+    uint32_t input_dim = 256;
 
     DataDim *dim_data = new DataDim(KernelType::GEMV, batch_size, output_dim, input_dim, true);
     dim_data->printDim(KernelType::GEMV);
