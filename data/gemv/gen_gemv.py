@@ -3,9 +3,12 @@ import numpy as np
 # min dim_in = 128 -> 256bit / 16bit
 # min dim_out = 8 PIM block
 BATCH = 1
-REAL_DIM_IN = 256
-DIM_IN = 256
-DIM_OUT = 1024
+# REAL_DIM_IN = 256
+# DIM_IN = 256
+# DIM_OUT = 1024
+REAL_DIM_IN = 1024
+DIM_IN = 1024
+DIM_OUT = 4096
 
 np.set_printoptions(precision=20)
 np.random.seed(1113)
@@ -13,7 +16,10 @@ np.random.seed(1113)
 batch_in = np.random.standard_normal(size=(DIM_IN, BATCH)).astype('float16')
 for i in range(DIM_IN):
     for j in range(BATCH):
-        batch_in[i][j] = i
+        if i % 2 == 0:
+            batch_in[i][j] = 1 + (i / DIM_IN) 
+        else:
+            batch_in[i][j] = 2 + ((i - 1) / DIM_IN)
 
 for i in range(REAL_DIM_IN, DIM_IN):
     for j in range(0, BATCH):
@@ -22,10 +28,15 @@ for i in range(REAL_DIM_IN, DIM_IN):
 data_w = np.random.standard_normal(size=(DIM_OUT, DIM_IN)).astype('float16')
 for i in range(DIM_OUT):
     for j in range(DIM_IN):
-        if (i % DIM_IN) == j:
-            data_w[i][j] = 1 + i // DIM_IN
-        else:
-            data_w[i][j] = 0
+        data_w[i][j] = 0
+for i in range(DIM_OUT):
+    for j in range(DIM_IN):
+        # Group each row as groups of 16 elements. Treat each group of 16 
+        # elements as a circular buffer, where the position at which
+        # the value is written goes up as the indexes increment, and
+        # resets when the index reaches the end of the group. 
+        if j % 16 == 0:
+            data_w[i][16*(j//16)+i%16] = i // DIM_IN + (j / DIM_IN)
 
 # np.random.shuffle(data_w)
 batch_out = np.zeros((DIM_OUT, BATCH)).astype('float16')
