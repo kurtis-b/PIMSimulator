@@ -10,14 +10,14 @@ REAL_DIM_IN = 1024
 DIM_IN = 1024
 DIM_OUT = 4096
 
-np.set_printoptions(precision=20)
+# np.set_printoptions(precision=20)
 np.random.seed(1113)
 
 batch_in = np.random.standard_normal(size=(DIM_IN, BATCH)).astype('float16')
 for i in range(DIM_IN):
     for j in range(BATCH):
         if i % 2 == 0:
-            batch_in[i][j] = 1 + (i / DIM_IN) 
+            batch_in[i][j] = 1 + (i / DIM_IN)
         else:
             batch_in[i][j] = 2 + ((i - 1) / DIM_IN)
 
@@ -36,7 +36,7 @@ for i in range(DIM_OUT):
         # the value is written goes up as the indexes increment, and
         # resets when the index reaches the end of the group. 
         if j % 16 == 0:
-            data_w[i][16*(j//16)+i%16] = i // DIM_IN + (j / DIM_IN)
+            data_w[i][16*(j//16)+i%16] = i / 16 + (j / DIM_IN)
 
 # np.random.shuffle(data_w)
 batch_out = np.zeros((DIM_OUT, BATCH)).astype('float16')
