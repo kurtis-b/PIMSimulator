@@ -1,0 +1,6 @@
+Range of ch: 0 to 63
+Range of ra: 0 to 0
+Range of bg: 0 to 0
+Range of b: 0 to 1
+Range of r: 0 to 7
+Range of c: 0 to 31

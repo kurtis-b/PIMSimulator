@@ -5,13 +5,7 @@ from collections import defaultdict
 import concurrent.futures
 import json
 import sys
-
-# Load the numpy arrays
-DIM_IN = 1024
-DIM_OUT = 4096
-weight_array = np.load(f'data/gemv/gemv_weight_{DIM_OUT}x{DIM_IN}.npy')
-output_array = np.load(f'data/gemv/gemv_output_{DIM_OUT}x{DIM_IN}.npy')
-input_array = np.load(f'data/gemv/gemv_input_{DIM_OUT}x{DIM_IN}.npy')
+import os
 
 # Initialize dictionaries to keep track of the ranges
 ranges = {
@@ -39,7 +33,7 @@ def get_ranges(file_path):
                         ranges['c'].add(int(match.group(6)))
                         break
 
-def parse_pim_trace(file_path, log_ch):
+def parse_pim_trace(file_path, log_ch, weight_array, input_array):
     channel_address_map = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(dict))))))
     grf_a_maps = []
     read_pattern = re.compile(r'READ ch(\d+) ra(\d+) bg(\d+) b(\d+) r(\d+) c(\d+)\|\| \[\d+\] MAC GRF_B\[\d+\], GRF_A\[\d+\], (EVEN_BANK|ODD_BANK), auto @ \d+')
@@ -71,7 +65,7 @@ def parse_pim_trace(file_path, log_ch):
                                 break
 
                         if "BANK_R" in line:
-                            row, col = find_bank_match(line, bank_r_pattern)
+                            row, col = find_bank_match(line, bank_r_pattern, weight_array)
                             if row is not None:
                                 channel_address_map[ch][ra][bg][b][r][c]['weight_array_idxs'] = (row, col)
                             else:
@@ -106,7 +100,7 @@ def parse_pim_trace(file_path, log_ch):
                         grf_a_maps.append({'in_vector_idxs': grf_a_map, 'maps': {'ch': {ch}, 'ra': {ra}, 'bg': {bg}, 'b': {b}, 'r': {r}, 'c': {c}}})
     return channel_address_map, grf_a_maps
 
-def find_bank_match(line, bank_r_pattern):
+def find_bank_match(line, bank_r_pattern, weight_array):
     match = bank_r_pattern.search(line)
     if match:
         values = list(map(lambda x: float(x), match.group(1).split()))
@@ -117,18 +111,33 @@ def find_bank_match(line, bank_r_pattern):
     return None, None
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python parse_animate_faster.py <log_ch>")
+    if len(sys.argv) != 5:
+        print("Usage: python parse_animate_faster.py <log_ch> <file_name> <input_dim> <output_dim>")
         sys.exit(1)
 
     log_ch = int(sys.argv[1])
+    file_name = str(sys.argv[2])
+    dim_in = int(sys.argv[3])
+    dim_out = int(sys.argv[4])
+
+    weight_array = np.load(f'data/gemv/gemv_weight_{dim_out}x{dim_in}.npy')
+    output_array = np.load(f'data/gemv/gemv_output_{dim_out}x{dim_in}.npy')
+    input_array = np.load(f'data/gemv/gemv_input_{dim_out}x{dim_in}.npy')
+    output_name = f'parse_output_ch{log_ch}.txt'
+
     # Get the ranges of the values
-    get_ranges('pim_trace.out')
+    get_ranges(file_name)
+
+    # Create a folder using the name of the file to be parsed
+    folder_name = os.path.splitext(file_name)[0]
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+    output_name = os.path.join(folder_name, f'parse_output_ch{log_ch}.txt')
 
     # Print the ranges of the values
     for key, value_set in ranges.items():
         print(f"Range of {key}: {min(value_set)} to {max(value_set)}")
-    with open(f'parse_output_ch{log_ch}.txt', 'w') as f:
+    with open(output_name, 'w') as f:
         for key, value_set in ranges.items():
             f.write(f"Range of {key}: {min(value_set)} to {max(value_set)}\n")
 
@@ -137,14 +146,14 @@ if __name__ == "__main__":
     print(f"Output array shape: {output_array.shape}")
     print(f"Input array shape: {input_array.shape}")
 
-    channel_address_map, grf_a_maps = parse_pim_trace('pim_trace.out', log_ch)
+    channel_address_map, grf_a_maps = parse_pim_trace(file_name, log_ch, weight_array, input_array)
 
     print(f"Log channel: {log_ch}")
     print(channel_address_map)
     print(grf_a_maps)
 
     # Write to a file
-    with open(f'parse_output_ch{log_ch}.txt', 'a') as f:
+    with open(output_name, 'a') as f:
         f.write(f"Log channel: {log_ch}\n")
         f.write(json.dumps(channel_address_map, indent=4))
         f.write('\n')
