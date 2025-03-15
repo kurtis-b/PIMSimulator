@@ -1,6 +1,6 @@
-Total counts found in order as found in .\pim_trace_1027x256.out
+Total counts of the commands executed after changing the mode:
 
-0--Setting up banks:
+0--Setting up banks (Not a command):
   TOTAL TIMES INVOKED: 0
   ACTIVATE: 3265
   PRECHARGE: 3008
@@ -22,6 +22,7 @@ Total counts found in order as found in .\pim_trace_1027x256.out
   BWRITE_GRF_A: 1024
   GRF_B_ZEROIZE: 63
   PRECHARGE: 448
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 4096, 'MAC GRF_B[0], GRF_A[0], ODD_BANK, auto': 4096, 'NOP 8x': 512}
   READ: 9152
   REF: 64
   WRITE: 576
