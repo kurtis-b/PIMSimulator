@@ -9,6 +9,7 @@ PU_CHANNEL_KEY = "ch0"
 CMDS_KEY = "Commands after activation"
 TAG_KEY = "Tag:"
 INVOKES_KEY = "Total activations"
+NO_TAG = "(No tag--setting up banks)"
 
 def count_substrings(file_path, unique_substrings):
     substring_count = []
@@ -16,7 +17,7 @@ def count_substrings(file_path, unique_substrings):
     try:
         with open(file_path, 'r') as file:
             found_pu_cmd = False # Create a flag for checking subsequent lines for a PU command
-            current_mode = '(No tag)'
+            current_mode = NO_TAG
             for line in file:
                 # The first line in the trace file should be an ACTIVATE command
                 # Will only use the trace from channel 0
@@ -25,7 +26,7 @@ def count_substrings(file_path, unique_substrings):
                     if tag[1].strip():
                         current_mode = tag[1].strip()
                     else:
-                        current_mode = '(No tag)'
+                        current_mode = NO_TAG
                     if len(substring_count) == 0:
                         substring_count.append({TAG_KEY: current_mode, INVOKES_KEY: 0, CMDS_KEY: {}})
                     elif substring_count[-1][TAG_KEY] != current_mode:

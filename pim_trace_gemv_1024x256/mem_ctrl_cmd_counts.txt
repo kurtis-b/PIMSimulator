@@ -3,7 +3,7 @@ Total counts of the commands executed after an activation with each tag for 1 ch
 Total activates: 87
 Total precharges: 87
 
-0--Activate tag: (No tag) invoked 32 times
+0--Activate tag: (No tag--setting up banks) invoked 32 times
   PRECHARGE: 31
   REF: 1
   WRITE: 1023
@@ -21,7 +21,7 @@ Total precharges: 87
 4--Activate tag: START_SB_TO_HAB_ invoked 1 time
   PRECHARGE: 1
 
-5--Activate tag: (No tag) invoked 2 times
+5--Activate tag: (No tag--setting up banks) invoked 2 times
   PRECHARGE: 3
   READ: 1
   WRITE: 3
