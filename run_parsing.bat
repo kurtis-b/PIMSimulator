@@ -1,10 +1,10 @@
 @echo off
 
 REM List of values to pass to the script
-set values=0 1 2 3 8 9 15 16 17 24 25 32 33 40 41 48 49 56 57 60 61 62 63
-set file_name="pim_trace_1027x256.out"
+set values=0 
+set file_name="pim_trace_1ch_gemv_64x256.out"
 set input_dim=256
-set output_dim=1027
+set output_dim=64
 
 REM Loop through each value and run the script in the background
 for %%a in (%values%) do (

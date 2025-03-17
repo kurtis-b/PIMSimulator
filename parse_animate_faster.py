@@ -42,14 +42,17 @@ def parse_pim_trace(file_path, log_ch, weight_array, input_array):
 
     with open(file_path, 'r') as file:
         found_start_mac = False
-        for block in file.read().split("----------"):
+        for idx, block in enumerate(file.read().split("----------")):
             if block.strip():
                 grf_a_map = []
                 lines = block.split('\n')
                 if any("NOP" in line for line in lines):
                     continue
 
+                found_grf_a_cmd = False
                 for line in lines:
+                    if "GRF_A" in line:
+                        found_grf_a_cmd = True
                     if not found_start_mac:
                         match = read_pattern.search(line)
                         if match:
@@ -71,21 +74,28 @@ def parse_pim_trace(file_path, log_ch, weight_array, input_array):
                             else:
                                 print(f"No BANK_R match found for ch{ch} ra{ra} bg{bg} b{b} r{r} c{c}")
 
+                        found_grf_a_match = False
                         match_grf_a = grf_a_pattern.search(line)
                         if match_grf_a:
                             key = int(match_grf_a.group(1))
                             values = list(map(lambda x: float(x), match_grf_a.group(2).split()))
-                            found_grf_a_match = False
+                            # print(f"GRF_A_{key} values: {values}")
                             for idx in range(0, input_array.shape[1], 16):
-                                if np.allclose(input_array[0][idx:idx+16], values, atol=0.01):
+                                # print(f"Comparing {input_array[0][idx:idx+16]} with {values}")
+                                # print(f"Difference: {np.abs(input_array[0][idx:idx+16] - values)}")
+                                if np.allclose(input_array[0][idx:idx+16], values, atol=1e-2, rtol=0):
                                     grf_a_map.append(idx)
                                     found_grf_a_match = True
                                     break
                             if not found_grf_a_match:
                                 print(f"No GRF_A match found for GRF_A_{key} with values {values}")
+                if not found_grf_a_cmd:
+                    print(f"No GRF_A command found in block {idx}")
+                    continue # Skip trying to match current maps with grf_a_map since it wasn't found in the block
 
                 found_match = False
-                if ch == log_ch:
+                # Only consider the log channel
+                if ch == log_ch: 
                     for current_maps in grf_a_maps:
                         if np.allclose(current_maps['in_vector_idxs'], grf_a_map):
                             current_maps['maps']['ch'].add(ch)
