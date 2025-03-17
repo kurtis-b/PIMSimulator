@@ -34,29 +34,30 @@ def count_substrings(file_path, unique_substrings):
                     substring_count[-1][INVOKES_KEY] += 1
                 else:
                     if PU_CHANNEL_KEY in line:
-                        found_pu_cmd = True # Set the flag to check for a PU command in the subsequent lines
-                    if CMD_CHANNEL_KEY in line:
+                        command = line.split(PU_CHANNEL_KEY)[0].strip()
+                        for substring in unique_substrings:
+                            if substring == command:
+                                if substring not in substring_count[-1][CMDS_KEY]:
+                                    substring_count[-1][CMDS_KEY][substring] = 0
+                                substring_count[-1][CMDS_KEY][substring] += 1
+                        pu_cmd = "PU (not a command)"
+                        start_idx = line.find("||") + 2
+                        end_idx = line.find('@', start_idx)
+                        if start_idx > 0 and end_idx > start_idx:
+                            exact_cmd = line[start_idx:end_idx].strip()
+                        if pu_cmd not in substring_count[-1][CMDS_KEY]:
+                            substring_count[-1][CMDS_KEY][pu_cmd] = {exact_cmd: 0}
+                        else:
+                            if exact_cmd not in substring_count[-1][CMDS_KEY][pu_cmd]:
+                                substring_count[-1][CMDS_KEY][pu_cmd][exact_cmd] = 0
+                        substring_count[-1][CMDS_KEY][pu_cmd][exact_cmd] += 1
+                    elif CMD_CHANNEL_KEY in line:
                         command = line.split(CMD_CHANNEL_KEY)[0].strip()
                         for substring in unique_substrings:
                             if substring == command:
                                 if substring not in substring_count[-1][CMDS_KEY]:
                                     substring_count[-1][CMDS_KEY][substring] = 0
                                 substring_count[-1][CMDS_KEY][substring] += 1
-                    elif found_pu_cmd:
-                        # Check if a processing unit command is called--"[CMD]" will be in the line
-                        if "[CMD]" in line:
-                            pu_cmd = "PU (not a command)"
-                            start_idx = line.find('(') + 1
-                            end_idx = line.find(')', start_idx)
-                            if start_idx > 0 and end_idx > start_idx:
-                                exact_cmd = line[start_idx:end_idx]
-                            if pu_cmd not in substring_count[-1][CMDS_KEY]:
-                                substring_count[-1][CMDS_KEY][pu_cmd] = {exact_cmd: 0}
-                            else:
-                                if exact_cmd not in substring_count[-1][CMDS_KEY][pu_cmd]:
-                                    substring_count[-1][CMDS_KEY][pu_cmd][exact_cmd] = 0
-                            substring_count[-1][CMDS_KEY][pu_cmd][exact_cmd] += 1
-                            found_pu_cmd = False # Reset the flag
     except FileNotFoundError:
         print(f"File not found: {file_path}")
         return
@@ -87,21 +88,41 @@ if __name__ == "__main__":
 
         unique_substrings = parse_file(file_path)
         substring_count = count_substrings(file_path, unique_substrings)
+        substring_count = substring_count[1:] # Skip the first entry since it's setting up the banks
         
         output_dir = os.path.splitext(file_path)[0]
         os.makedirs(output_dir, exist_ok=True)
         output_file_path = os.path.join(output_dir, "mem_ctrl_cmd_counts.txt")
         total_activates = 0
         total_precharge = 0
+        total_writes = 0
+        total_reads = 0
+        total_macs = 0
+        total_nops = 0
+        total_jumps = 0
         with open(output_file_path, 'w') as output_file:
             output_file.write(f"Total counts of the commands executed after an activation with each tag for 1 channel (2 banks and 1 pim unit):\n\n")
-            for idx, activate_data in enumerate(substring_count):
+            for activate_data in substring_count:
                 total_activates += activate_data[INVOKES_KEY]
                 total_precharge += activate_data[CMDS_KEY]["PRECHARGE"] if "PRECHARGE" in activate_data[CMDS_KEY] else 0
+                total_writes += activate_data[CMDS_KEY]["WRITE"] if "WRITE" in activate_data[CMDS_KEY] else 0
+                total_reads += activate_data[CMDS_KEY]["READ"] if "READ" in activate_data[CMDS_KEY] else 0
+                if "PU (not a command)" in activate_data[CMDS_KEY]:
+                    for cmd, count in activate_data[CMDS_KEY]["PU (not a command)"].items():
+                        if "MAC" in cmd:
+                            total_macs += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
+                        elif "NOP" in cmd:
+                            total_nops += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
+                        elif "JUMP" in cmd:
+                            total_jumps += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
             output_file.write(f"Total activates: {total_activates}\n")
-            output_file.write(f"Total precharges: {total_precharge}\n\n")
-            for idx, activate_data in enumerate(substring_count):
-                cmd_description = f"{idx}--Activate tag: {activate_data[TAG_KEY]}"
+            output_file.write(f"Total precharges: {total_precharge}\n")
+            output_file.write(f"Total writes: {total_writes}\n")
+            output_file.write(f"Total reads: {total_reads}\n")
+            output_file.write(f"Total macs: {total_macs}, Total jumps 7x: {total_jumps}, Total nops 8x: {total_nops}\n")
+            output_file.write(f"Total PU executions: {total_macs + 7 * total_jumps + 8 * total_nops}\n\n")
+            for idx, activate_data in enumerate(substring_count): 
+                cmd_description = f"{idx+1}--Activate tag: {activate_data[TAG_KEY]}"
                 cmd_description += f" invoked {activate_data[INVOKES_KEY]} time"
                 if activate_data[INVOKES_KEY] > 1:
                     cmd_description += "s"
@@ -109,6 +130,4 @@ if __name__ == "__main__":
                 for substring in sorted(activate_data[CMDS_KEY].keys()):
                     output_file.write(f"  {substring}: {activate_data[CMDS_KEY][substring]}\n")
                 output_file.write("\n")
-                total_activates += activate_data[INVOKES_KEY]
-                total_precharge += activate_data[CMDS_KEY]["PRECHARGE"] if "PRECHARGE" in activate_data[CMDS_KEY] else 0
         
