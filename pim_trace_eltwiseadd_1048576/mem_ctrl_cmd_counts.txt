@@ -1,39 +1,245 @@
-Total counts of the commands executed after changing the mode:
+Total counts of the commands executed after an activation with each tag for 1 channel (2 banks and 1 pim unit):
 
-0--Setting up banks (Not a command):
-  TOTAL TIMES INVOKED: 0
-  ACTIVATE: 27777
-  PRECHARGE: 27520
-  READ: 1024
-  REF: 64
-  WRITE: 131264
+Total activates: 536
+Total precharges: 536
 
-1--HAB:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 191
-  BWRITE_CRF: 64
-  PRECHARGE: 320
-  WRITE: 64
+0--Activate tag: (No tag) invoked 415 times
+  PRECHARGE: 405
+  REF: 1
+  WRITE: 2048
 
-2--HAB_PIM:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 3136
-  PRECHARGE: 3136
-  PU (not a command): {'FILL GRF_A[0], EVEN_BANK': 4096, 'ADD GRF_A[0], GRF_A[0], EVEN_BANK, auto': 4096, 'NOP 8x': 8192, 'FILL GRF_B[0], ODD_BANK': 4096, 'ADD GRF_B[0], GRF_B[0], ODD_BANK, auto': 4096}
-  READ: 16832
-  REF: 64
-  WRITE: 8192
+1--Activate tag: START_PARK_IN_ invoked 1 time
+  PRECHARGE: 3
 
-3--HAB mode:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 128
-  PRECHARGE: 193
-  WRITE: 128
+2--Activate tag: PARK_IN_ invoked 14 times
+  PRECHARGE: 17
+  READ: 15
 
-4--SB mode:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 3072
-  PRECHARGE: 3135
-  READ: 66560
-  REF: 64
+3--Activate tag: END_PARK_IN_BAR invoked 1 time
+  PRECHARGE: 1
+
+4--Activate tag: START_SB_TO_HAB_ invoked 1 time
+  PRECHARGE: 1
+
+5--Activate tag: (No tag) invoked 2 times
+  PRECHARGE: 3
+  READ: 1
+  WRITE: 3
+
+6--Activate tag: END_SB_TO_HAB_BAR invoked 1 time
+  HAB: 1
+  PRECHARGE: 5
+  WRITE: 1
+
+7--Activate tag: PROGRAM_CRFBAR invoked 1 time
+  BWRITE_CRF: 1
+
+8--Activate tag: PIMBAR invoked 1 time
+  HAB_PIM: 1
+  PRECHARGE: 2
+
+9--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'FILL GRF_A[0], EVEN_BANK': 8}
+
+10--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_A[0], GRF_A[0], EVEN_BANK, auto': 8}
+
+11--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+12--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_B[0], ODD_BANK': 8}
+
+13--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_B[0], GRF_B[0], ODD_BANK, auto': 8}
+
+14--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+15--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_A[0], EVEN_BANK': 8}
+
+16--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_A[0], GRF_A[0], EVEN_BANK, auto': 8}
+
+17--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+18--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_B[0], ODD_BANK': 8}
+
+19--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_B[0], GRF_B[0], ODD_BANK, auto': 8}
+
+20--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+21--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_A[0], EVEN_BANK': 8}
+
+22--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_A[0], GRF_A[0], EVEN_BANK, auto': 8}
+
+23--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+24--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_B[0], ODD_BANK': 8}
+
+25--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_B[0], GRF_B[0], ODD_BANK, auto': 8}
+
+26--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+27--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_A[0], EVEN_BANK': 8}
+
+28--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_A[0], GRF_A[0], EVEN_BANK, auto': 8}
+
+29--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+30--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_B[0], ODD_BANK': 8}
+
+31--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_B[0], GRF_B[0], ODD_BANK, auto': 8}
+
+32--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+33--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_A[0], EVEN_BANK': 8}
+
+34--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_A[0], GRF_A[0], EVEN_BANK, auto': 8}
+  REF: 1
+
+35--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+36--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_B[0], ODD_BANK': 8}
+
+37--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_B[0], GRF_B[0], ODD_BANK, auto': 8}
+
+38--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+39--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_A[0], EVEN_BANK': 8}
+
+40--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_A[0], GRF_A[0], EVEN_BANK, auto': 8}
+
+41--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+42--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_B[0], ODD_BANK': 8}
+
+43--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_B[0], GRF_B[0], ODD_BANK, auto': 8}
+
+44--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+45--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_A[0], EVEN_BANK': 8}
+
+46--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_A[0], GRF_A[0], EVEN_BANK, auto': 8}
+
+47--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+48--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_B[0], ODD_BANK': 8}
+
+49--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_B[0], GRF_B[0], ODD_BANK, auto': 8}
+
+50--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+51--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_A[0], EVEN_BANK': 8}
+
+52--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_A[0], GRF_A[0], EVEN_BANK, auto': 8}
+
+53--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 7}
+
+54--Activate tag: BANK_TO_GRF_ invoked 1 time
+  PRECHARGE: 2
+  PU (not a command): {'NOP 8x': 1, 'FILL GRF_B[0], ODD_BANK': 8}
+
+55--Activate tag: ADD invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'ADD GRF_B[0], GRF_B[0], ODD_BANK, auto': 8}
+
+56--Activate tag: GRF_TO_BANK invoked 1 time
+  PU (not a command): {'NOP 8x': 8}
+
+57--Activate tag: PIMBAR invoked 1 time
+  HAB mode: 1
+  PRECHARGE: 2
+
+58--Activate tag: START_HAB_TO_SB invoked 1 time
+  WRITE: 1
+
+59--Activate tag: END_HAB_TO_SBBAR invoked 1 time
+  PRECHARGE: 2
+  SB mode: 1
+  WRITE: 1
+
+60--Activate tag: PARK_OUT_ invoked 1 time
+
+61--Activate tag: START_PARK_OUT_ invoked 1 time
+
+62--Activate tag: PARK_OUT_ invoked 13 times
+  PRECHARGE: 10
+  READ: 15
+
+63--Activate tag: END_PARK_OUT_BAR invoked 1 time
+  PRECHARGE: 1
+
+64--Activate tag: (No tag) invoked 32 times
+  PRECHARGE: 37
+  READ: 1025
+  REF: 1
 

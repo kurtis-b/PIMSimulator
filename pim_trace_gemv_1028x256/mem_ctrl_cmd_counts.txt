@@ -1,41 +1,86 @@
-Total counts of the commands executed after changing the mode:
+Total counts of the commands executed after an activation with each tag for 1 channel (2 banks and 1 pim unit):
 
-0--Setting up banks (Not a command):
-  TOTAL TIMES INVOKED: 0
-  ACTIVATE: 3265
-  PRECHARGE: 3008
-  READ: 1024
-  REF: 64
-  WRITE: 65728
+Total activates: 87
+Total precharges: 87
 
-1--HAB:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 191
-  BWRITE_CRF: 64
+0--Activate tag: (No tag) invoked 32 times
+  PRECHARGE: 31
+  REF: 1
+  WRITE: 1023
+
+1--Activate tag: START_PARK_IN_ invoked 1 time
+  WRITE: 1
+
+2--Activate tag: PARK_IN_ invoked 14 times
+  PRECHARGE: 11
+  READ: 15
+
+3--Activate tag: END_PARK_IN_BAR invoked 1 time
+  PRECHARGE: 1
+
+4--Activate tag: START_SB_TO_HAB_ invoked 1 time
+  PRECHARGE: 1
+
+5--Activate tag: (No tag) invoked 2 times
+  PRECHARGE: 3
+  READ: 1
+  WRITE: 3
+
+6--Activate tag: END_SB_TO_HAB_BAR invoked 1 time
+  HAB: 1
+  PRECHARGE: 5
+  WRITE: 1
+
+7--Activate tag: PROGRAM_CRFBAR invoked 1 time
+  BWRITE_CRF: 1
+
+8--Activate tag: PIMBAR invoked 1 time
+  BWRITE_GRF_A: 8
   GRF_B_ZEROIZE: 1
-  PRECHARGE: 320
-  WRITE: 64
+  HAB_PIM: 1
+  PRECHARGE: 1
 
-2--HAB_PIM:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 448
-  BWRITE_GRF_A: 1024
-  GRF_B_ZEROIZE: 63
-  PRECHARGE: 448
-  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 4096, 'MAC GRF_B[0], GRF_A[0], ODD_BANK, auto': 4096, 'NOP 8x': 512}
-  READ: 9152
-  REF: 64
-  WRITE: 576
+9--Activate tag: MAC_ invoked 2 times
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 63}
 
-3--HAB mode:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 128
-  PRECHARGE: 193
-  WRITE: 128
+10--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  BWRITE_GRF_A: 8
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 1}
 
-4--SB mode:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 1154
-  PRECHARGE: 1217
-  READ: 2064
+11--Activate tag: MAC_ invoked 2 times
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], ODD_BANK, auto': 64}
+  REF: 1
+
+12--Activate tag: GRFB_TO_BANK_ invoked 1 time
+  PU (not a command): {'NOP 8x': 8}
+
+13--Activate tag: PIMBAR invoked 1 time
+  HAB mode: 1
+  PRECHARGE: 2
+
+14--Activate tag: START_HAB_TO_SB invoked 1 time
+  WRITE: 1
+
+15--Activate tag: END_HAB_TO_SBBAR invoked 1 time
+  PRECHARGE: 2
+  SB mode: 1
+  WRITE: 1
+
+16--Activate tag: PARK_OUT_ invoked 1 time
+
+17--Activate tag: START_PARK_OUT_ invoked 1 time
+
+18--Activate tag: PARK_OUT_ invoked 13 times
+  PRECHARGE: 10
+  READ: 15
+
+19--Activate tag: END_PARK_OUT_BAR invoked 1 time
+  PRECHARGE: 1
+
+20--Activate tag: output invoked 8 times
+  PRECHARGE: 13
+  READ: 65
 

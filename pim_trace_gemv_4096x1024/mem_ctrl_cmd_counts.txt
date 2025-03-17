@@ -1,41 +1,141 @@
-Total counts of the commands executed after changing the mode:
+Total counts of the commands executed after an activation with each tag for 1 channel (2 banks and 1 pim unit):
 
-0--Setting up banks (Not a command):
-  TOTAL TIMES INVOKED: 0
-  ACTIVATE: 9665
-  PRECHARGE: 9408
-  READ: 1024
-  REF: 320
-  WRITE: 262336
+Total activates: 205
+Total precharges: 205
 
-1--HAB:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 191
-  BWRITE_CRF: 64
+0--Activate tag: (No tag) invoked 132 times
+  PRECHARGE: 131
+  REF: 5
+  WRITE: 4095
+
+1--Activate tag: START_PARK_IN_ invoked 1 time
+  WRITE: 1
+
+2--Activate tag: PARK_IN_ invoked 14 times
+  PRECHARGE: 11
+  READ: 15
+
+3--Activate tag: END_PARK_IN_BAR invoked 1 time
+  PRECHARGE: 1
+
+4--Activate tag: START_SB_TO_HAB_ invoked 1 time
+  PRECHARGE: 1
+
+5--Activate tag: (No tag) invoked 2 times
+  PRECHARGE: 3
+  READ: 1
+  WRITE: 3
+
+6--Activate tag: END_SB_TO_HAB_BAR invoked 1 time
+  HAB: 1
+  PRECHARGE: 5
+  WRITE: 1
+
+7--Activate tag: PROGRAM_CRFBAR invoked 1 time
+  BWRITE_CRF: 1
+
+8--Activate tag: PIMBAR invoked 1 time
+  BWRITE_GRF_A: 8
   GRF_B_ZEROIZE: 1
-  PRECHARGE: 320
-  WRITE: 64
+  HAB_PIM: 1
+  PRECHARGE: 1
 
-2--HAB_PIM:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 1600
-  BWRITE_GRF_A: 4096
-  GRF_B_ZEROIZE: 63
-  PRECHARGE: 1600
-  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 16384, 'MAC GRF_B[0], GRF_A[0], ODD_BANK, auto': 16384, 'NOP 8x': 512}
-  READ: 36800
-  REF: 128
-  WRITE: 576
+9--Activate tag: MAC_ invoked 2 times
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 63}
+  REF: 1
 
-3--HAB mode:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 128
-  PRECHARGE: 193
-  WRITE: 128
+10--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  BWRITE_GRF_A: 7
+  PRECHARGE: 1
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 1}
 
-4--SB mode:
-  TOTAL TIMES INVOKED: 64
-  ACTIVATE: 1536
-  PRECHARGE: 1599
-  READ: 5120
+11--Activate tag: MAC_ invoked 2 times
+  BWRITE_GRF_A: 1
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 63}
+
+12--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  BWRITE_GRF_A: 7
+  PRECHARGE: 1
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 1}
+
+13--Activate tag: MAC_ invoked 2 times
+  BWRITE_GRF_A: 1
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 63}
+
+14--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  BWRITE_GRF_A: 7
+  PRECHARGE: 1
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 1}
+
+15--Activate tag: MAC_ invoked 2 times
+  BWRITE_GRF_A: 1
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 63}
+
+16--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  BWRITE_GRF_A: 8
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], EVEN_BANK, auto': 1}
+
+17--Activate tag: MAC_ invoked 2 times
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], ODD_BANK, auto': 64}
+
+18--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  BWRITE_GRF_A: 8
+  PRECHARGE: 1
+
+19--Activate tag: MAC_ invoked 2 times
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], ODD_BANK, auto': 64}
+  REF: 1
+
+20--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  BWRITE_GRF_A: 8
+  PRECHARGE: 1
+
+21--Activate tag: MAC_ invoked 2 times
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], ODD_BANK, auto': 64}
+
+22--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  BWRITE_GRF_A: 8
+  PRECHARGE: 1
+
+23--Activate tag: MAC_ invoked 2 times
+  PRECHARGE: 2
+  PU (not a command): {'MAC GRF_B[0], GRF_A[0], ODD_BANK, auto': 64}
+
+24--Activate tag: GRFB_TO_BANK_ invoked 1 time
+  PU (not a command): {'NOP 8x': 8}
+
+25--Activate tag: PIMBAR invoked 1 time
+  HAB mode: 1
+  PRECHARGE: 2
+
+26--Activate tag: START_HAB_TO_SB invoked 1 time
+  WRITE: 1
+
+27--Activate tag: END_HAB_TO_SBBAR invoked 1 time
+  PRECHARGE: 2
+  SB mode: 1
+  WRITE: 1
+
+28--Activate tag: PARK_OUT_ invoked 1 time
+
+29--Activate tag: START_PARK_OUT_ invoked 1 time
+
+30--Activate tag: PARK_OUT_ invoked 13 times
+  PRECHARGE: 10
+  READ: 15
+
+31--Activate tag: END_PARK_OUT_BAR invoked 1 time
+  PRECHARGE: 1
+
+32--Activate tag: output invoked 8 times
+  PRECHARGE: 13
+  READ: 65
 
