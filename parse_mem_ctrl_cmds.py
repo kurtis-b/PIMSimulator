@@ -100,6 +100,14 @@ if __name__ == "__main__":
         total_macs = 0
         total_nops = 0
         total_jumps = 0
+
+        total_rdpuall = 0
+        total_comppuall = 0
+        total_rdall = 0
+        total_actbuf = 0
+        total_actall = 0
+        total_wrbuf = 0
+        buffer_length = 16
         with open(output_file_path, 'w') as output_file:
             output_file.write(f"Total counts of the commands executed after an activation with each tag for 1 channel (2 banks and 1 pim unit):\n\n")
             for activate_data in substring_count:
@@ -115,12 +123,43 @@ if __name__ == "__main__":
                             total_nops += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
                         elif "JUMP" in cmd:
                             total_jumps += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
+                if "GRFB_TO_BANK_" in activate_data[TAG_KEY]:    
+                    total_rdpuall += activate_data[CMDS_KEY]["WRITE"]
+                elif "PROGRAM_CRFBAR" in activate_data[TAG_KEY]:
+                    total_wrbuf += activate_data[CMDS_KEY]["BWRITE_CRF"] * buffer_length
+                elif "MAC_" in activate_data[TAG_KEY]:
+                    total_actall += activate_data[INVOKES_KEY]
+                    for cmd, count in activate_data[CMDS_KEY]["PU (not a command)"].items():
+                        if "MAC" in cmd:
+                            total_comppuall += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
+                            total_rdall += activate_data[CMDS_KEY]["PU (not a command)"][cmd] * buffer_length
+                    if "BWRITE_GRF_A" in activate_data[CMDS_KEY].keys():
+                        total_wrbuf += activate_data[CMDS_KEY]["BWRITE_GRF_A"] * buffer_length
+                elif "WRIO_TO_GRF_" in activate_data[TAG_KEY]:
+                    if "PU (not a command)" in activate_data[CMDS_KEY].keys():
+                        for cmd, count in activate_data[CMDS_KEY]["PU (not a command)"].items():
+                            if "MAC" in cmd:
+                                total_comppuall += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
+                                total_rdall += activate_data[CMDS_KEY]["PU (not a command)"][cmd] * buffer_length
+                    total_wrbuf += activate_data[CMDS_KEY]["BWRITE_GRF_A"] * buffer_length
+                    total_actbuf += activate_data[INVOKES_KEY]
+                elif "PIMBAR" in activate_data[TAG_KEY]:
+                    if "BWRITE_GRF_A" in activate_data[CMDS_KEY].keys():
+                        total_wrbuf += activate_data[CMDS_KEY]["BWRITE_GRF_A"] * buffer_length
+                    # elif "GRF_B_ZEROIZE" in activate_data[CMDS_KEY].keys():
+                    #     total_wrbuf += activate_data[CMDS_KEY]["GRF_B_ZEROIZE"] * buffer_length
             output_file.write(f"Total activates: {total_activates}\n")
             output_file.write(f"Total precharges: {total_precharge}\n")
             output_file.write(f"Total writes: {total_writes}\n")
             output_file.write(f"Total reads: {total_reads}\n")
             output_file.write(f"Total macs: {total_macs}, Total jumps 7x: {total_jumps}, Total nops 8x: {total_nops}\n")
             output_file.write(f"Total PU executions: {total_macs + 7 * total_jumps + 8 * total_nops}\n\n")
+            output_file.write(f"Total RD_PU_ALL: {total_rdpuall}\n")
+            output_file.write(f"Total COMP_PU_ALL: {total_comppuall}\n")
+            output_file.write(f"Total RD_ALL: {total_rdall}\n")
+            output_file.write(f"Total ACT_BUF: {total_actbuf}\n")
+            output_file.write(f"Total ACT_ALL: {total_actall}\n")
+            output_file.write(f"Total WR_BUF: {total_wrbuf}\n\n")
             for idx, activate_data in enumerate(substring_count): 
                 cmd_description = f"{idx+1}--Activate tag: {activate_data[TAG_KEY]}"
                 cmd_description += f" invoked {activate_data[INVOKES_KEY]} time"

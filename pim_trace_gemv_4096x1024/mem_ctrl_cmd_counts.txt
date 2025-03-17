@@ -7,6 +7,13 @@ Total reads: 671
 Total macs: 512, Total jumps 7x: 64, Total nops 8x: 8
 Total PU executions: 1024
 
+Total RD_PU_ALL: 9
+Total COMP_PU_ALL: 512
+Total RD_ALL: 8192
+Total ACT_BUF: 7
+Total ACT_ALL: 16
+Total WR_BUF: 1040
+
 1--Activate tag: START_PARK_IN_ invoked 1 time
   WRITE: 1
 
