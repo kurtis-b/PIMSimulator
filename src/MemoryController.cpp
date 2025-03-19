@@ -179,7 +179,7 @@ void MemoryController::updateCommandQueue(BusPacket* poppedBusPacket)
     // update each bank's state based on the command that was just popped
     // out of the command queue for readability's sake
     unsigned rank = poppedBusPacket->rank;
-    unsigned bank = poppedBusPacket->bank;
+    unsigned bank = poppedBusPacket->bank ;
     auto am = config.addrMapping;
 
     switch (poppedBusPacket->busPacketType)

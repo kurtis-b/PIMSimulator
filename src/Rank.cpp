@@ -38,7 +38,7 @@
 using namespace std;
 using namespace DRAMSim;
 
-Rank::Rank(ostream& simLog, Configuration& configuration)
+Rank::Rank(ostream &simLog, Configuration &configuration)
     : chanId(-1),
       rankId(-1),
       dramsimLog(simLog),
@@ -82,20 +82,21 @@ int Rank::getRankId() const
 }
 
 // attachMemoryController() must be called before any other Rank functions are called
-void Rank::attachMemoryController(MemoryController* mc)
+void Rank::attachMemoryController(MemoryController *mc)
 {
     this->memoryController = mc;
 }
 
 Rank::~Rank()
 {
-    for (size_t i = 0; i < readReturnPacket.size(); i++) delete readReturnPacket[i];
+    for (size_t i = 0; i < readReturnPacket.size(); i++)
+        delete readReturnPacket[i];
 
     readReturnPacket.clear();
     delete outgoingDataPacket;
 }
 
-void Rank::receiveFromBus(BusPacket* packet)
+void Rank::receiveFromBus(BusPacket *packet)
 {
     if (DEBUG_BUS)
     {
@@ -118,62 +119,62 @@ void Rank::checkBank(BusPacketType type, int bank, int row)
 {
     switch (type)
     {
-        case READ:
-            if (bankStates[bank].currentBankState != RowActive ||
-                currentClockCycle < bankStates[bank].nextRead ||
-                row != bankStates[bank].openRowAddress)
-            {
-                ERROR("== Error - ch " << getChanId() << " ra" << getRankId() << " ba" << bank
-                                       << " received a READ when not allowed @ "
-                                       << currentClockCycle);
-                exit(-1);
-            }
-            break;
-        case WRITE:
-            if (bankStates[bank].currentBankState != RowActive ||
-                currentClockCycle < bankStates[bank].nextWrite ||
-                row != bankStates[bank].openRowAddress)
-            {
-                ERROR("== Error - ch " << getChanId() << " ra" << getRankId() << " ba" << bank
-                                       << " received a WRITE when not allowed @ "
-                                       << currentClockCycle);
-                bankStates[bank].print();
-                exit(-1);
-            }
-            break;
-
-        case ACTIVATE:
-            if (bankStates[bank].currentBankState != Idle ||
-                currentClockCycle < bankStates[bank].nextActivate)
-            {
-                ERROR("== Error - ch " << getChanId() << " ra" << getRankId() << " ba" << bank
-                                       << " received a ACT when not allowed @ "
-                                       << currentClockCycle);
-                bankStates[bank].print();
-                exit(-1);
-            }
-            break;
-
-        case PRECHARGE:
-            if (bankStates[bank].currentBankState != RowActive ||
-                currentClockCycle < bankStates[bank].nextPrecharge)
-            {
-                ERROR("== Error - ch " << getChanId() << " ra" << getRankId() << " ba" << bank
-                                       << " received a PRE when not allowed @ "
-                                       << currentClockCycle);
-                exit(-1);
-            }
-            break;
-        case DATA:
-            break;
-        default:
-            ERROR("== Error - Unknown BusPacketType trying to be sent to Bank");
+    case READ:
+        if (bankStates[bank].currentBankState != RowActive ||
+            currentClockCycle < bankStates[bank].nextRead ||
+            row != bankStates[bank].openRowAddress)
+        {
+            ERROR("== Error - ch " << getChanId() << " ra" << getRankId() << " ba" << bank
+                                   << " received a READ when not allowed @ "
+                                   << currentClockCycle);
             exit(-1);
-            break;
+        }
+        break;
+    case WRITE:
+        if (bankStates[bank].currentBankState != RowActive ||
+            currentClockCycle < bankStates[bank].nextWrite ||
+            row != bankStates[bank].openRowAddress)
+        {
+            ERROR("== Error - ch " << getChanId() << " ra" << getRankId() << " ba" << bank
+                                   << " received a WRITE when not allowed @ "
+                                   << currentClockCycle);
+            bankStates[bank].print();
+            exit(-1);
+        }
+        break;
+
+    case ACTIVATE:
+        if (bankStates[bank].currentBankState != Idle ||
+            currentClockCycle < bankStates[bank].nextActivate)
+        {
+            ERROR("== Error - ch " << getChanId() << " ra" << getRankId() << " ba" << bank
+                                   << " received a ACT when not allowed @ "
+                                   << currentClockCycle);
+            bankStates[bank].print();
+            exit(-1);
+        }
+        break;
+
+    case PRECHARGE:
+        if (bankStates[bank].currentBankState != RowActive ||
+            currentClockCycle < bankStates[bank].nextPrecharge)
+        {
+            ERROR("== Error - ch " << getChanId() << " ra" << getRankId() << " ba" << bank
+                                   << " received a PRE when not allowed @ "
+                                   << currentClockCycle);
+            exit(-1);
+        }
+        break;
+    case DATA:
+        break;
+    default:
+        ERROR("== Error - Unknown BusPacketType trying to be sent to Bank");
+        exit(-1);
+        break;
     }
 }
 
-void Rank::check(BusPacket* packet)
+void Rank::check(BusPacket *packet)
 {
     if (packet->busPacketType == REF)
     {
@@ -187,18 +188,14 @@ void Rank::check(BusPacket* packet)
             }
         }
     }
-    else if (mode_ == dramMode::SB)
-    {
-        checkBank(packet->busPacketType, packet->bank, packet->row);
-    }
     else
     {
-        for (int bank = (packet->bank % 2); bank < config.NUM_BANKS; bank += 2)
-            checkBank(packet->busPacketType, bank, packet->row);
+        // Same for SB and HAB
+        checkBank(packet->busPacketType, packet->bank, packet->row);
     }
 }
 
-void Rank::updateState(BusPacket* packet)
+void Rank::updateState(BusPacket *packet)
 {
     auto addrMapping = config.addrMapping;
     if (packet->busPacketType == REF)
@@ -209,19 +206,13 @@ void Rank::updateState(BusPacket* packet)
             bankStates[i].nextActivate = currentClockCycle + config.tRFC;
         }
     }
-    else if (mode_ == dramMode::SB)
+    else
     {
+        // Same for SB and HAB
         for (int bank = 0; bank < config.NUM_BANKS; bank++)
         {
             updateBank(packet->busPacketType, bank, packet->row, bank == packet->bank,
                        addrMapping.isSameBankgroup(bank, packet->bank));
-        }
-    }
-    else
-    {
-        for (int bank = 0; bank < config.NUM_BANKS; bank++)
-        {
-            updateBank(packet->busPacketType, bank, packet->row, (bank % 2) == packet->bank, true);
         }
     }
 }
@@ -230,90 +221,90 @@ void Rank::updateBank(BusPacketType type, int bank, int row, bool targetBank, bo
 {
     switch (type)
     {
-        case READ:
-            if (targetBank)
-                bankStates[bank].nextPrecharge = max(bankStates[bank].nextPrecharge,
-                                                     currentClockCycle + config.READ_TO_PRE_DELAY);
+    case READ:
+        if (targetBank)
+            bankStates[bank].nextPrecharge = max(bankStates[bank].nextPrecharge,
+                                                 currentClockCycle + config.READ_TO_PRE_DELAY);
 
-            if (targetBankgroup)
-            {
-                bankStates[bank].nextRead =
-                    max(bankStates[bank].nextRead,
-                        currentClockCycle + max(config.tCCDL, config.BL / 2));
-            }
-            else
-            {
-                bankStates[bank].nextRead =
-                    max(bankStates[bank].nextRead,
-                        currentClockCycle + max(config.tCCDS, config.BL / 2));
-            }
+        if (targetBankgroup)
+        {
+            bankStates[bank].nextRead =
+                max(bankStates[bank].nextRead,
+                    currentClockCycle + max(config.tCCDL, config.BL / 2));
+        }
+        else
+        {
+            bankStates[bank].nextRead =
+                max(bankStates[bank].nextRead,
+                    currentClockCycle + max(config.tCCDS, config.BL / 2));
+        }
+        bankStates[bank].nextWrite =
+            max(bankStates[bank].nextWrite, currentClockCycle + config.READ_TO_WRITE_DELAY);
+
+        break;
+    case WRITE:
+        // update state table
+        if (targetBank)
+            bankStates[bank].nextPrecharge = max(bankStates[bank].nextPrecharge,
+                                                 currentClockCycle + config.WRITE_TO_PRE_DELAY);
+        if (targetBankgroup)
+        {
+            bankStates[bank].nextRead =
+                max(bankStates[bank].nextRead,
+                    currentClockCycle + config.WRITE_TO_READ_DELAY_B_LONG);
             bankStates[bank].nextWrite =
-                max(bankStates[bank].nextWrite, currentClockCycle + config.READ_TO_WRITE_DELAY);
+                max(bankStates[bank].nextWrite,
+                    currentClockCycle + max(config.BL / 2, config.tCCDL));
+        }
+        else
+        {
+            bankStates[bank].nextRead =
+                max(bankStates[bank].nextRead,
+                    currentClockCycle + config.WRITE_TO_READ_DELAY_B_SHORT);
+            bankStates[bank].nextWrite =
+                max(bankStates[bank].nextWrite,
+                    currentClockCycle + max(config.BL / 2, config.tCCDS));
+        }
+        break;
+    case ACTIVATE:
+        if (targetBank)
+        {
+            bankStates[bank].currentBankState = RowActive;
+            bankStates[bank].nextActivate = currentClockCycle + config.tRC;
+            bankStates[bank].openRowAddress = row;
+            bankStates[bank].nextWrite = currentClockCycle + (config.tRCDWR - config.AL);
+            bankStates[bank].nextRead = currentClockCycle + (config.tRCDRD - config.AL);
+            bankStates[bank].nextPrecharge = currentClockCycle + config.tRAS;
+        }
+        else
+        {
+            bankStates[bank].nextActivate =
+                (targetBankgroup)
+                    ? max(bankStates[bank].nextActivate, currentClockCycle + config.tRRDL)
+                    : max(bankStates[bank].nextActivate, currentClockCycle + config.tRRDS);
+        }
+        break;
 
-            break;
-        case WRITE:
-            // update state table
-            if (targetBank)
-                bankStates[bank].nextPrecharge = max(bankStates[bank].nextPrecharge,
-                                                     currentClockCycle + config.WRITE_TO_PRE_DELAY);
-            if (targetBankgroup)
-            {
-                bankStates[bank].nextRead =
-                    max(bankStates[bank].nextRead,
-                        currentClockCycle + config.WRITE_TO_READ_DELAY_B_LONG);
-                bankStates[bank].nextWrite =
-                    max(bankStates[bank].nextWrite,
-                        currentClockCycle + max(config.BL / 2, config.tCCDL));
-            }
-            else
-            {
-                bankStates[bank].nextRead =
-                    max(bankStates[bank].nextRead,
-                        currentClockCycle + config.WRITE_TO_READ_DELAY_B_SHORT);
-                bankStates[bank].nextWrite =
-                    max(bankStates[bank].nextWrite,
-                        currentClockCycle + max(config.BL / 2, config.tCCDS));
-            }
-            break;
-        case ACTIVATE:
-            if (targetBank)
-            {
-                bankStates[bank].currentBankState = RowActive;
-                bankStates[bank].nextActivate = currentClockCycle + config.tRC;
-                bankStates[bank].openRowAddress = row;
-                bankStates[bank].nextWrite = currentClockCycle + (config.tRCDWR - config.AL);
-                bankStates[bank].nextRead = currentClockCycle + (config.tRCDRD - config.AL);
-                bankStates[bank].nextPrecharge = currentClockCycle + config.tRAS;
-            }
-            else
-            {
-                bankStates[bank].nextActivate =
-                    (targetBankgroup)
-                        ? max(bankStates[bank].nextActivate, currentClockCycle + config.tRRDL)
-                        : max(bankStates[bank].nextActivate, currentClockCycle + config.tRRDS);
-            }
-            break;
+    case PRECHARGE:
+        if (targetBank)
+        {
+            bankStates[bank].currentBankState = Idle;
+            bankStates[bank].nextActivate =
+                max(bankStates[bank].nextActivate, currentClockCycle + config.tRP);
+        }
+        break;
 
-        case PRECHARGE:
-            if (targetBank)
-            {
-                bankStates[bank].currentBankState = Idle;
-                bankStates[bank].nextActivate =
-                    max(bankStates[bank].nextActivate, currentClockCycle + config.tRP);
-            }
-            break;
+    case DATA:
+        break;
 
-        case DATA:
-            break;
-
-        default:
-            ERROR("== Error - Unknown BusPacketType trying to be sent to Bank");
-            exit(0);
-            break;
+    default:
+        ERROR("== Error - Unknown BusPacketType trying to be sent to Bank");
+        exit(0);
+        break;
     }
 }
 
-void Rank::readSb(BusPacket* packet)
+void Rank::readSb(BusPacket *packet)
 {
     if (DEBUG_CMD_TRACE)
     {
@@ -323,7 +314,7 @@ void Rank::readSb(BusPacket* packet)
             {
                 PRINT(OUTLOG_GRF_A("READ_GRF_A"));
             }
-            else if (0x18 <= packet->column && packet->column <= 0x1f)
+            else if (0x18 <= packet->column && packet->column <= config.PIM_ABMR_CA)
             {
                 PRINT(OUTLOG_GRF_B("READ_GRF_B"));
             }
@@ -342,9 +333,9 @@ void Rank::readSb(BusPacket* packet)
     if (packet->row == config.PIM_REG_RA)
     {
         if (0x08 <= packet->column && packet->column <= 0x0f)
-            *(packet->data) = pimRank->pimBlocks[packet->bank / 2].grfA[packet->column - 0x8];
-        else if (0x18 <= packet->column && packet->column <= 0x1f)
-            *(packet->data) = pimRank->pimBlocks[packet->bank / 2].grfB[packet->column - 0x18];
+            *(packet->data) = pimRank->pimBlocks[packet->bank / 2].grfA;
+        else if (0x18 <= packet->column && packet->column <= config.PIM_ABMR_CA)
+            *(packet->data) = pimRank->pimBlocks[packet->bank / 2].grfB;
         else
             banks[packet->bank].read(packet);
     }
@@ -353,7 +344,7 @@ void Rank::readSb(BusPacket* packet)
 #endif
 }
 
-void Rank::writeSb(BusPacket* packet)
+void Rank::writeSb(BusPacket *packet)
 {
     if (DEBUG_CMD_TRACE)
     {
@@ -373,105 +364,107 @@ void Rank::writeSb(BusPacket* packet)
 #endif
 }
 
-void Rank::sendToBank(BusPacket* packet)
+void Rank::sendToBank(BusPacket *packet)
 {
     switch (packet->busPacketType)
     {
-        case READ:
-            if (mode_ == dramMode::SB)
-                readSb(packet);
-            else if (mode_ == dramMode::HAB_PIM && pimRank->isToggleCond(packet))
-                pimRank->doPIM(packet);
+    case READ:
+        if (mode_ == dramMode::SB)
+            readSb(packet);
+        else if (mode_ == dramMode::HAB_PIM && pimRank->isToggleCond(packet))
+            pimRank->doPIM(packet);
+        else
+            pimRank->readHab(packet);
+        packet->busPacketType = DATA;
+        readReturnPacket.push_back(packet);
+        readReturnCountdown.push_back(config.RL);
+        break;
+    case WRITE:
+        if (mode_ == dramMode::SB)
+            writeSb(packet);
+        else if (mode_ == dramMode::HAB_PIM && pimRank->isToggleCond(packet))
+            pimRank->doPIM(packet);
+        else
+            pimRank->writeHab(packet);
+        delete (packet);
+        break;
+    case ACTIVATE:
+        if (DEBUG_CMD_TRACE)
+        {
+            PRINTC(getModeColor(), OUTLOG_ALL("ACTIVATE") << " tag : " << packet->tag);
+        }
+        if (mode_ == dramMode::SB && packet->row == config.PIM_ABMR_RA &&
+            packet->column == config.PIM_ABMR_CA)
+        {
+            abmr1Even_ = (packet->bank == 0) ? true : abmr1Even_;
+            abmr1Odd_ = (packet->bank == 1) ? true : abmr1Odd_;
+            abmr2Even_ = (packet->bank == 8) ? true : abmr2Even_;
+            abmr2Odd_ = (packet->bank == 9) ? true : abmr2Odd_;
+
+            DEBUG("abmr1Even_: " << abmr1Even_ << ", abmr1Odd_: " << abmr1Odd_ << ", abmr2Even_: " << abmr2Even_ << ", abmr2Odd_: " << abmr2Odd_);
+            if ((config.NUM_BANKS <= 2 && abmr1Even_ && abmr1Odd_) ||
+                (config.NUM_BANKS > 2 && abmr1Even_ && abmr1Odd_ && abmr2Even_ && abmr2Odd_))
+            {
+                abmr1Even_ = abmr1Odd_ = abmr2Even_ = abmr2Odd_ = false;
+                mode_ = dramMode::HAB;
+                if (DEBUG_CMD_TRACE)
+                {
+                    PRINTC(RED, OUTLOG_CH_RA("HAB") << " tag : " << packet->tag);
+                }
+            }
+        }
+        delete (packet);
+        break;
+    case PRECHARGE:
+        if (DEBUG_CMD_TRACE)
+        {
+            if (mode_ == dramMode::SB || packet->bank < 2)
+            {
+                PRINTC(getModeColor(), OUTLOG_PRECHARGE("PRECHARGE"));
+            }
             else
-                pimRank->readHab(packet);
-            packet->busPacketType = DATA;
-            readReturnPacket.push_back(packet);
-            readReturnCountdown.push_back(config.RL);
-            break;
-        case WRITE:
-            if (mode_ == dramMode::SB)
-                writeSb(packet);
-            else if (mode_ == dramMode::HAB_PIM && pimRank->isToggleCond(packet))
-                pimRank->doPIM(packet);
-            else
-                pimRank->writeHab(packet);
-            delete (packet);
-            break;
-        case ACTIVATE:
-            if (DEBUG_CMD_TRACE)
             {
-                PRINTC(getModeColor(), OUTLOG_ALL("ACTIVATE") << " tag : " << packet->tag);
+                PRINTC(GRAY, OUTLOG_PRECHARGE("PRECHARGE"));
             }
-            if (mode_ == dramMode::SB && packet->row == config.PIM_ABMR_RA &&
-                packet->column == 0x1f)
-            {
-                abmr1Even_ = (packet->bank == 0) ? true : abmr1Even_;
-                abmr1Odd_ = (packet->bank == 1) ? true : abmr1Odd_;
-                abmr2Even_ = (packet->bank == 8) ? true : abmr2Even_;
-                abmr2Odd_ = (packet->bank == 9) ? true : abmr2Odd_;
+        }
 
-                if ((config.NUM_BANKS <= 2 && abmr1Even_ && abmr1Odd_) ||
-                    (config.NUM_BANKS > 2 && abmr1Even_ && abmr1Odd_ && abmr2Even_ && abmr2Odd_))
+        if (mode_ == dramMode::HAB && packet->row == config.PIM_SBMR_RA)
+        {
+            sbmr1_ = (packet->bank == 0) ? true : sbmr1_;
+            sbmr2_ = (packet->bank == 1) ? true : sbmr2_;
+
+            DEBUG("sbmr1_: " << sbmr1_ << ", sbmr2_: " << sbmr2_);
+            if (sbmr1_ && sbmr2_)
+            {
+                sbmr1_ = sbmr2_ = false;
+                mode_ = dramMode::SB;
+                if (DEBUG_CMD_TRACE)
                 {
-                    abmr1Even_ = abmr1Odd_ = abmr2Even_ = abmr2Odd_ = false;
-                    mode_ = dramMode::HAB;
-                    if (DEBUG_CMD_TRACE)
-                    {
-                        PRINTC(RED, OUTLOG_CH_RA("HAB") << " tag : " << packet->tag);
-                    }
+                    PRINTC(RED, OUTLOG_CH_RA("SB mode"));
                 }
             }
-            delete (packet);
-            break;
-        case PRECHARGE:
-            if (DEBUG_CMD_TRACE)
-            {
-                if (mode_ == dramMode::SB || packet->bank < 2)
-                {
-                    PRINTC(getModeColor(), OUTLOG_PRECHARGE("PRECHARGE"));
-                }
-                else
-                {
-                    PRINTC(GRAY, OUTLOG_PRECHARGE("PRECHARGE"));
-                }
-            }
+        }
 
-            if (mode_ == dramMode::HAB && packet->row == config.PIM_SBMR_RA)
-            {
-                sbmr1_ = (packet->bank == 0) ? true : sbmr1_;
-                sbmr2_ = (packet->bank == 1) ? true : sbmr2_;
+        delete (packet);
+        break;
 
-                if (sbmr1_ && sbmr2_)
-                {
-                    sbmr1_ = sbmr2_ = false;
-                    mode_ = dramMode::SB;
-                    if (DEBUG_CMD_TRACE)
-                    {
-                        PRINTC(RED, OUTLOG_CH_RA("SB mode"));
-                    }
-                }
-            }
+    case REF:
+        refreshWaiting = false;
+        if (DEBUG_CMD_TRACE)
+        {
+            PRINT(OUTLOG_CH_RA("REF"));
+        }
+        delete (packet);
+        break;
 
-            delete (packet);
-            break;
+    case DATA:
+        delete (packet);
+        break;
 
-        case REF:
-            refreshWaiting = false;
-            if (DEBUG_CMD_TRACE)
-            {
-                PRINT(OUTLOG_CH_RA("REF"));
-            }
-            delete (packet);
-            break;
-
-        case DATA:
-            delete (packet);
-            break;
-
-        default:
-            ERROR("== Error - Unknown BusPacketType trying to be sent to Bank");
-            exit(0);
-            break;
+    default:
+        ERROR("== Error - Unknown BusPacketType trying to be sent to Bank");
+        exit(0);
+        break;
     }
 }
 
@@ -492,7 +485,8 @@ void Rank::update()
     }
 
     // decrement the counter for all packets waiting to be sent back
-    for (size_t i = 0; i < readReturnCountdown.size(); i++) readReturnCountdown[i]--;
+    for (size_t i = 0; i < readReturnCountdown.size(); i++)
+        readReturnCountdown[i]--;
 
     if (readReturnCountdown.size() > 0 && readReturnCountdown[0] == 0)
     {

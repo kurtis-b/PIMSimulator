@@ -118,6 +118,7 @@ class GemvPIMKernel : public IPIMCmd
             vector<PIMCmd> tmp_cmds{
                 PIMCmd(PIMCmdType::MAC, PIMOpdType::GRF_B, PIMOpdType::GRF_A, PIMOpdType::EVEN_BANK,
                        1, 0, 0, 0),
+                // TODO: Might need to modify these
                 PIMCmd(PIMCmdType::JUMP, num_jump_to_be_taken_even_bank, 2),
                 PIMCmd(PIMCmdType::MAC, PIMOpdType::GRF_B, PIMOpdType::GRF_A, PIMOpdType::ODD_BANK,
                        1, 0, 0, 0),

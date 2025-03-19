@@ -26,14 +26,15 @@ class PIMBenchTestCase
     PIMBenchTestCase(KernelType k, unsigned b, unsigned out, unsigned in)
         : kernel_type_(k), batch_(b), out_(out), in_(in)
     {
+        // CURT'S NOTE: Modify this based on the number of channels specified in the .ini, if running the PIMBenchFixture tests (performance comparison). 
+        // If you want to run the functionality verification--PIMKernelFixture--modify the KernelTestCases files instead.
         mem_ = make_shared<MultiChannelMemorySystem>("ini/HBM2_samsung_2M_16B_x64.ini",
                                                      "system_hbm_1ch.ini", ".", "example_app",
-                                                     256 * 64 * 2);
+                                                     256 * 64 * 2); // 256 MB, 64 channels, 2 Bytes per element
         pim_mem_ = make_shared<MultiChannelMemorySystem>("ini/HBM2_samsung_2M_16B_x64.ini",
                                                          "system_hbm_1ch.ini", ".", "example_app",
-                                                         256 * 64 * 2);
-        // # of pim channel = 64, # of pim rank = 1
-        kernel_ = make_shared<PIMKernel>(pim_mem_, 64, 1);
+                                                         256 * 64 * 2); // 256 MB, 64 channels, 2 Bytes per element
+        kernel_ = make_shared<PIMKernel>(pim_mem_, 64, 1); // # of pim channel = 64, # of pim rank = 1
         dim_data_ = new DataDim(kernel_type_, batch_, out_, in_, false);
     }
 

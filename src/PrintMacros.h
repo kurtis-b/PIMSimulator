@@ -56,7 +56,7 @@ using std::ostream;
 #else
 #define DEBUG(str)
 #define DEBUGN(str)
-#endif  // end DEBUG_BUILD
+#endif // end DEBUG_BUILD
 
 #ifdef NO_OUTPUT
 #undef DEBUG
@@ -121,6 +121,6 @@ using std::ostream;
                 cout << str;         \
         }                            \
     } while (0)
-#endif  // end NO_OUTPUT
+#endif // end NO_OUTPUT
 
 #endif /*PRINT_MACROS_H*/

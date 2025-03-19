@@ -170,11 +170,13 @@ bool CommandQueue::process_refresh(BusPacket** busPacket)
 {
     if (refreshWaiting)
     {
+        DEBUG("Waiting for refresh");
         bool sendREF = true;
         for (size_t b = 0; b < num_banks_; b++)
         {
             if (bankStates[refreshRank][b].currentBankState == RowActive)
             {
+                DEBUG("Found row active in bank " << b << " for rank " << refreshRank << ". Sending PRECHARGE bus packet instead of REF.");
                 sendREF = false;
                 *busPacket =
                     new BusPacket(PRECHARGE, 0, 0, bankStates[refreshRank][b].openRowAddress,
@@ -191,9 +193,11 @@ bool CommandQueue::process_refresh(BusPacket** busPacket)
         }
         if (sendREF)
         {
+            DEBUG("Sending REF bus packet for rank " << refreshRank);
             *busPacket = new BusPacket(REF, 0, 0, 0, refreshRank, 0, nullptr, dramsimLog);
             if (isIssuable(*busPacket))
             {
+                DEBUG("REF bus packet was issuable");
                 refreshWaiting = false;
                 return true;
             }

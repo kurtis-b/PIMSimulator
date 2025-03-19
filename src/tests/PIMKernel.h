@@ -44,7 +44,7 @@ class PIMKernel
                             (getConfigParam(UINT, "JEDEC_DATA_BUS_BITS") / 8);  // in byte
 
         // FIXME: HARDCODED
-        num_grf_ = num_grfA_ = num_grfB_ = 8;
+        num_grf_ = num_grfA_ = num_grfB_ = 1;
         num_total_pim_blocks_ = num_pim_blocks_ * num_pim_chans_ * num_pim_ranks_;
 
         pim_chans_.clear();
@@ -52,6 +52,7 @@ class PIMKernel
 
         pim_ranks_.clear();
         for (int i = 0; i < num_pim_ranks_; i++) pim_ranks_.push_back(i);
+        DEBUG("pim_ranks.size: " << pim_ranks_.size());
 
         pim_addr_mgr_ = make_shared<PIMAddrManager>(num_pim_chan, num_pim_rank);
     }
@@ -118,6 +119,7 @@ class PIMKernel
     shared_ptr<MultiChannelMemorySystem> mem_;
     const uint32_t pim_reg_ra_ = 0x3fff;
     const uint32_t pim_abmr_ra_ = 0x27ff;
+    const uint32_t pim_abmr_ca_ = 0xf;
     const uint32_t pim_sbmr_ra_ = 0x2fff;
 
     int inline getToggleCond(pimBankType pb_type = pimBankType::ALL_BANK)

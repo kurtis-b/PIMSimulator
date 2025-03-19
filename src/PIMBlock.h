@@ -35,8 +35,8 @@ class PIMBlock
     PIMBlock(const PIMPrecision& pimPrecision) : pimPrecision_(pimPrecision) {}
 
     BurstType srf;
-    BurstType grfA[8];  // FIXME: hard coding shcha
-    BurstType grfB[8];
+    BurstType grfA; 
+    BurstType grfB;
     BurstType mOut;
     BurstType aOut;
 

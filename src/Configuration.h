@@ -93,6 +93,7 @@ class Configuration
 
         PIM_REG_RA = 0x3fff;
         PIM_ABMR_RA = 0x27ff;
+        PIM_ABMR_CA = 0xf;
         PIM_SBMR_RA = 0x2fff;
 
         setDebugConfiguration();
@@ -185,6 +186,7 @@ class Configuration
 
     uint32_t PIM_REG_RA;
     uint32_t PIM_ABMR_RA;
+    uint32_t PIM_ABMR_CA;
     uint32_t PIM_SBMR_RA;
 
     AddrMapping& addrMapping;

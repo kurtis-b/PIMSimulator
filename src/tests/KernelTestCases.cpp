@@ -64,7 +64,10 @@ TEST_F(PIMKernelFixture, gemv)
     shared_ptr<PIMKernel> kernel = make_pim_kernel();
 
     uint32_t batch_size = 1;
-    uint32_t output_dim = 1024;
+    // CURT'S NOTE: Modify this to change the data used for the GEMV Kernel Test (functional verification).
+    // This will lead to the application pulling the corresponding npy files in the data/gemv foler.
+    // Then run ./sim --gtest_filter=PIMKernelFixture.gemv
+    uint32_t output_dim = 64;
     uint32_t input_dim = 256;
 
     DataDim *dim_data = new DataDim(KernelType::GEMV, batch_size, output_dim, input_dim, true);
