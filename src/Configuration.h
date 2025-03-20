@@ -93,7 +93,7 @@ class Configuration
 
         PIM_REG_RA = 0x3fff;
         PIM_ABMR_RA = 0x27ff;
-        PIM_ABMR_CA = 0xf;
+        PIM_ABMR_CA = 0x3d;
         PIM_SBMR_RA = 0x2fff;
 
         setDebugConfiguration();

@@ -141,7 +141,8 @@ if __name__ == "__main__":
                             if "MAC" in cmd:
                                 total_comppuall += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
                                 total_rdall += activate_data[CMDS_KEY]["PU (not a command)"][cmd] * buffer_length
-                    total_wrbuf += activate_data[CMDS_KEY]["BWRITE_GRF_A"] * buffer_length
+                    if "BWRITE_GRF_A" in activate_data[CMDS_KEY].keys():
+                        total_wrbuf += activate_data[CMDS_KEY]["BWRITE_GRF_A"] * buffer_length
                     total_actbuf += activate_data[INVOKES_KEY]
                 elif "PIMBAR" in activate_data[TAG_KEY]:
                     if "BWRITE_GRF_A" in activate_data[CMDS_KEY].keys():

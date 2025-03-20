@@ -21,7 +21,7 @@
 using namespace std;
 using namespace DRAMSim;
 
-PIMRank::PIMRank(ostream& simLog, Configuration& configuration)
+PIMRank::PIMRank(ostream &simLog, Configuration &configuration)
     : chanId(-1),
       rankId(-1),
       dramsimLog(simLog),
@@ -38,7 +38,7 @@ PIMRank::PIMRank(ostream& simLog, Configuration& configuration)
     currentClockCycle = 0;
 }
 
-void PIMRank::attachRank(Rank* r)
+void PIMRank::attachRank(Rank *r)
 {
     this->rank = r;
 }
@@ -65,7 +65,7 @@ int PIMRank::getRankId() const
 
 void PIMRank::update() {}
 
-void PIMRank::controlPIM(BusPacket* packet)
+void PIMRank::controlPIM(BusPacket *packet)
 {
     uint8_t grf_a_zeroize = packet->data->u8Data_[20];
     if (grf_a_zeroize)
@@ -77,7 +77,8 @@ void PIMRank::controlPIM(BusPacket* packet)
         BurstType burst_zero;
         for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
         {
-            pimBlocks[pb].grfA = burst_zero;
+            for (int i = 0; i < 16; i++)
+                pimBlocks[pb].grfA[i] = burst_zero;
         }
     }
     uint8_t grf_b_zeroize = packet->data->u8Data_[21];
@@ -115,7 +116,7 @@ void PIMRank::controlPIM(BusPacket* packet)
     DEBUG("Set to mode: " << (int)rank->mode_);
 }
 
-bool PIMRank::isToggleCond(BusPacket* packet)
+bool PIMRank::isToggleCond(BusPacket *packet)
 {
     if (pimOpMode_ && !crfExit_)
     {
@@ -143,9 +144,9 @@ bool PIMRank::isToggleCond(BusPacket* packet)
     }
 }
 
-void PIMRank::readHab(BusPacket* packet)
+void PIMRank::readHab(BusPacket *packet)
 {
-    if (isReservedRA(packet->row))  // ignored
+    if (isReservedRA(packet->row)) // ignored
     {
         PRINTC(GRAY, OUTLOG_ALL("READ"));
     }
@@ -157,23 +158,25 @@ void PIMRank::readHab(BusPacket* packet)
         for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
         {
             rank->banks[pb].read(packet);
+
             pimBlocks[pb].grfB = *(packet->data);
         }
 #endif
     }
 }
 
-void PIMRank::writeHab(BusPacket* packet)
+void PIMRank::writeHab(BusPacket *packet)
 {
-    if (packet->row == config.PIM_REG_RA)  // WRIO to PIM Broadcasting
+    if (packet->row == config.PIM_REG_RA) // WRIO to PIM Broadcasting
     {
         if (packet->column == 0x00)
             controlPIM(packet);
-        if (0x08 <= packet->column && packet->column <= 0x0f)
+        if ((0x08 <= packet->column && packet->column <= 0x18) ||
+            (0x18 <= packet->column && packet->column <= 0x18))
         {
             if (DEBUG_CMD_TRACE)
             {
-                if (packet->column - 1 < 1)
+                if (packet->column - 8 < 24)
                     PRINTC(GREEN, OUTLOG_B_GRF_A("BWRITE_GRF_A"));
                 else
                     PRINTC(GREEN, OUTLOG_B_GRF_B("BWRITE_GRF_B"));
@@ -181,10 +184,10 @@ void PIMRank::writeHab(BusPacket* packet)
 #ifndef NO_STORAGE
             for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
             {
-                if (packet->column - 1 < 1)
-                    pimBlocks[pb].grfA = *(packet->data);
+                if (packet->column - 8 < 24) // The number of pim blocks = number of grf a's, so the below works
+                    pimBlocks[pb].grfA[packet->column - 0x8] = *(packet->data);
                 else
-                    pimBlocks[pb].grfB= *(packet->data);
+                    pimBlocks[pb].grfB = *(packet->data);
             }
 #endif
         }
@@ -198,14 +201,15 @@ void PIMRank::writeHab(BusPacket* packet)
         {
             if (DEBUG_CMD_TRACE)
                 PRINTC(GREEN, OUTLOG_CH_RA("BWRITE_SRF"));
-            for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++) pimBlocks[pb].srf = *(packet->data);
+            for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
+                pimBlocks[pb].srf = *(packet->data);
         }
     }
     else if (isReservedRA(packet->row))
     {
         PRINTC(GRAY, OUTLOG_ALL("WRITE"));
     }
-    else  // PIM (only GRF) to Bank Move
+    else // PIM (only GRF) to Bank Move
     {
         PRINTC(GREEN, OUTLOG_ALL("PIM_TO_BANK"));
 
@@ -215,111 +219,111 @@ void PIMRank::writeHab(BusPacket* packet)
         {
             if (packet->bank == 0)
             {
-                *(packet->data) = pimBlocks[pb].grfA;
-                rank->banks[pb].write(packet);  // basically read from bank;
+                *(packet->data) = pimBlocks[pb].grfA[pb];
+                rank->banks[pb].write(packet); // basically read from bank;
             }
             else if (packet->bank == 1)
             {
                 *(packet->data) = pimBlocks[pb].grfB;
-                rank->banks[pb].write(packet);  // basically read from bank.
+                rank->banks[pb].write(packet); // basically read from bank.
             }
         }
 #endif
     }
 }
 
-void PIMRank::readOpd(int pb, BurstType& bst, PIMOpdType type, BusPacket* packet, int idx,
+void PIMRank::readOpd(int pb, BurstType &bst, PIMOpdType type, BusPacket *packet, int idx,
                       bool is_auto, bool is_mac)
 {
     idx = getGrfIdx(idx);
 
     switch (type)
     {
-        case PIMOpdType::A_OUT:
-            bst = pimBlocks[pb].aOut;
-            return;
-        case PIMOpdType::M_OUT:
-            bst = pimBlocks[pb].mOut;
-            return;
-        case PIMOpdType::EVEN_BANK:
-            if (packet->bank % 2 != 0)
-                PRINT("Warning, CRF bank coding and bank id from packet are inconsistent");
-            rank->banks[pb].read(packet);  // basically read from bank.
-            bst = *(packet->data);
-            return;
-        case PIMOpdType::ODD_BANK:
-            if (packet->bank % 2 == 0)
-                PRINT("Warning, CRF bank coding and bank id from packet are inconsistent");
-            rank->banks[pb].read(packet);  // basically read from bank.
-            bst = *(packet->data);
-            return;
-        case PIMOpdType::GRF_A:
-            bst = pimBlocks[pb].grfA;
-            return;
-        case PIMOpdType::GRF_B:
-            if (is_auto)
-                bst = pimBlocks[pb].grfB;
-            else
-                bst = pimBlocks[pb].grfB;
-            return;
-        case PIMOpdType::SRF_M:
-            bst.set(pimBlocks[pb].srf.fp16Data_[idx]);
-            return;
-        case PIMOpdType::SRF_A:
-            bst.set(pimBlocks[pb].srf.fp16Data_[idx + 8]);
-            return;
+    case PIMOpdType::A_OUT:
+        bst = pimBlocks[pb].aOut;
+        return;
+    case PIMOpdType::M_OUT:
+        bst = pimBlocks[pb].mOut;
+        return;
+    case PIMOpdType::EVEN_BANK:
+        if (packet->bank % 2 != 0)
+            PRINT("Warning, CRF bank coding and bank id from packet are inconsistent");
+        rank->banks[pb].read(packet); // basically read from bank.
+        bst = *(packet->data);
+        return;
+    case PIMOpdType::ODD_BANK:
+        if (packet->bank % 2 == 0)
+            PRINT("Warning, CRF bank coding and bank id from packet are inconsistent");
+        rank->banks[pb].read(packet); // basically read from bank.
+        bst = *(packet->data);
+        return;
+    case PIMOpdType::GRF_A:
+        bst = pimBlocks[pb].grfA[pb];
+        return;
+    case PIMOpdType::GRF_B:
+        if (is_auto)
+            bst = pimBlocks[pb].grfB;
+        else
+            bst = pimBlocks[pb].grfB;
+        return;
+    case PIMOpdType::SRF_M:
+        bst.set(pimBlocks[pb].srf.fp16Data_[idx]);
+        return;
+    case PIMOpdType::SRF_A:
+        bst.set(pimBlocks[pb].srf.fp16Data_[idx + 8]);
+        return;
     }
 }
 
-void PIMRank::writeOpd(int pb, BurstType& bst, PIMOpdType type, BusPacket* packet, int idx,
+void PIMRank::writeOpd(int pb, BurstType &bst, PIMOpdType type, BusPacket *packet, int idx,
                        bool is_auto, bool is_mac)
 {
     idx = getGrfIdx(idx);
 
     switch (type)
     {
-        case PIMOpdType::A_OUT:
-            pimBlocks[pb].aOut = bst;
-            return;
-        case PIMOpdType::M_OUT:
-            pimBlocks[pb].mOut = bst;
-            return;
-        case PIMOpdType::EVEN_BANK:
-            if (packet->bank % 2 != 0)
-            {
-                PRINT("CRF bank coding and bank id from packet are inconsistent");
-            }
-            *(packet->data) = bst;
-            rank->banks[pb].write(packet);  // basically read from bank.
-            return;
-        case PIMOpdType::ODD_BANK:
-            if (packet->bank % 2 == 0)
-            {
-                PRINT("CRF bank coding and bank id from packet are inconsistent");
-                exit(-1);
-            }
-            *(packet->data) = bst;
-            rank->banks[pb].write(packet);  // basically read from bank.
-            return;
-        case PIMOpdType::GRF_A:
-            pimBlocks[pb].grfA = bst;
-            return;
-        case PIMOpdType::GRF_B:
-            if (is_auto)
-                pimBlocks[pb].grfB = bst;
-            else
-                pimBlocks[pb].grfB = bst;
-            return;
-        case PIMOpdType::SRF_M:
-            pimBlocks[pb].srf = bst;
-            return;
-        case PIMOpdType::SRF_A:
-            pimBlocks[pb].srf = bst;
-            return;
+    case PIMOpdType::A_OUT:
+        pimBlocks[pb].aOut = bst;
+        return;
+    case PIMOpdType::M_OUT:
+        pimBlocks[pb].mOut = bst;
+        return;
+    case PIMOpdType::EVEN_BANK:
+        if (packet->bank % 2 != 0)
+        {
+            PRINT("CRF bank coding and bank id from packet are inconsistent");
+        }
+        *(packet->data) = bst;
+        rank->banks[pb].write(packet); // basically read from bank.
+        return;
+    case PIMOpdType::ODD_BANK:
+        if (packet->bank % 2 == 0)
+        {
+            PRINT("CRF bank coding and bank id from packet are inconsistent");
+            exit(-1);
+        }
+        *(packet->data) = bst;
+        rank->banks[pb].write(packet); // basically read from bank.
+        return;
+    case PIMOpdType::GRF_A:
+        pimBlocks[pb].grfA[pb] = bst;
+        return;
+    case PIMOpdType::GRF_B:
+        if (is_auto)
+            pimBlocks[pb].grfB = bst;
+        else
+            pimBlocks[pb].grfB = bst;
+        return;
+    case PIMOpdType::SRF_M:
+        pimBlocks[pb].srf = bst;
+        return;
+    case PIMOpdType::SRF_A:
+        pimBlocks[pb].srf = bst;
+        return;
     }
 }
 
-void PIMRank::doPIM(BusPacket* packet)
+void PIMRank::doPIM(BusPacket *packet)
 {
     PIMCmd cCmd;
     packet->row = masked2accessibleRA(packet->row);
@@ -335,7 +339,7 @@ void PIMRank::doPIM(BusPacket* packet)
                              << "] " << cCmd.toStr() << " @ " << currentClockCycle);
         }
 
-        DEBUG("cCmd.type_=" << (int)cCmd.type_);
+        // DEBUG("cCmd.type_=" << (int)cCmd.type_);
         if (cCmd.type_ == PIMCmdType::EXIT)
         {
             crfExit_ = true;
@@ -394,7 +398,7 @@ void PIMRank::doPIM(BusPacket* packet)
 
             for (int pimblock_id = 0; pimblock_id < config.NUM_PIM_BLOCKS; pimblock_id++)
             {
-                DEBUG("Doing PIM Block");
+                // DEBUG("Doing PIM Block");
                 doPIMBlock(packet, cCmd, pimblock_id);
 
                 if (DEBUG_PIM_BLOCK && pimblock_id == 0)
@@ -415,7 +419,7 @@ void PIMRank::doPIM(BusPacket* packet)
     } while (cCmd.type_ == PIMCmdType::JUMP);
 }
 
-void PIMRank::doPIMBlock(BusPacket* packet, PIMCmd cCmd, int pimblock_id)
+void PIMRank::doPIMBlock(BusPacket *packet, PIMCmd cCmd, int pimblock_id)
 {
     if (cCmd.type_ == PIMCmdType::FILL || cCmd.type_ == PIMCmdType::MOV)
     {
@@ -458,7 +462,8 @@ void PIMRank::doPIMBlock(BusPacket* packet, PIMCmd cCmd, int pimblock_id)
         readOpd(pimblock_id, src1Bst, cCmd.src1_, packet, cCmd.src1Idx_, cCmd.isAuto_, is_mac);
         if (is_mac)
         {
-            DEBUG("Running MAC for PIM Block " << pimblock_id);
+            if (pimblock_id == 0)
+                DEBUG("Running MAC for PIM Block " << pimblock_id);
             readOpd(pimblock_id, dstBst, cCmd.dst_, packet, cCmd.dstIdx_, cCmd.isAuto_, is_mac);
             // dstBst = src0Bst * src1Bst + dstBst;
             pimBlocks[pimblock_id].mac(dstBst, src0Bst, src1Bst);
@@ -478,13 +483,13 @@ void PIMRank::doPIMBlock(BusPacket* packet, PIMCmd cCmd, int pimblock_id)
         int grf_id = getGrfIdx(packet->column);
         if (packet->bank == 0)
         {
-            *(packet->data) = pimBlocks[pimblock_id].grfA;
-            rank->banks[pimblock_id].write(packet);  // basically read from bank;
+            *(packet->data) = pimBlocks[pimblock_id].grfA[pimblock_id];
+            rank->banks[pimblock_id].write(packet); // basically read from bank;
         }
         else if (packet->bank == 1)
         {
             *(packet->data) = pimBlocks[pimblock_id].grfB;
-            rank->banks[pimblock_id].write(packet);  // basically read from bank.
+            rank->banks[pimblock_id].write(packet); // basically read from bank.
         }
     }
 }

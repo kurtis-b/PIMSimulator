@@ -38,11 +38,11 @@ namespace DRAMSim
     msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] bg["                         \
         << config.addrMapping.bankgroupId(packet->bank) << "] ba[" << packet->bank << "] ro[" \
         << bankStates[packet->bank].openRowAddress << "] @" << currentClockCycle
-#define OUTLOG_GRF_A(msg)                                                                 \
-    msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] pb[" << packet->bank / 2 \
+#define OUTLOG_GRF_A(msg)                                                             \
+    msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] pb[" << packet->bank \
         << " reg" << packet->column - 0x8 << " @" << currentClockCycle
-#define OUTLOG_GRF_B(msg)                                                                 \
-    msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] pb[" << packet->bank / 2 \
+#define OUTLOG_GRF_B(msg)                                                             \
+    msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] pb[" << packet->bank \
         << "] reg[" << packet->column - 0x18 << "] @" << currentClockCycle
 #define OUTLOG_B_GRF_A(msg)                                                                    \
     msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] reg[" << packet->column - 0x8 \
@@ -54,68 +54,68 @@ namespace DRAMSim
     msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] idx[" << packet->column - 0x4 \
         << "] @" << currentClockCycle
 
-class Rank;  // forward declaration
+    class Rank; // forward declaration
 
-class PIMRank : public SimulatorObject
-{
-  private:
-    int chanId;
-    int rankId;
-    ostream& dramsimLog;
-    Configuration& config;
-    int pimPC_, lastJumpIdx_, numJumpToBeTaken_, lastRepeatIdx_, numRepeatToBeDone_;
-    bool pimOpMode_, toggleEvenBank_, toggleOddBank_, toggleRa13h_, crfExit_;
-
-  public:
-    PIMRank(ostream& simLog, Configuration& configuration);
-    ~PIMRank() {}
-
-    void attachRank(Rank* r);
-    int getChanId() const;
-    void setChanId(int id);
-    int getRankId() const;
-    void setRankId(int id);
-    void update();
-    void readHab(BusPacket* packet);
-    void writeHab(BusPacket* packet);
-    void doPIM(BusPacket* packet);
-    void doPIMBlock(BusPacket* packet, PIMCmd curCmd, int pimblock_id);
-    void controlPIM(BusPacket* packet);
-    void readOpd(int pb, BurstType& bst, PIMOpdType type, BusPacket* packet, int idx, bool is_auto,
-                 bool is_mac);
-    void writeOpd(int pb, BurstType& bst, PIMOpdType type, BusPacket* packet, int idx, bool is_auto,
-                  bool is_mac);
-    bool isToggleCond(BusPacket* packet);
-
-    union crf_t
+    class PIMRank : public SimulatorObject
     {
-        uint32_t data[32];
-        BurstType bst[4];
-        crf_t()
+    private:
+        int chanId;
+        int rankId;
+        ostream &dramsimLog;
+        Configuration &config;
+        int pimPC_, lastJumpIdx_, numJumpToBeTaken_, lastRepeatIdx_, numRepeatToBeDone_;
+        bool pimOpMode_, toggleEvenBank_, toggleOddBank_, toggleRa13h_, crfExit_;
+
+    public:
+        PIMRank(ostream &simLog, Configuration &configuration);
+        ~PIMRank() {}
+
+        void attachRank(Rank *r);
+        int getChanId() const;
+        void setChanId(int id);
+        int getRankId() const;
+        void setRankId(int id);
+        void update();
+        void readHab(BusPacket *packet);
+        void writeHab(BusPacket *packet);
+        void doPIM(BusPacket *packet);
+        void doPIMBlock(BusPacket *packet, PIMCmd curCmd, int pimblock_id);
+        void controlPIM(BusPacket *packet);
+        void readOpd(int pb, BurstType &bst, PIMOpdType type, BusPacket *packet, int idx, bool is_auto,
+                     bool is_mac);
+        void writeOpd(int pb, BurstType &bst, PIMOpdType type, BusPacket *packet, int idx, bool is_auto,
+                      bool is_mac);
+        bool isToggleCond(BusPacket *packet);
+
+        union crf_t
         {
-            memset(data, 0, sizeof(uint32_t) * 32);
+            uint32_t data[32];
+            BurstType bst[4];
+            crf_t()
+            {
+                memset(data, 0, sizeof(uint32_t) * 32);
+            }
+        } crf;
+
+        unsigned inline getGrfIdx(unsigned idx)
+        {
+            return idx & 0x7;
         }
-    } crf;
+        unsigned inline getGrfIdxHigh(unsigned r, unsigned c)
+        {
+            return ((r & 0x1) << 2 | ((c >> 3) & 0x3));
+        }
+        unsigned inline isReservedRA(unsigned row)
+        {
+            return (row & (1 << 13));
+        }
+        unsigned inline masked2accessibleRA(unsigned row)
+        {
+            return (row & ((1 << 13) - 1));
+        }
 
-    unsigned inline getGrfIdx(unsigned idx)
-    {
-        return idx & 0x7;
-    }
-    unsigned inline getGrfIdxHigh(unsigned r, unsigned c)
-    {
-        return ((r & 0x1) << 2 | ((c >> 3) & 0x3));
-    }
-    unsigned inline isReservedRA(unsigned row)
-    {
-        return (row & (1 << 13));
-    }
-    unsigned inline masked2accessibleRA(unsigned row)
-    {
-        return (row & ((1 << 13) - 1));
-    }
-
-    Rank* rank;
-    vector<PIMBlock> pimBlocks;
-};
-}  // namespace DRAMSim
+        Rank *rank;
+        vector<PIMBlock> pimBlocks;
+    };
+} // namespace DRAMSim
 #endif

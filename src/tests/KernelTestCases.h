@@ -21,15 +21,15 @@
 using namespace DRAMSim;
 
 // A predicate-formatter for asserting that two integers are mutually prime.
-::testing::AssertionResult fp16EqualHelper(const char* m_expr, const char* n_expr, fp16 m, fp16 n);
-::testing::AssertionResult fp16BstEqualHelper(const char* m_expr, const char* n_expr,
+::testing::AssertionResult fp16EqualHelper(const char *m_expr, const char *n_expr, fp16 m, fp16 n);
+::testing::AssertionResult fp16BstEqualHelper(const char *m_expr, const char *n_expr,
                                               DRAMSim::BurstType mb, DRAMSim::BurstType nb);
 #define EXPECT_FP16_BST_EQ(val1, val2) EXPECT_PRED_FORMAT2(fp16BstEqualHelper, val1, val2)
 #define EXPECT_FP16_EQ(val1, val2) EXPECT_PRED_FORMAT2(fp16EqualHelper, val1, val2)
 
 class TestStats
 {
-  private:
+private:
     unsigned num_test_passed_;
     unsigned num_test_warning_;
     unsigned num_test_failed_;
@@ -38,7 +38,7 @@ class TestStats
     vector<float> fail_data_sim_;
     vector<float> fail_data_numpy_;
 
-  public:
+public:
     TestStats() {}
     unsigned getNumPassed()
     {
@@ -97,7 +97,7 @@ TestStats testStats;
 
 class PIMKernelFixture : public testing::Test
 {
-  public:
+public:
     PIMKernelFixture() {}
     ~PIMKernelFixture() {}
 
@@ -112,56 +112,56 @@ class PIMKernelFixture : public testing::Test
         printFailVector();
     }
 
-    BurstType* getResultPIM(KernelType kn_type, DataDim* dim_data, shared_ptr<PIMKernel> kernel,
-                            BurstType* result)
+    BurstType *getResultPIM(KernelType kn_type, DataDim *dim_data, shared_ptr<PIMKernel> kernel,
+                            BurstType *result)
     {
         switch (kn_type)
         {
-            case KernelType::GEMV:
-            {
-                kernel->preloadGemv(&dim_data->weight_npbst_);
-                kernel->executeGemv(&dim_data->weight_npbst_, &dim_data->input_npbst_, false);
-                unsigned end_col = kernel->getResultColGemv(
-                    dim_data->dimTobShape(dim_data->input_dim_), dim_data->output_dim_);
-                result = new BurstType[dim_data->output_dim_ * dim_data->batch_size_];
-                kernel->readResult(result, pimBankType::ODD_BANK,
-                                   dim_data->output_dim_ * dim_data->batch_size_, 0, 0, end_col);
-                break;
-            }
-            case KernelType::ADD:
-            case KernelType::MUL:
-            {
-                int input_row0 = 0;
-                int input_row1 = 128;
-                int result_row = 256;
-                kernel->preloadNoReplacement(&dim_data->input_npbst_, input_row0, 0);
-                kernel->preloadNoReplacement(&dim_data->input1_npbst_, input_row1, 0);
-                kernel->executeEltwise(dim_data->dimTobShape(dim_data->output_dim_),
-                                       pimBankType::ALL_BANK, kn_type, input_row0, result_row,
-                                       input_row1);
-                result = new BurstType[dim_data->output_dim_];
-                kernel->readData(result, dim_data->dimTobShape(dim_data->output_dim_), result_row,
-                                 0);
-                break;
-            }
-            case KernelType::RELU:
-            {
-                int input_row0 = 0;
-                int result_row = 256;
-                kernel->preloadNoReplacement(&dim_data->input_npbst_, input_row0, 0);
-                kernel->executeEltwise(dim_data->dimTobShape(dim_data->output_dim_),
-                                       pimBankType::ALL_BANK, kn_type, input_row0, result_row);
-                result = new BurstType[dim_data->output_dim_];
-                kernel->readData(result, dim_data->dimTobShape(dim_data->output_dim_), result_row,
-                                 0);
-                break;
-            }
-            case KernelType::GEMVTREE:
-            default:
-            {
-                ERROR("== Error - Unknown KernelType trying to run");
-                break;
-            }
+        case KernelType::GEMV:
+        {
+            kernel->preloadGemv(&dim_data->weight_npbst_);
+            kernel->executeGemv(&dim_data->weight_npbst_, &dim_data->input_npbst_, false);
+            unsigned end_col = kernel->getResultColGemv(
+                dim_data->dimTobShape(dim_data->input_dim_), dim_data->output_dim_);
+            result = new BurstType[dim_data->output_dim_ * dim_data->batch_size_];
+            kernel->readResult(result, pimBankType::ODD_BANK,
+                               dim_data->output_dim_ * dim_data->batch_size_, 0, 0, end_col);
+            break;
+        }
+        case KernelType::ADD:
+        case KernelType::MUL:
+        {
+            int input_row0 = 0;
+            int input_row1 = 128;
+            int result_row = 256;
+            kernel->preloadNoReplacement(&dim_data->input_npbst_, input_row0, 0);
+            kernel->preloadNoReplacement(&dim_data->input1_npbst_, input_row1, 0);
+            kernel->executeEltwise(dim_data->dimTobShape(dim_data->output_dim_),
+                                   pimBankType::ALL_BANK, kn_type, input_row0, result_row,
+                                   input_row1);
+            result = new BurstType[dim_data->output_dim_];
+            kernel->readData(result, dim_data->dimTobShape(dim_data->output_dim_), result_row,
+                             0);
+            break;
+        }
+        case KernelType::RELU:
+        {
+            int input_row0 = 0;
+            int result_row = 256;
+            kernel->preloadNoReplacement(&dim_data->input_npbst_, input_row0, 0);
+            kernel->executeEltwise(dim_data->dimTobShape(dim_data->output_dim_),
+                                   pimBankType::ALL_BANK, kn_type, input_row0, result_row);
+            result = new BurstType[dim_data->output_dim_];
+            kernel->readData(result, dim_data->dimTobShape(dim_data->output_dim_), result_row,
+                             0);
+            break;
+        }
+        case KernelType::GEMVTREE:
+        default:
+        {
+            ERROR("== Error - Unknown KernelType trying to run");
+            break;
+        }
         }
         kernel->runPIM();
         return result;
@@ -172,41 +172,41 @@ class PIMKernelFixture : public testing::Test
     {
         switch (kn_type)
         {
-            case KernelType::GEMV:
+        case KernelType::GEMV:
+        {
+            for (int i = 0; i < num_tests; i++)
             {
-                for (int i = 0; i < num_tests; i++)
-                {
-                    EXPECT_FP16_EQ(result_[i].fp16ReduceSum(),
-                                   precalculated_result.getBurst(0).fp16Data_[i]);
-                    reduced_result_[i / stride].fp16Data_[i % stride] = result_[i].fp16ReduceSum();
-                }
-                return;
+                EXPECT_FP16_EQ(result_[i].fp16ReduceSum(),
+                               precalculated_result.getBurst(0).fp16Data_[i]);
+                reduced_result_[i / stride].fp16Data_[i % stride] = result_[i].fp16ReduceSum();
             }
-            case KernelType::ADD:
-            case KernelType::MUL:
-            case KernelType::RELU:
+            return;
+        }
+        case KernelType::ADD:
+        case KernelType::MUL:
+        case KernelType::RELU:
+        {
+            for (int i = 0; i < num_tests; i++)
             {
-                for (int i = 0; i < num_tests; i++)
-                {
-                    EXPECT_FP16_BST_EQ(result_[i], precalculated_result.getBurst(i));
-                }
-                return;
+                EXPECT_FP16_BST_EQ(result_[i], precalculated_result.getBurst(i));
             }
-            default:
-            {
-                ERROR("== Error - Unknown KernelType trying to run");
-                return;
-            }
+            return;
+        }
+        default:
+        {
+            ERROR("== Error - Unknown KernelType trying to run");
+            return;
+        }
         }
     }
 
     shared_ptr<PIMKernel> make_pim_kernel()
     {
-        // CURT'S NOTE: Modify this based on the number of channels specified in the .ini, if running the PIMKernelFixture tests (functionality verification). 
+        // CURT'S NOTE: Modify this based on the number of channels specified in the .ini, if running the PIMKernelFixture tests (functionality verification).
         // If you want to run the performance comparison--PIMBenchFixture--modify the PimBenchTestCases files instead.
         shared_ptr<MultiChannelMemorySystem> mem = make_shared<MultiChannelMemorySystem>(
             "ini/HBM2_samsung_2M_16B_x64.ini", "system_hbm_1ch.ini", ".", "example_app",
-            256 * 1 * 2);
+            128 * 1 * 2);
         int numPIMChan = 1;
         int numPIMRank = 1;
         shared_ptr<PIMKernel> kernel = make_shared<PIMKernel>(mem, numPIMChan, numPIMRank);
@@ -215,8 +215,8 @@ class PIMKernelFixture : public testing::Test
     }
 
     /* result data */
-    BurstType* result_;
-    BurstType* reduced_result_;
+    BurstType *result_;
+    BurstType *reduced_result_;
 
     /* stats */
     void testStatsClear()
@@ -253,7 +253,7 @@ class PIMKernelFixture : public testing::Test
     testStats.insertToFailVector(GET_NUM_TESTS(), var1, var2)
 
 // A predicate-formatter for asserting that two integers are mutually prime.
-::testing::AssertionResult fp16EqualHelper(const char* m_expr, const char* n_expr, fp16 m, fp16 n)
+::testing::AssertionResult fp16EqualHelper(const char *m_expr, const char *n_expr, fp16 m, fp16 n)
 {
     fp16i mi(m);
     fp16i ni(n);
@@ -278,7 +278,7 @@ class PIMKernelFixture : public testing::Test
     }
 }
 
-::testing::AssertionResult fp16BstEqualHelper(const char* m_expr, const char* n_expr, BurstType mb,
+::testing::AssertionResult fp16BstEqualHelper(const char *m_expr, const char *n_expr, BurstType mb,
                                               BurstType nb)
 {
     for (int i = 0; i < 16; i++)

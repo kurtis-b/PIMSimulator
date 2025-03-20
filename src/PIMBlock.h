@@ -35,7 +35,7 @@ class PIMBlock
     PIMBlock(const PIMPrecision& pimPrecision) : pimPrecision_(pimPrecision) {}
 
     BurstType srf;
-    BurstType grfA; 
+    BurstType grfA[16]; 
     BurstType grfB;
     BurstType mOut;
     BurstType aOut;

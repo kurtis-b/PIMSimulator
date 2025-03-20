@@ -310,11 +310,11 @@ void Rank::readSb(BusPacket *packet)
     {
         if (packet->row == config.PIM_REG_RA)
         {
-            if (0x08 <= packet->column && packet->column <= 0x0f)
+            if (0x08 <= packet->column && packet->column <= 0x018)
             {
                 PRINT(OUTLOG_GRF_A("READ_GRF_A"));
             }
-            else if (0x18 <= packet->column && packet->column <= config.PIM_ABMR_CA)
+            else if (0x18 <= packet->column && packet->column <= 0x18)
             {
                 PRINT(OUTLOG_GRF_B("READ_GRF_B"));
             }
@@ -332,10 +332,10 @@ void Rank::readSb(BusPacket *packet)
 #ifndef NO_STORAGE
     if (packet->row == config.PIM_REG_RA)
     {
-        if (0x08 <= packet->column && packet->column <= 0x0f)
-            *(packet->data) = pimRank->pimBlocks[packet->bank / 2].grfA;
-        else if (0x18 <= packet->column && packet->column <= config.PIM_ABMR_CA)
-            *(packet->data) = pimRank->pimBlocks[packet->bank / 2].grfB;
+        if (0x08 <= packet->column && packet->column <= 0x18)
+            *(packet->data) = pimRank->pimBlocks[packet->bank].grfA[packet->column - 0x8];
+        else if (0x18 <= packet->column && packet->column <= 0x18)
+            *(packet->data) = pimRank->pimBlocks[packet->bank].grfB;
         else
             banks[packet->bank].read(packet);
     }

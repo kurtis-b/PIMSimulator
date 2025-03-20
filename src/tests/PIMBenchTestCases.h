@@ -22,11 +22,11 @@ using namespace DRAMSim;
 
 class PIMBenchTestCase
 {
-  public:
+public:
     PIMBenchTestCase(KernelType k, unsigned b, unsigned out, unsigned in)
         : kernel_type_(k), batch_(b), out_(out), in_(in)
     {
-        // CURT'S NOTE: Modify this based on the number of channels specified in the .ini, if running the PIMBenchFixture tests (performance comparison). 
+        // CURT'S NOTE: Modify this based on the number of channels specified in the .ini, if running the PIMBenchFixture tests (performance comparison).
         // If you want to run the functionality verification--PIMKernelFixture--modify the KernelTestCases files instead.
         mem_ = make_shared<MultiChannelMemorySystem>("ini/HBM2_samsung_2M_16B_x64.ini",
                                                      "system_hbm_1ch.ini", ".", "example_app",
@@ -34,7 +34,7 @@ class PIMBenchTestCase
         pim_mem_ = make_shared<MultiChannelMemorySystem>("ini/HBM2_samsung_2M_16B_x64.ini",
                                                          "system_hbm_1ch.ini", ".", "example_app",
                                                          256 * 64 * 2); // 256 MB, 64 channels, 2 Bytes per element
-        kernel_ = make_shared<PIMKernel>(pim_mem_, 64, 1); // # of pim channel = 64, # of pim rank = 1
+        kernel_ = make_shared<PIMKernel>(pim_mem_, 64, 1);              // # of pim channel = 64, # of pim rank = 1
         dim_data_ = new DataDim(kernel_type_, batch_, out_, in_, false);
     }
 
@@ -102,7 +102,7 @@ class PIMBenchTestCase
         dim_data_->printDim(kernel_type_);
     }
 
-  protected:
+protected:
     KernelType kernel_type_;
     unsigned batch_;
     unsigned in_;
@@ -116,7 +116,7 @@ class PIMBenchTestCase
 
 class GemvPIMBenchTest : public PIMBenchTestCase
 {
-  public:
+public:
     GemvPIMBenchTest(KernelType k, unsigned b, unsigned out, unsigned in)
         : PIMBenchTestCase(k, b, out, in)
     {
@@ -144,7 +144,7 @@ class GemvPIMBenchTest : public PIMBenchTestCase
             starting_addr = genMemTraffic(mem_, false, weight_data_size_in_byte, starting_addr);
             starting_addr = genMemTraffic(mem_, false, input_data_size_in_byte, starting_addr);
             run(mem_, &cycle);
-            genMemTraffic(mem_, true, output_data_size_in_byte, starting_addr);  // result-vec
+            genMemTraffic(mem_, true, output_data_size_in_byte, starting_addr); // result-vec
             run(mem_, &cycle);
         }
         return cycle;
@@ -153,7 +153,7 @@ class GemvPIMBenchTest : public PIMBenchTestCase
 
 class EltPIMBenchTest : public PIMBenchTestCase
 {
-  public:
+public:
     EltPIMBenchTest(KernelType k, unsigned b, unsigned out, unsigned in)
         : PIMBenchTestCase(k, b, out, in)
     {
@@ -185,13 +185,13 @@ class EltPIMBenchTest : public PIMBenchTestCase
             starting_addr = genMemTraffic(mem_, false, input_data_size_in_byte, starting_addr);
             starting_addr = genMemTraffic(mem_, false, input1_data_size_in_byte, starting_addr);
             run(mem_, &cycle);
-            genMemTraffic(mem_, true, output_data_size_in_byte, starting_addr);  // result-vec
+            genMemTraffic(mem_, true, output_data_size_in_byte, starting_addr); // result-vec
             run(mem_, &cycle);
         }
         return cycle;
     }
 
-  private:
+private:
     // for PIM
     unsigned input_row0_;
     unsigned input_row1_;
@@ -200,7 +200,7 @@ class EltPIMBenchTest : public PIMBenchTestCase
 
 class ActPIMBenchTest : public PIMBenchTestCase
 {
-  public:
+public:
     ActPIMBenchTest(KernelType k, unsigned b, unsigned out, unsigned in)
         : PIMBenchTestCase(k, b, out, in)
     {
@@ -228,13 +228,13 @@ class ActPIMBenchTest : public PIMBenchTestCase
                 dim_data_->getDataSize(dim_data_->output_dim_, dim_data_->batch_size_);
             starting_addr = genMemTraffic(mem_, false, input_data_size_in_byte, starting_addr);
             run(mem_, &cycle);
-            genMemTraffic(mem_, true, output_data_size_in_byte, starting_addr);  // result-vec
+            genMemTraffic(mem_, true, output_data_size_in_byte, starting_addr); // result-vec
             run(mem_, &cycle);
         }
         return cycle;
     }
 
-  private:
+private:
     // for PIM
     unsigned input_row0_;
     unsigned result_row_;
@@ -242,7 +242,7 @@ class ActPIMBenchTest : public PIMBenchTestCase
 
 class PIMBenchFixture : public testing::Test
 {
-  public:
+public:
     virtual void SetUp()
     {
         pim_cycle_ = 0;
@@ -314,7 +314,7 @@ class PIMBenchFixture : public testing::Test
         cout << "> Speed-up : " << gain << endl;
     }
 
-  private:
+private:
     uint64_t pim_cycle_, non_pim_cycle_;
     PIMBenchTestCase *perfTest;
 };

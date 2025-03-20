@@ -21,7 +21,7 @@
 
 using namespace DRAMSim;
 
-void PIMBlock::add(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst)
+void PIMBlock::add(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst)
 {
     if (pimPrecision_ == FP16)
     {
@@ -41,7 +41,7 @@ void PIMBlock::add(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst)
         dstBst = src0Bst + src1Bst;
 }
 
-void PIMBlock::mul(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst)
+void PIMBlock::mul(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst)
 {
     if (pimPrecision_ == FP16)
     {
@@ -61,7 +61,7 @@ void PIMBlock::mul(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst)
         dstBst = src0Bst * src1Bst;
 }
 
-void PIMBlock::mac(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst)
+void PIMBlock::mac(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst)
 {
     if (pimPrecision_ == FP16)
     {
@@ -70,7 +70,7 @@ void PIMBlock::mac(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst)
             dstBst.fp16Data_[i] = src0Bst.fp16Data_[i] * src1Bst.fp16Data_[i] + dstBst.fp16Data_[i];
         }
 
-        DEBUG("MAC " << src0Bst.hexToStr2() << "*+" << src1Bst.hexToStr2() << ""
+        DEBUG("MAC " << src0Bst.hexToStr2() << "*" << src1Bst.hexToStr2() << "+="
                      << dstBst.hexToStr2());
     }
     else if (pimPrecision_ == FP32)
@@ -84,7 +84,7 @@ void PIMBlock::mac(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst)
         dstBst = src0Bst * src1Bst + dstBst;
 }
 
-void PIMBlock::mad(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst, BurstType& src2Bst)
+void PIMBlock::mad(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst, BurstType &src2Bst)
 {
     if (pimPrecision_ == FP16)
     {
@@ -110,7 +110,8 @@ std::string PIMBlock::print()
 {
     stringstream ss;
     ss << "[SRF]" << srf.binToStr() << endl;
-    ss << "[GRF_A]" << grfA.fp16ToStr() << endl;
+    for (int i = 0; i < 16; i++)
+        ss << "[GRF_A][" << i << "]" << grfA[i].fp16ToStr() << endl;
     ss << "[GRF_B]" << grfB.fp16ToStr() << endl;
     ss << "[M_OUT]" << mOut.binToStr() << endl;
     ss << "[A_OUT]" << aOut.binToStr() << endl;

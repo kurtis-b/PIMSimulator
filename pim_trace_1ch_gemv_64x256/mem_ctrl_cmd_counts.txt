@@ -1,0 +1,185 @@
+Total counts of the commands executed after an activation with each tag for 1 channel (2 banks and 1 pim unit):
+
+Total activates: 81
+Total precharges: 82
+Total writes: 19
+Total reads: 228
+Total macs: 124, Total jumps 7x: 8, Total nops 8x: 8
+Total PU executions: 244
+
+Total RD_PU_ALL: 12
+Total COMP_PU_ALL: 124
+Total RD_ALL: 1984
+Total ACT_BUF: 4
+Total ACT_ALL: 9
+Total WR_BUF: 1024
+
+1--Activate tag: START_PARK_IN_ invoked 1 time
+  WRITE: 1
+
+2--Activate tag: PARK_IN_ invoked 14 times
+  PRECHARGE: 11
+  READ: 15
+
+3--Activate tag: END_PARK_IN_BAR invoked 1 time
+  PRECHARGE: 1
+
+4--Activate tag: START_SB_TO_HAB_ invoked 1 time
+  PRECHARGE: 1
+
+5--Activate tag: (No tag--setting up banks) invoked 2 times
+  PRECHARGE: 3
+  READ: 1
+  WRITE: 3
+
+6--Activate tag: END_SB_TO_HAB_BAR invoked 1 time
+  HAB: 1
+  PRECHARGE: 5
+  WRITE: 1
+
+7--Activate tag: PROGRAM_CRF invoked 1 time
+  BWRITE_CRF: 3
+
+8--Activate tag: PIMBAR invoked 1 time
+  BWRITE_GRF_A: 16
+  GRF_B_ZEROIZE: 1
+  HAB_PIM: 1
+  PRECHARGE: 2
+
+9--Activate tag: MAC_BAR invoked 1 time
+  PU (not a command): {'[0] MAC GRF_B[0], GRF_A[0], EVEN_BANK': 1, '[1] MAC GRF_B[0], GRF_A[1], EVEN_BANK': 1, '[2] MAC GRF_B[0], GRF_A[2], EVEN_BANK': 1, '[3] MAC GRF_B[0], GRF_A[3], EVEN_BANK': 1, '[4] MAC GRF_B[0], GRF_A[4], EVEN_BANK': 1, '[5] MAC GRF_B[0], GRF_A[5], EVEN_BANK': 1, '[6] MAC GRF_B[0], GRF_A[6], EVEN_BANK': 1, '[7] MAC GRF_B[0], GRF_A[7], EVEN_BANK': 1, '[8] MAC GRF_B[0], GRF_A[8], EVEN_BANK': 1, '[9] MAC GRF_B[0], GRF_A[9], EVEN_BANK': 1, '[10] MAC GRF_B[0], GRF_A[10], EVEN_BANK': 1, '[11] MAC GRF_B[0], GRF_A[11], EVEN_BANK': 1, '[12] MAC GRF_B[0], GRF_A[12], EVEN_BANK': 1, '[13] MAC GRF_B[0], GRF_A[13], EVEN_BANK': 1, '[14] MAC GRF_B[0], GRF_A[14], EVEN_BANK': 1, '[15] MAC GRF_B[0], GRF_A[15], EVEN_BANK': 1}
+  READ: 16
+
+10--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  PRECHARGE: 1
+
+11--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
+  BWRITE_GRF_A: 16
+  PRECHARGE: 2
+  PU (not a command): {'[16] NOP 1x': 1}
+  WRITE: 1
+
+12--Activate tag: MAC_BAR invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'[17] JUMP 1x [PC - 17]': 1, '[1] MAC GRF_B[0], GRF_A[1], EVEN_BANK': 1, '[2] MAC GRF_B[0], GRF_A[2], EVEN_BANK': 1, '[3] MAC GRF_B[0], GRF_A[3], EVEN_BANK': 1, '[4] MAC GRF_B[0], GRF_A[4], EVEN_BANK': 1, '[5] MAC GRF_B[0], GRF_A[5], EVEN_BANK': 1, '[6] MAC GRF_B[0], GRF_A[6], EVEN_BANK': 1, '[7] MAC GRF_B[0], GRF_A[7], EVEN_BANK': 1, '[8] MAC GRF_B[0], GRF_A[8], EVEN_BANK': 1, '[9] MAC GRF_B[0], GRF_A[9], EVEN_BANK': 1, '[10] MAC GRF_B[0], GRF_A[10], EVEN_BANK': 1, '[11] MAC GRF_B[0], GRF_A[11], EVEN_BANK': 1, '[12] MAC GRF_B[0], GRF_A[12], EVEN_BANK': 1, '[13] MAC GRF_B[0], GRF_A[13], EVEN_BANK': 1, '[14] MAC GRF_B[0], GRF_A[14], EVEN_BANK': 1, '[15] MAC GRF_B[0], GRF_A[15], EVEN_BANK': 1, '[16] NOP 1x': 1}
+  READ: 17
+
+13--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
+  PU (not a command): {'[17] JUMP 1x [PC - 17]': 1, '[18] EXIT': 1}
+  WRITE: 2
+
+14--Activate tag: PIMBAR invoked 1 time
+  BWRITE_GRF_A: 16
+  GRF_B_ZEROIZE: 1
+  HAB mode: 1
+  HAB_PIM: 1
+  PRECHARGE: 2
+
+15--Activate tag: MAC_BAR invoked 1 time
+  PU (not a command): {'[0] MAC GRF_B[0], GRF_A[0], EVEN_BANK': 1, '[1] MAC GRF_B[0], GRF_A[1], EVEN_BANK': 1, '[2] MAC GRF_B[0], GRF_A[2], EVEN_BANK': 1, '[3] MAC GRF_B[0], GRF_A[3], EVEN_BANK': 1, '[4] MAC GRF_B[0], GRF_A[4], EVEN_BANK': 1, '[5] MAC GRF_B[0], GRF_A[5], EVEN_BANK': 1, '[6] MAC GRF_B[0], GRF_A[6], EVEN_BANK': 1, '[7] MAC GRF_B[0], GRF_A[7], EVEN_BANK': 1, '[8] MAC GRF_B[0], GRF_A[8], EVEN_BANK': 1, '[9] MAC GRF_B[0], GRF_A[9], EVEN_BANK': 1, '[10] MAC GRF_B[0], GRF_A[10], EVEN_BANK': 1, '[11] MAC GRF_B[0], GRF_A[11], EVEN_BANK': 1, '[12] MAC GRF_B[0], GRF_A[12], EVEN_BANK': 1, '[13] MAC GRF_B[0], GRF_A[13], EVEN_BANK': 1, '[14] MAC GRF_B[0], GRF_A[14], EVEN_BANK': 1, '[15] MAC GRF_B[0], GRF_A[15], EVEN_BANK': 1}
+  READ: 16
+
+16--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  PRECHARGE: 1
+
+17--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
+  BWRITE_GRF_A: 16
+  PRECHARGE: 2
+  PU (not a command): {'[16] NOP 1x': 1}
+  WRITE: 1
+
+18--Activate tag: MAC_BAR invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'[17] JUMP 1x [PC - 17]': 1, '[1] MAC GRF_B[0], GRF_A[1], EVEN_BANK': 1, '[2] MAC GRF_B[0], GRF_A[2], EVEN_BANK': 1, '[3] MAC GRF_B[0], GRF_A[3], EVEN_BANK': 1, '[4] MAC GRF_B[0], GRF_A[4], EVEN_BANK': 1, '[5] MAC GRF_B[0], GRF_A[5], EVEN_BANK': 1, '[6] MAC GRF_B[0], GRF_A[6], EVEN_BANK': 1, '[7] MAC GRF_B[0], GRF_A[7], EVEN_BANK': 1, '[8] MAC GRF_B[0], GRF_A[8], EVEN_BANK': 1, '[9] MAC GRF_B[0], GRF_A[9], EVEN_BANK': 1, '[10] MAC GRF_B[0], GRF_A[10], EVEN_BANK': 1, '[11] MAC GRF_B[0], GRF_A[11], EVEN_BANK': 1, '[12] MAC GRF_B[0], GRF_A[12], EVEN_BANK': 1, '[13] MAC GRF_B[0], GRF_A[13], EVEN_BANK': 1, '[14] MAC GRF_B[0], GRF_A[14], EVEN_BANK': 1, '[15] MAC GRF_B[0], GRF_A[15], EVEN_BANK': 1, '[16] NOP 1x': 1}
+  READ: 17
+
+19--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
+  PU (not a command): {'[17] JUMP 1x [PC - 17]': 1, '[18] EXIT': 1}
+  WRITE: 2
+
+20--Activate tag: PIMBAR invoked 1 time
+  BWRITE_GRF_A: 16
+  GRF_B_ZEROIZE: 1
+  HAB mode: 1
+  HAB_PIM: 1
+  PRECHARGE: 2
+
+21--Activate tag: MAC_BAR invoked 1 time
+  PU (not a command): {'[0] MAC GRF_B[0], GRF_A[0], EVEN_BANK': 1, '[1] MAC GRF_B[0], GRF_A[1], EVEN_BANK': 1, '[2] MAC GRF_B[0], GRF_A[2], EVEN_BANK': 1, '[3] MAC GRF_B[0], GRF_A[3], EVEN_BANK': 1, '[4] MAC GRF_B[0], GRF_A[4], EVEN_BANK': 1, '[5] MAC GRF_B[0], GRF_A[5], EVEN_BANK': 1, '[6] MAC GRF_B[0], GRF_A[6], EVEN_BANK': 1, '[7] MAC GRF_B[0], GRF_A[7], EVEN_BANK': 1, '[8] MAC GRF_B[0], GRF_A[8], EVEN_BANK': 1, '[9] MAC GRF_B[0], GRF_A[9], EVEN_BANK': 1, '[10] MAC GRF_B[0], GRF_A[10], EVEN_BANK': 1, '[11] MAC GRF_B[0], GRF_A[11], EVEN_BANK': 1, '[12] MAC GRF_B[0], GRF_A[12], EVEN_BANK': 1, '[13] MAC GRF_B[0], GRF_A[13], EVEN_BANK': 1, '[14] MAC GRF_B[0], GRF_A[14], EVEN_BANK': 1, '[15] MAC GRF_B[0], GRF_A[15], EVEN_BANK': 1}
+  READ: 16
+
+22--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  PRECHARGE: 1
+
+23--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
+  BWRITE_GRF_A: 16
+  PRECHARGE: 2
+  PU (not a command): {'[16] NOP 1x': 1}
+  WRITE: 1
+
+24--Activate tag: MAC_BAR invoked 1 time
+  PRECHARGE: 1
+  PU (not a command): {'[17] JUMP 1x [PC - 17]': 1, '[1] MAC GRF_B[0], GRF_A[1], EVEN_BANK': 1, '[2] MAC GRF_B[0], GRF_A[2], EVEN_BANK': 1, '[3] MAC GRF_B[0], GRF_A[3], EVEN_BANK': 1, '[4] MAC GRF_B[0], GRF_A[4], EVEN_BANK': 1, '[5] MAC GRF_B[0], GRF_A[5], EVEN_BANK': 1, '[6] MAC GRF_B[0], GRF_A[6], EVEN_BANK': 1, '[7] MAC GRF_B[0], GRF_A[7], EVEN_BANK': 1, '[8] MAC GRF_B[0], GRF_A[8], EVEN_BANK': 1, '[9] MAC GRF_B[0], GRF_A[9], EVEN_BANK': 1, '[10] MAC GRF_B[0], GRF_A[10], EVEN_BANK': 1, '[11] MAC GRF_B[0], GRF_A[11], EVEN_BANK': 1, '[12] MAC GRF_B[0], GRF_A[12], EVEN_BANK': 1, '[13] MAC GRF_B[0], GRF_A[13], EVEN_BANK': 1, '[14] MAC GRF_B[0], GRF_A[14], EVEN_BANK': 1, '[15] MAC GRF_B[0], GRF_A[15], EVEN_BANK': 1, '[16] NOP 1x': 1}
+  READ: 17
+
+25--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
+  PU (not a command): {'[17] JUMP 1x [PC - 17]': 1, '[18] EXIT': 1}
+  WRITE: 2
+
+26--Activate tag: PIMBAR invoked 1 time
+  BWRITE_GRF_A: 16
+  GRF_B_ZEROIZE: 1
+  HAB mode: 1
+  HAB_PIM: 1
+  PRECHARGE: 2
+
+27--Activate tag: MAC_BAR invoked 1 time
+  PU (not a command): {'[0] MAC GRF_B[0], GRF_A[0], EVEN_BANK': 1, '[1] MAC GRF_B[0], GRF_A[1], EVEN_BANK': 1, '[2] MAC GRF_B[0], GRF_A[2], EVEN_BANK': 1, '[3] MAC GRF_B[0], GRF_A[3], EVEN_BANK': 1, '[4] MAC GRF_B[0], GRF_A[4], EVEN_BANK': 1, '[5] MAC GRF_B[0], GRF_A[5], EVEN_BANK': 1, '[6] MAC GRF_B[0], GRF_A[6], EVEN_BANK': 1, '[7] MAC GRF_B[0], GRF_A[7], EVEN_BANK': 1, '[8] MAC GRF_B[0], GRF_A[8], EVEN_BANK': 1, '[9] MAC GRF_B[0], GRF_A[9], EVEN_BANK': 1, '[10] MAC GRF_B[0], GRF_A[10], EVEN_BANK': 1, '[11] MAC GRF_B[0], GRF_A[11], EVEN_BANK': 1, '[12] MAC GRF_B[0], GRF_A[12], EVEN_BANK': 1, '[13] MAC GRF_B[0], GRF_A[13], EVEN_BANK': 1, '[14] MAC GRF_B[0], GRF_A[14], EVEN_BANK': 1, '[15] MAC GRF_B[0], GRF_A[15], EVEN_BANK': 1}
+  READ: 16
+
+28--Activate tag: WRIO_TO_GRF_ invoked 1 time
+  PRECHARGE: 1
+
+29--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
+  BWRITE_GRF_A: 16
+  PRECHARGE: 2
+  PU (not a command): {'[16] NOP 1x': 1}
+  WRITE: 1
+
+30--Activate tag: MAC_BAR invoked 2 times
+  PRECHARGE: 2
+  PU (not a command): {'[17] JUMP 1x [PC - 17]': 1, '[1] MAC GRF_B[0], GRF_A[1], EVEN_BANK': 1, '[2] MAC GRF_B[0], GRF_A[2], EVEN_BANK': 1, '[3] MAC GRF_B[0], GRF_A[3], EVEN_BANK': 1, '[4] MAC GRF_B[0], GRF_A[4], EVEN_BANK': 1, '[5] MAC GRF_B[0], GRF_A[5], EVEN_BANK': 1, '[6] MAC GRF_B[0], GRF_A[6], EVEN_BANK': 1, '[7] MAC GRF_B[0], GRF_A[7], EVEN_BANK': 1, '[8] MAC GRF_B[0], GRF_A[8], EVEN_BANK': 1, '[9] MAC GRF_B[0], GRF_A[9], EVEN_BANK': 1, '[10] MAC GRF_B[0], GRF_A[10], EVEN_BANK': 1, '[11] MAC GRF_B[0], GRF_A[11], EVEN_BANK': 1, '[12] MAC GRF_B[0], GRF_A[12], EVEN_BANK': 1, '[13] MAC GRF_B[0], GRF_A[13], EVEN_BANK': 1, '[14] MAC GRF_B[0], GRF_A[14], EVEN_BANK': 1, '[15] MAC GRF_B[0], GRF_A[15], EVEN_BANK': 1, '[16] NOP 1x': 1}
+  READ: 17
+  REF: 1
+
+31--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
+  PU (not a command): {'[17] JUMP 1x [PC - 17]': 1, '[18] EXIT': 1}
+  WRITE: 2
+
+32--Activate tag: PIMBAR invoked 1 time
+  HAB mode: 1
+  PRECHARGE: 2
+
+33--Activate tag: START_HAB_TO_SB invoked 1 time
+  WRITE: 1
+
+34--Activate tag: END_HAB_TO_SBBAR invoked 1 time
+  PRECHARGE: 2
+  SB mode: 1
+  WRITE: 1
+
+35--Activate tag: PARK_OUT_ invoked 1 time
+
+36--Activate tag: START_PARK_OUT_ invoked 1 time
+
+37--Activate tag: PARK_OUT_ invoked 13 times
+  PRECHARGE: 10
+  READ: 15
+
+38--Activate tag: END_PARK_OUT_BAR invoked 1 time
+  PRECHARGE: 1
+
+39--Activate tag: output invoked 16 times
+  PRECHARGE: 21
+  READ: 65
+

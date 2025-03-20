@@ -25,19 +25,19 @@ using namespace DRAMSim;
 
 class IPIMCmd
 {
-  public:
+public:
     IPIMCmd(KernelType ktype) : kernelType(ktype) {}
     virtual vector<PIMCmd> generateKernel(int num_jump_to_be_taken,
                                           int num_jump_to_be_taken_odd_bank,
                                           int num_jump_to_be_taken_even_bank) = 0;
 
-  protected:
+protected:
     KernelType kernelType;
 };
 
 class EltwisePIMKernel : public IPIMCmd
 {
-  public:
+public:
     EltwisePIMKernel(KernelType ktype) : IPIMCmd(ktype) {}
     virtual vector<PIMCmd> generateKernel(int num_jump_to_be_taken,
                                           int num_jump_to_be_taken_odd_bank = 0,
@@ -61,7 +61,7 @@ class EltwisePIMKernel : public IPIMCmd
         return pim_cmds;
     }
 
-  private:
+private:
     PIMCmdType getPIMCmdType()
     {
         if (kernelType == KernelType::ADD)
@@ -75,7 +75,7 @@ class EltwisePIMKernel : public IPIMCmd
 
 class ActPIMKernel : public IPIMCmd
 {
-  public:
+public:
     ActPIMKernel(KernelType ktype) : IPIMCmd(ktype) {}
     virtual vector<PIMCmd> generateKernel(int num_jump_to_be_taken,
                                           int num_jump_to_be_taken_odd_bank = 0,
@@ -106,25 +106,26 @@ class ActPIMKernel : public IPIMCmd
 
 class GemvPIMKernel : public IPIMCmd
 {
-  public:
+public:
     GemvPIMKernel(KernelType ktype) : IPIMCmd(ktype) {}
-    virtual vector<PIMCmd> generateKernel(int num_jump_to_be_taken,
-                                          int num_jump_to_be_taken_odd_bank,
-                                          int num_jump_to_be_taken_even_bank) override
+    virtual vector<PIMCmd> generateKernel(int num_grfa,
+                                          int num_grfa_per_grfb, // Should be at most 16
+                                          int np_burst_wt_cols) override
     {
         vector<PIMCmd> pim_cmds;
         if (kernelType == KernelType::GEMV)
         {
-            vector<PIMCmd> tmp_cmds{
-                PIMCmd(PIMCmdType::MAC, PIMOpdType::GRF_B, PIMOpdType::GRF_A, PIMOpdType::EVEN_BANK,
-                       1, 0, 0, 0),
-                // TODO: Might need to modify these
-                PIMCmd(PIMCmdType::JUMP, num_jump_to_be_taken_even_bank, 2),
-                PIMCmd(PIMCmdType::MAC, PIMOpdType::GRF_B, PIMOpdType::GRF_A, PIMOpdType::ODD_BANK,
-                       1, 0, 0, 0),
-                PIMCmd(PIMCmdType::JUMP, num_jump_to_be_taken_odd_bank, 2),
-                PIMCmd(PIMCmdType::NOP, 7),
-            };
+            // CURT'S NOTE: Looks like in the original code they only write commands for banks 0 and 1 (i.e. 1 bank-group in Samsung's HBM PIM)
+            // Will do the same for SK Hynix
+            vector<PIMCmd> tmp_cmds;
+            for (int i = 0; i < num_grfa; i++) // There are 16 GRF A's
+            {
+                // Just using even bank here, but the bus packet will have odd bank too. Need to do this because the crf buffer is only of size 32
+                tmp_cmds.push_back(PIMCmd(PIMCmdType::MAC, PIMOpdType::GRF_B, PIMOpdType::GRF_A, PIMOpdType::EVEN_BANK,
+                                          0, 0, i, 0));
+            }
+            tmp_cmds.push_back(PIMCmd(PIMCmdType::NOP, 0)); // Seems like an extra NOP iteration is added from this
+            tmp_cmds.push_back(PIMCmd(PIMCmdType::JUMP, 1, 17));
             pim_cmds.assign(tmp_cmds.begin(), tmp_cmds.end());
         }
         else if (kernelType == KernelType::GEMVTREE)
@@ -149,10 +150,7 @@ class GemvPIMKernel : public IPIMCmd
         {
             throw invalid_argument("Not supported gemv operation");
         }
-        if (num_jump_to_be_taken != 0)
-        {
-            pim_cmds.push_back(PIMCmd(PIMCmdType::JUMP, num_jump_to_be_taken, pim_cmds.size() + 1));
-        }
+
         pim_cmds.push_back(PIMCmd(PIMCmdType::EXIT, 0));
         return pim_cmds;
     }
@@ -160,10 +158,10 @@ class GemvPIMKernel : public IPIMCmd
 
 class PIMCmdGen
 {
-  public:
+public:
     static vector<PIMCmd> getPIMCmds(KernelType ktype, int num_jump_to_be_taken,
                                      int num_jump_to_be_taken_odd_bank,
                                      int num_jump_to_be_taken_even_bank);
 };
 
-#endif  // __PIM_KERNEL_GEN_H__
+#endif // __PIM_KERNEL_GEN_H__

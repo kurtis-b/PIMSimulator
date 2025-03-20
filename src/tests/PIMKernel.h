@@ -44,7 +44,11 @@ class PIMKernel
                             (getConfigParam(UINT, "JEDEC_DATA_BUS_BITS") / 8);  // in byte
 
         // FIXME: HARDCODED
-        num_grf_ = num_grfA_ = num_grfB_ = 1;
+        // CURT'S NOTE: Looks like these are allocated to one channel, i.e. there doesn't seem to be a distinction about which 
+        // GRF A or B are used by each bank. The math will just work out since parts of the code are hardcoded
+        // such that 1 GRF A and 1 GRF B will be used by 1 PIM unit and 2 banks in the original implementation.
+        num_grfA_ = 16; 
+        num_grf_ = num_grfB_ = 1;
         num_total_pim_blocks_ = num_pim_blocks_ * num_pim_chans_ * num_pim_ranks_;
 
         pim_chans_.clear();
@@ -119,7 +123,7 @@ class PIMKernel
     shared_ptr<MultiChannelMemorySystem> mem_;
     const uint32_t pim_reg_ra_ = 0x3fff;
     const uint32_t pim_abmr_ra_ = 0x27ff;
-    const uint32_t pim_abmr_ca_ = 0xf;
+    const uint32_t pim_abmr_ca_ = 0x3d;
     const uint32_t pim_sbmr_ra_ = 0x2fff;
 
     int inline getToggleCond(pimBankType pb_type = pimBankType::ALL_BANK)
