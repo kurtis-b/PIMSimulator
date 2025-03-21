@@ -97,18 +97,15 @@ def parse_pim_trace(file_path, log_ch, weight_array, input_array):
                 # Only consider the log channel
                 if ch == log_ch: 
                     for current_maps in grf_a_maps:
-                        if len(current_maps['in_vector_idxs']) == len(grf_a_map):
-                            if np.allclose(current_maps['in_vector_idxs'], grf_a_map):
-                                current_maps['maps']['ch'].add(ch)
-                                current_maps['maps']['ra'].add(ra)
-                                current_maps['maps']['bg'].add(bg)
-                                current_maps['maps']['b'].add(b)
-                                current_maps['maps']['r'].add(r)
-                                current_maps['maps']['c'].add(c)
-                                found_match = True
-                                break
-                        else:
-                            print(f"Length mismatch: {len(current_maps['in_vector_idxs'])} vs {len(grf_a_map)}")
+                        if np.allclose(current_maps['in_vector_idxs'], grf_a_map):
+                            current_maps['maps']['ch'].add(ch)
+                            current_maps['maps']['ra'].add(ra)
+                            current_maps['maps']['bg'].add(bg)
+                            current_maps['maps']['b'].add(b)
+                            current_maps['maps']['r'].add(r)
+                            current_maps['maps']['c'].add(c)
+                            found_match = True
+                            break
                     if not found_match:
                         grf_a_maps.append({'in_vector_idxs': grf_a_map, 'maps': {'ch': {ch}, 'ra': {ra}, 'bg': {bg}, 'b': {b}, 'r': {r}, 'c': {c}}})
     return channel_address_map, grf_a_maps

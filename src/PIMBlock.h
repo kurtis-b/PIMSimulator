@@ -25,31 +25,31 @@ using namespace std;
 
 namespace DRAMSim
 {
-class PIMBlock
-{
-  public:
-    PIMBlock()
+    class PIMBlock
     {
-        pimPrecision_ = PIMConfiguration::getPIMPrecision();
-    }
-    PIMBlock(const PIMPrecision& pimPrecision) : pimPrecision_(pimPrecision) {}
+    public:
+        PIMBlock()
+        {
+            pimPrecision_ = PIMConfiguration::getPIMPrecision();
+        }
+        PIMBlock(const PIMPrecision &pimPrecision) : pimPrecision_(pimPrecision) {}
 
-    BurstType srf;
-    BurstType grfA[16]; 
-    BurstType grfB;
-    BurstType mOut;
-    BurstType aOut;
+        BurstType srf;
+        BurstType grfA[64];
+        BurstType grfB;
+        BurstType mOut;
+        BurstType aOut;
 
-    void add(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst);
-    void mac(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst);
-    void mul(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst);
-    void mad(BurstType& dstBst, BurstType& src0Bst, BurstType& src1Bst, BurstType& src2Bst);
+        void add(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst);
+        void mac(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst, int pimBlockId);
+        void mul(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst);
+        void mad(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst, BurstType &src2Bst);
 
-    std::string print();
+        std::string print();
 
-  private:
-    PIMPrecision pimPrecision_;
-};
+    private:
+        PIMPrecision pimPrecision_;
+    };
 
-}  // namespace DRAMSim
+} // namespace DRAMSim
 #endif

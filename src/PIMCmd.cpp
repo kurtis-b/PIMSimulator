@@ -14,21 +14,21 @@
 
 namespace DRAMSim
 {
-bool operator==(const PIMCmd& lhs, const PIMCmd& rhs)
-{
-    return lhs.toInt() == rhs.toInt();
-}
-
-bool operator!=(const PIMCmd& lhs, const PIMCmd& rhs)
-{
-    return lhs.toInt() != rhs.toInt();
-}
-
-void PIMCmd::fromInt(uint32_t val)
-{
-    type_ = PIMCmdType(fromBit(val, 4, 28));
-    switch (type_)
+    bool operator==(const PIMCmd &lhs, const PIMCmd &rhs)
     {
+        return lhs.toInt() == rhs.toInt();
+    }
+
+    bool operator!=(const PIMCmd &lhs, const PIMCmd &rhs)
+    {
+        return lhs.toInt() != rhs.toInt();
+    }
+
+    void PIMCmd::fromInt(uint32_t val)
+    {
+        type_ = PIMCmdType(fromBit(val, 4, 28));
+        switch (type_)
+        {
         case PIMCmdType::EXIT:
             break;
 
@@ -60,49 +60,49 @@ void PIMCmd::fromInt(uint32_t val)
             src0_ = PIMOpdType(fromBit(val, 3, 22));
             src1_ = PIMOpdType(fromBit(val, 3, 19));
             isAuto_ = fromBit(val, 1, 15);
-            dstIdx_ = fromBit(val, 4, 8);
-            src0Idx_ = fromBit(val, 4, 4);
+            dstIdx_ = fromBit(val, 4, 10);
+            src0Idx_ = fromBit(val, 6, 4);
             src1Idx_ = fromBit(val, 4, 0);
             break;
 
         default:
             break;
-    }
-}
-
-void PIMCmd::validationCheck() const
-{
-    if (type_ == PIMCmdType::MOV || type_ == PIMCmdType::FILL)
-    {
-        if (dst_ == PIMOpdType::EVEN_BANK || dst_ == PIMOpdType::ODD_BANK)
-        {
-            if (src0_ == PIMOpdType::GRF_A || src0_ == PIMOpdType::GRF_B ||
-                src1_ == PIMOpdType::GRF_A || src1_ == PIMOpdType::GRF_B ||
-                src2_ == PIMOpdType::GRF_A || src2_ == PIMOpdType::GRF_B)
-            {
-                std::cerr << "ERROR) Invalid in ISA 1.0 " << toStr() << std::endl;
-                exit(-1);
-            }
         }
-        /*
-           if (src0_ == PIMOpdType::EVEN_BANK || src0_ == PIMOpdType::ODD_BANK ||
-           src1_ == PIMOpdType::EVEN_BANK || src1_ == PIMOpdType::ODD_BANK ||
-           src2_ == PIMOpdType::EVEN_BANK || src2_ == PIMOpdType::ODD_BANK){
-           if (dst_ == PIMOpdType::GRF_A || dst_ == PIMOpdType::GRF_B){
-           std::cerr << "ERROR) Invalid in ISA 1.0 " << toStr() << std::endl;
-           exit(-1);
-           }
-           }
-         */
     }
-}
 
-uint32_t PIMCmd::toInt() const
-{
-    validationCheck();
-    uint32_t val = toBit(int(type_), 4, 28);
-    switch (type_)
+    void PIMCmd::validationCheck() const
     {
+        if (type_ == PIMCmdType::MOV || type_ == PIMCmdType::FILL)
+        {
+            if (dst_ == PIMOpdType::EVEN_BANK || dst_ == PIMOpdType::ODD_BANK)
+            {
+                if (src0_ == PIMOpdType::GRF_A || src0_ == PIMOpdType::GRF_B ||
+                    src1_ == PIMOpdType::GRF_A || src1_ == PIMOpdType::GRF_B ||
+                    src2_ == PIMOpdType::GRF_A || src2_ == PIMOpdType::GRF_B)
+                {
+                    std::cerr << "ERROR) Invalid in ISA 1.0 " << toStr() << std::endl;
+                    exit(-1);
+                }
+            }
+            /*
+               if (src0_ == PIMOpdType::EVEN_BANK || src0_ == PIMOpdType::ODD_BANK ||
+               src1_ == PIMOpdType::EVEN_BANK || src1_ == PIMOpdType::ODD_BANK ||
+               src2_ == PIMOpdType::EVEN_BANK || src2_ == PIMOpdType::ODD_BANK){
+               if (dst_ == PIMOpdType::GRF_A || dst_ == PIMOpdType::GRF_B){
+               std::cerr << "ERROR) Invalid in ISA 1.0 " << toStr() << std::endl;
+               exit(-1);
+               }
+               }
+             */
+        }
+    }
+
+    uint32_t PIMCmd::toInt() const
+    {
+        validationCheck();
+        uint32_t val = toBit(int(type_), 4, 28);
+        switch (type_)
+        {
         case PIMCmdType::EXIT:
             break;
 
@@ -134,24 +134,24 @@ uint32_t PIMCmd::toInt() const
             val |= toBit(int(src0_), 3, 22);
             val |= toBit(int(src1_), 3, 19);
             val |= toBit(isAuto_, 1, 15);
-            val |= toBit(dstIdx_, 4, 8);
-            val |= toBit(src0Idx_, 4, 4);
+            val |= toBit(dstIdx_, 4, 10);
+            val |= toBit(src0Idx_, 6, 4);
             val |= toBit(src1Idx_, 4, 0);
             break;
 
         default:
             break;
+        }
+
+        return val;
     }
 
-    return val;
-}
-
-std::string PIMCmd::toStr() const
-{
-    stringstream ss;
-    ss << cmdToStr(type_) << " ";
-    switch (type_)
+    std::string PIMCmd::toStr() const
     {
+        stringstream ss;
+        ss << cmdToStr(type_) << " ";
+        switch (type_)
+        {
         case PIMCmdType::EXIT:
             break;
 
@@ -189,11 +189,11 @@ std::string PIMCmd::toStr() const
 
         default:
             break;
+        }
+        if (isAuto_)
+        {
+            ss << ", auto";
+        }
+        return ss.str();
     }
-    if (isAuto_)
-    {
-        ss << ", auto";
-    }
-    return ss.str();
-}
-}  // namespace DRAMSim
+} // namespace DRAMSim

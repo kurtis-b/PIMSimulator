@@ -40,15 +40,15 @@ namespace DRAMSim
         << bankStates[packet->bank].openRowAddress << "] @" << currentClockCycle
 #define OUTLOG_GRF_A(msg)                                                             \
     msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] pb[" << packet->bank \
-        << " reg" << packet->column - 0x8 << " @" << currentClockCycle
+        << " reg" << packet->column << " @" << currentClockCycle
 #define OUTLOG_GRF_B(msg)                                                             \
     msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] pb[" << packet->bank \
-        << "] reg[" << packet->column - 0x18 << "] @" << currentClockCycle
-#define OUTLOG_B_GRF_A(msg)                                                                    \
-    msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] reg[" << packet->column - 0x8 \
+        << "] reg[" << packet->column - 0x2 << "] @" << currentClockCycle
+#define OUTLOG_B_GRF_A(msg)                                                              \
+    msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] reg[" << packet->column \
         << "] @" << currentClockCycle
-#define OUTLOG_B_GRF_B(msg)                                                                     \
-    msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] reg[" << packet->column - 0x18 \
+#define OUTLOG_B_GRF_B(msg)                                                                    \
+    msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] reg[" << packet->column - 0x2 \
         << "] @" << currentClockCycle
 #define OUTLOG_B_CRF(msg)                                                                      \
     msg << " ch[" << getChanId() << "] ra[" << getRankId() << "] idx[" << packet->column - 0x4 \
@@ -89,21 +89,17 @@ namespace DRAMSim
 
         union crf_t
         {
-            uint32_t data[32];
-            BurstType bst[4];
+            uint32_t data[128];
+            BurstType bst[16];
             crf_t()
             {
-                memset(data, 0, sizeof(uint32_t) * 32);
+                memset(data, 0, sizeof(uint32_t) * 128);
             }
         } crf;
 
         unsigned inline getGrfIdx(unsigned idx)
         {
-            return idx & 0x7;
-        }
-        unsigned inline getGrfIdxHigh(unsigned r, unsigned c)
-        {
-            return ((r & 0x1) << 2 | ((c >> 3) & 0x3));
+            return idx & 0x3f;
         }
         unsigned inline isReservedRA(unsigned row)
         {

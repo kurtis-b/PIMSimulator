@@ -25,7 +25,7 @@ using namespace DRAMSim;
 
 class PIMAddrManager
 {
-  public:
+public:
     unsigned num_chans_;
     unsigned num_ranks_;
     unsigned num_bank_groups_;
@@ -39,7 +39,7 @@ class PIMAddrManager
     uint64_t addrGen(unsigned chan, unsigned rank, unsigned bankgroup, unsigned bank, unsigned row,
                      unsigned col);
     uint64_t addrGenSafe(unsigned chan, unsigned rank, unsigned bankgroup, unsigned bank,
-                         unsigned& row, unsigned& col);
+                         unsigned &row, unsigned &col);
     unsigned maskByBit(unsigned value, int startingBit, int endBit);
 
     PIMAddrManager(int num_pim_chans, int num_pim_ranks)
@@ -47,8 +47,9 @@ class PIMAddrManager
     {
         num_chans_ = getConfigParam(UINT, "NUM_CHANS");
         num_ranks_ = getConfigParam(UINT, "NUM_RANKS");
-        num_bank_groups_ = getConfigParam(UINT, "NUM_BANK_GROUPS");
+        // num_bank_groups_ = getConfigParam(UINT, "NUM_BANK_GROUPS");
         num_banks_ = getConfigParam(UINT, "NUM_BANKS");
+        num_bank_groups_ = num_banks_; // Force the number of bank groups to be the same as the number of banks for SK Hynix
         num_rows_ = getConfigParam(UINT, "NUM_ROWS");
         num_cols_ = getConfigParam(UINT, "NUM_COLS");
 
@@ -68,7 +69,7 @@ class PIMAddrManager
         address_mapping_scheme_ = PIMConfiguration::getAddressMappingScheme();
     }
 
-  private:
+private:
     int num_chan_bits_;
     int num_rank_bits_;
     int num_col_bits_;

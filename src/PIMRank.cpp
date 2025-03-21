@@ -31,10 +31,16 @@ PIMRank::PIMRank(ostream &simLog, Configuration &configuration)
       lastRepeatIdx_(-1),
       numRepeatToBeDone_(-1),
       crfExit_(false),
-      config(configuration),
-      pimBlocks(getConfigParam(UINT, "NUM_PIM_BLOCKS"),
-                PIMBlock(PIMConfiguration::getPIMPrecision()))
+      config(configuration)
+//   pimBlocks(getConfigParam(UINT, "NUM_PIM_BLOCKS"),
+//             PIMBlock(PIMConfiguration::getPIMPrecision()))
 {
+    unsigned num_pim_blocks = getConfigParam(UINT, "NUM_PIM_BLOCKS");
+    for (unsigned int i = 0; i < num_pim_blocks; i++)
+    {
+        pimBlocks.push_back(PIMBlock(PIMConfiguration::getPIMPrecision()));
+    }
+
     currentClockCycle = 0;
 }
 
@@ -77,7 +83,7 @@ void PIMRank::controlPIM(BusPacket *packet)
         BurstType burst_zero;
         for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
         {
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 64; i++)
                 pimBlocks[pb].grfA[i] = burst_zero;
         }
     }
@@ -91,6 +97,7 @@ void PIMRank::controlPIM(BusPacket *packet)
         BurstType burst_zero;
         for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
         {
+            // std::cout << "Zeroize GRF B for PB " << pb << std::endl;
             pimBlocks[pb].grfB = burst_zero;
         }
     }
@@ -118,21 +125,26 @@ void PIMRank::controlPIM(BusPacket *packet)
 
 bool PIMRank::isToggleCond(BusPacket *packet)
 {
+    // This seems to be checking whether a packet meets some conditions when in HAB PIM mode
+    // Not sure what toggleRa13h_, but just removed the conditions with pim bank indexes in the
+    // if-else statements
     if (pimOpMode_ && !crfExit_)
     {
         if (toggleRa13h_)
         {
-            if (toggleEvenBank_ && ((packet->bank & 1) == 0))
+            // std::cout << "toggleRa13h_, even: " << toggleEvenBank_ << ", odd: " << toggleOddBank_ << std::endl;
+            if (toggleEvenBank_)
                 return true;
-            else if (toggleOddBank_ && ((packet->bank & 1) == 1))
+            else if (toggleOddBank_)
                 return true;
             return false;
         }
         else if (!toggleRa13h_ && !isReservedRA(packet->row))
         {
-            if (toggleEvenBank_ && ((packet->bank & 1) == 0))
+            // std::cout << "!toggleRa13h_ and !isReservedRA(row=" << packet->row << ", even: " << toggleEvenBank_ << ", odd: " << toggleOddBank_ << std::endl;
+            if (toggleEvenBank_)
                 return true;
-            else if (toggleOddBank_ && ((packet->bank & 1) == 1))
+            else if (toggleOddBank_)
                 return true;
             return false;
         }
@@ -154,12 +166,11 @@ void PIMRank::readHab(BusPacket *packet)
     {
         PRINTC(GRAY, OUTLOG_ALL("BANK_TO_PIM"));
 #ifndef NO_STORAGE
-        int grf_id = getGrfIdx(packet->column);
         for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
         {
-            rank->banks[pb].read(packet);
-
-            pimBlocks[pb].grfB = *(packet->data);
+            rank->banks[packet->bank].read(packet);
+            pimBlocks[packet->bank].grfB = *(packet->data); // basically write to bank.
+            // std::cout << "Bank_to_pim packet: " << packet->data->fp16ToStr() << ", setting grfb for bank " << packet->bank << " to this data" << std::endl;
         }
 #endif
     }
@@ -167,31 +178,14 @@ void PIMRank::readHab(BusPacket *packet)
 
 void PIMRank::writeHab(BusPacket *packet)
 {
-    if (packet->row == config.PIM_REG_RA) // WRIO to PIM Broadcasting
+    // std::cout << "PIMRank::writeHab() start, packet->row: " << std::hex << packet->row << std::dec << std::endl;
+    if (packet->row == config.PIM_REG_RA_1) // WRIO to PIM Broadcasting
     {
         if (packet->column == 0x00)
-            controlPIM(packet);
-        if ((0x08 <= packet->column && packet->column <= 0x18) ||
-            (0x18 <= packet->column && packet->column <= 0x18))
         {
-            if (DEBUG_CMD_TRACE)
-            {
-                if (packet->column - 8 < 24)
-                    PRINTC(GREEN, OUTLOG_B_GRF_A("BWRITE_GRF_A"));
-                else
-                    PRINTC(GREEN, OUTLOG_B_GRF_B("BWRITE_GRF_B"));
-            }
-#ifndef NO_STORAGE
-            for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
-            {
-                if (packet->column - 8 < 24) // The number of pim blocks = number of grf a's, so the below works
-                    pimBlocks[pb].grfA[packet->column - 0x8] = *(packet->data);
-                else
-                    pimBlocks[pb].grfB = *(packet->data);
-            }
-#endif
+            controlPIM(packet);
         }
-        else if (0x04 <= packet->column && packet->column <= 0x07)
+        else if (0x04 <= packet->column && packet->column <= 0x14)
         {
             if (DEBUG_CMD_TRACE)
                 PRINTC(GREEN, OUTLOG_B_CRF("BWRITE_CRF"));
@@ -205,6 +199,24 @@ void PIMRank::writeHab(BusPacket *packet)
                 pimBlocks[pb].srf = *(packet->data);
         }
     }
+    else if (packet->row == config.PIM_REG_RA_2) // WRIO to PIM Broadcasting
+    {
+        if ((0x00 <= packet->column && packet->column <= 0x3f))
+        {
+            if (DEBUG_CMD_TRACE)
+            {
+                if (packet->column < 64)
+                    PRINTC(GREEN, OUTLOG_B_GRF_A("BWRITE_GRF_A"));
+            }
+#ifndef NO_STORAGE
+            for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
+            {
+                if (packet->column < 64)
+                    pimBlocks[pb].grfA[packet->column] = *(packet->data);
+            }
+#endif
+        }
+    }
     else if (isReservedRA(packet->row))
     {
         PRINTC(GRAY, OUTLOG_ALL("WRITE"));
@@ -214,19 +226,10 @@ void PIMRank::writeHab(BusPacket *packet)
         PRINTC(GREEN, OUTLOG_ALL("PIM_TO_BANK"));
 
 #ifndef NO_STORAGE
-        int grf_id = getGrfIdx(packet->column);
         for (int pb = 0; pb < config.NUM_PIM_BLOCKS; pb++)
         {
-            if (packet->bank == 0)
-            {
-                *(packet->data) = pimBlocks[pb].grfA[pb];
-                rank->banks[pb].write(packet); // basically read from bank;
-            }
-            else if (packet->bank == 1)
-            {
-                *(packet->data) = pimBlocks[pb].grfB;
-                rank->banks[pb].write(packet); // basically read from bank.
-            }
+            *(packet->data) = pimBlocks[pb].grfB;
+            rank->banks[pb].write(packet); // basically write to bank.
         }
 #endif
     }
@@ -258,8 +261,11 @@ void PIMRank::readOpd(int pb, BurstType &bst, PIMOpdType type, BusPacket *packet
         bst = *(packet->data);
         return;
     case PIMOpdType::GRF_A:
-        bst = pimBlocks[pb].grfA[pb];
+    {
+        // std::cout << "ReadOpd grfA idx " << idx << std::endl;
+        bst = pimBlocks[pb].grfA[idx];
         return;
+    }
     case PIMOpdType::GRF_B:
         if (is_auto)
             bst = pimBlocks[pb].grfB;
@@ -306,7 +312,7 @@ void PIMRank::writeOpd(int pb, BurstType &bst, PIMOpdType type, BusPacket *packe
         rank->banks[pb].write(packet); // basically read from bank.
         return;
     case PIMOpdType::GRF_A:
-        pimBlocks[pb].grfA[pb] = bst;
+        pimBlocks[pb].grfA[idx] = bst;
         return;
     case PIMOpdType::GRF_B:
         if (is_auto)
@@ -396,6 +402,7 @@ void PIMRank::doPIM(BusPacket *packet)
                     lastRepeatIdx_ = -1;
             }
 
+            // std::cout << "cCmd.src0_: " << (int)cCmd.src0_ << ", cCmd.src0Idx_: " << cCmd.src0Idx_ << std::endl;
             for (int pimblock_id = 0; pimblock_id < config.NUM_PIM_BLOCKS; pimblock_id++)
             {
                 // DEBUG("Doing PIM Block");
@@ -458,15 +465,15 @@ void PIMRank::doPIMBlock(BusPacket *packet, PIMCmd cCmd, int pimblock_id)
         BurstType src1Bst;
         bool is_mac = (cCmd.type_ == PIMCmdType::MAC) ? true : false;
 
+        // std::cout << "cCmd.src0_: " << (int)cCmd.src0_ << "cCmd.src0Idx_: " << cCmd.src0Idx_ << std::endl;
         readOpd(pimblock_id, src0Bst, cCmd.src0_, packet, cCmd.src0Idx_, cCmd.isAuto_, is_mac);
         readOpd(pimblock_id, src1Bst, cCmd.src1_, packet, cCmd.src1Idx_, cCmd.isAuto_, is_mac);
         if (is_mac)
         {
-            if (pimblock_id == 0)
-                DEBUG("Running MAC for PIM Block " << pimblock_id);
+            // std::cout << "Running MAC for PIM Block " << pimblock_id << std::endl;
             readOpd(pimblock_id, dstBst, cCmd.dst_, packet, cCmd.dstIdx_, cCmd.isAuto_, is_mac);
             // dstBst = src0Bst * src1Bst + dstBst;
-            pimBlocks[pimblock_id].mac(dstBst, src0Bst, src1Bst);
+            pimBlocks[pimblock_id].mac(dstBst, src0Bst, src1Bst, pimblock_id); // The assumption is that the number of pim blocks is the same as the size of 1 GRF B
         }
         else
         {
@@ -480,16 +487,14 @@ void PIMRank::doPIMBlock(BusPacket *packet, PIMCmd cCmd, int pimblock_id)
     }
     else if (cCmd.type_ == PIMCmdType::NOP && packet->busPacketType == WRITE)
     {
-        int grf_id = getGrfIdx(packet->column);
-        if (packet->bank == 0)
-        {
-            *(packet->data) = pimBlocks[pimblock_id].grfA[pimblock_id];
-            rank->banks[pimblock_id].write(packet); // basically read from bank;
-        }
-        else if (packet->bank == 1)
-        {
-            *(packet->data) = pimBlocks[pimblock_id].grfB;
-            rank->banks[pimblock_id].write(packet); // basically read from bank.
-        }
+        // std::cout << "doPIMBlock NOP Write instance for pb: " << pimblock_id << ", and current accumulation is: "<< packet->data->fp16ToStr() << std::endl;
+        *(packet->data) = pimBlocks[pimblock_id].grfB;
+        rank->banks[pimblock_id].write(packet); // basically write to bank.
+    }
+    else if (cCmd.type_ == PIMCmdType::NOP && packet->busPacketType == READ)
+    {
+        rank->banks[pimblock_id].read(packet); // basically read from bank.
+        // std::cout << "doPIMBlock NOP Read instance for pb: " << pimblock_id << ", and using packet data: " << packet->data->fp16ToStr() << std::endl;
+        pimBlocks[pimblock_id].grfB = *(packet->data);
     }
 }

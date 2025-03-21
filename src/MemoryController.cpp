@@ -39,8 +39,8 @@
 
 using namespace DRAMSim;
 
-MemoryController::MemoryController(MemorySystem* parent, CSVWriter& csvOut_, ostream& simLog,
-                                   Configuration& configuration)
+MemoryController::MemoryController(MemorySystem *parent, CSVWriter &csvOut_, ostream &simLog,
+                                   Configuration &configuration)
     : dramsimLog(simLog),
       config(configuration),
       bankStates(getConfigParam(UINT, "NUM_RANKS"),
@@ -100,7 +100,7 @@ MemoryController::MemoryController(MemorySystem* parent, CSVWriter& csvOut_, ost
 }
 
 // get a bus packet from either data or cmd bus
-void MemoryController::receiveFromBus(BusPacket* bpacket)
+void MemoryController::receiveFromBus(BusPacket *bpacket)
 {
     if (bpacket->busPacketType != DATA)
     {
@@ -124,7 +124,7 @@ void MemoryController::receiveFromBus(BusPacket* bpacket)
 }
 
 // sends read data back to the CPU
-void MemoryController::returnReadData(const Transaction* trans)
+void MemoryController::returnReadData(const Transaction *trans)
 {
     if (parentMemorySystem->ReturnReadData != NULL)
         (*parentMemorySystem->ReturnReadData)(parentMemorySystem->systemID, trans->address,
@@ -143,7 +143,7 @@ bool MemoryController::addBarrier()
 }
 
 // gives the memory controller a handle on the rank objects
-void MemoryController::attachRanks(vector<Rank*>* ranks)
+void MemoryController::attachRanks(vector<Rank *> *ranks)
 {
     this->ranks = ranks;
     commandQueue.ranks = ranks;
@@ -166,7 +166,7 @@ void MemoryController::setBankStates(size_t rank, size_t bank, CurrentBankState 
     bankStates[rank][bank].nextActivate = nextActivate;
 }
 
-void MemoryController::updateCommandQueue(BusPacket* poppedBusPacket)
+void MemoryController::updateCommandQueue(BusPacket *poppedBusPacket)
 {
     if (poppedBusPacket->busPacketType == WRITE)
     {
@@ -179,110 +179,110 @@ void MemoryController::updateCommandQueue(BusPacket* poppedBusPacket)
     // update each bank's state based on the command that was just popped
     // out of the command queue for readability's sake
     unsigned rank = poppedBusPacket->rank;
-    unsigned bank = poppedBusPacket->bank ;
+    unsigned bank = poppedBusPacket->bank;
     auto am = config.addrMapping;
 
     switch (poppedBusPacket->busPacketType)
     {
-        case READ:
-            bankStates[rank][bank].nextPrecharge = max(currentClockCycle + config.READ_TO_PRE_DELAY,
-                                                       bankStates[rank][bank].nextPrecharge);
-            bankStates[rank][bank].lastCommand = READ;
-            for (size_t i = 0; i < config.NUM_RANKS; i++)
+    case READ:
+        bankStates[rank][bank].nextPrecharge = max(currentClockCycle + config.READ_TO_PRE_DELAY,
+                                                   bankStates[rank][bank].nextPrecharge);
+        bankStates[rank][bank].lastCommand = READ;
+        for (size_t i = 0; i < config.NUM_RANKS; i++)
+        {
+            for (size_t j = 0; j < config.NUM_BANKS; j++)
             {
-                for (size_t j = 0; j < config.NUM_BANKS; j++)
+                if (i != poppedBusPacket->rank)
                 {
-                    if (i != poppedBusPacket->rank)
+                    if (bankStates[i][j].currentBankState == RowActive)
                     {
-                        if (bankStates[i][j].currentBankState == RowActive)
-                        {
-                            setBankStatesRW(i, j, config.BL / 2 + config.tRTRS,
-                                            config.READ_TO_WRITE_DELAY);
-                        }
-                    }
-                    else
-                    {
-                        uint64_t RdCycle =
-                            max((am.isSameBankgroup(j, bank) ? config.tCCDL : config.tCCDS),
-                                config.BL / 2);
-                        setBankStatesRW(i, j, RdCycle, config.READ_TO_WRITE_DELAY);
+                        setBankStatesRW(i, j, config.BL / 2 + config.tRTRS,
+                                        config.READ_TO_WRITE_DELAY);
                     }
                 }
-            }
-            totalReads++;
-
-            break;
-
-        case WRITE:
-            bankStates[rank][bank].nextPrecharge =
-                max(currentClockCycle + config.WRITE_TO_PRE_DELAY,
-                    bankStates[rank][bank].nextPrecharge);
-            bankStates[rank][bank].lastCommand = WRITE;
-            for (size_t i = 0; i < config.NUM_RANKS; i++)
-            {
-                for (size_t j = 0; j < config.NUM_BANKS; j++)
+                else
                 {
-                    if (i != poppedBusPacket->rank)
-                    {
-                        if (bankStates[i][j].currentBankState == RowActive)
-                        {
-                            setBankStatesRW(i, j, config.WRITE_TO_READ_DELAY_R,
-                                            config.BL / 2 + config.tRTRS);
-                        }
-                    }
-                    else
-                    {
-                        uint64_t WrCycle =
-                            max((am.isSameBankgroup(j, bank) ? config.tCCDL : config.tCCDS),
-                                config.BL / 2);
-                        setBankStatesRW(i, j, config.WRITE_TO_READ_DELAY_B_LONG, WrCycle);
-                    }
+                    uint64_t RdCycle =
+                        max((am.isSameBankgroup(j, bank) ? config.tCCDL : config.tCCDS),
+                            config.BL / 2);
+                    setBankStatesRW(i, j, RdCycle, config.READ_TO_WRITE_DELAY);
                 }
             }
-            totalWrites++;
+        }
+        totalReads++;
 
-            break;
+        break;
 
-        case ACTIVATE:
-            setBankStates(rank, bank, RowActive, ACTIVATE, 0,
-                          max(currentClockCycle + config.tRC, bankStates[rank][bank].nextActivate));
-            bankStates[rank][bank].openRowAddress = poppedBusPacket->row;
-            bankStates[rank][bank].nextPrecharge =
-                max(currentClockCycle + config.tRAS, bankStates[rank][bank].nextPrecharge);
-
-            // if we are using posted-CAS, the next column access can be sooner than normal
-            // operation
-            setBankStatesRW(rank, bank, (config.tRCDRD - config.AL), (config.tRCDWR - config.AL));
-
-            for (size_t i = 0; i < config.NUM_BANKS; i++)
+    case WRITE:
+        bankStates[rank][bank].nextPrecharge =
+            max(currentClockCycle + config.WRITE_TO_PRE_DELAY,
+                bankStates[rank][bank].nextPrecharge);
+        bankStates[rank][bank].lastCommand = WRITE;
+        for (size_t i = 0; i < config.NUM_RANKS; i++)
+        {
+            for (size_t j = 0; j < config.NUM_BANKS; j++)
             {
-                if (i != poppedBusPacket->bank)
+                if (i != poppedBusPacket->rank)
                 {
-                    bankStates[rank][i].nextActivate =
-                        max(currentClockCycle +
-                                (am.isSameBankgroup(i, bank) ? config.tRRDL : config.tRRDS),
-                            bankStates[rank][i].nextActivate);
+                    if (bankStates[i][j].currentBankState == RowActive)
+                    {
+                        setBankStatesRW(i, j, config.WRITE_TO_READ_DELAY_R,
+                                        config.BL / 2 + config.tRTRS);
+                    }
+                }
+                else
+                {
+                    uint64_t WrCycle =
+                        max((am.isSameBankgroup(j, bank) ? config.tCCDL : config.tCCDS),
+                            config.BL / 2);
+                    setBankStatesRW(i, j, config.WRITE_TO_READ_DELAY_B_LONG, WrCycle);
                 }
             }
+        }
+        totalWrites++;
 
-            break;
+        break;
 
-        case PRECHARGE:
-            setBankStates(rank, bank, Precharging, PRECHARGE, config.tRP,
-                          max(currentClockCycle + config.tRP, bankStates[rank][bank].nextActivate));
+    case ACTIVATE:
+        setBankStates(rank, bank, RowActive, ACTIVATE, 0,
+                      max(currentClockCycle + config.tRC, bankStates[rank][bank].nextActivate));
+        bankStates[rank][bank].openRowAddress = poppedBusPacket->row;
+        bankStates[rank][bank].nextPrecharge =
+            max(currentClockCycle + config.tRAS, bankStates[rank][bank].nextPrecharge);
 
-            break;
+        // if we are using posted-CAS, the next column access can be sooner than normal
+        // operation
+        setBankStatesRW(rank, bank, (config.tRCDRD - config.AL), (config.tRCDWR - config.AL));
 
-        case REF:
-            for (size_t i = 0; i < config.NUM_BANKS; i++)
-                setBankStates(rank, i, Refreshing, REF, config.tRFC,
-                              currentClockCycle + config.tRFC);
+        for (size_t i = 0; i < config.NUM_BANKS; i++)
+        {
+            if (i != poppedBusPacket->bank)
+            {
+                bankStates[rank][i].nextActivate =
+                    max(currentClockCycle +
+                            (am.isSameBankgroup(i, bank) ? config.tRRDL : config.tRRDS),
+                        bankStates[rank][i].nextActivate);
+            }
+        }
 
-            break;
-        default:
-            ERROR("== Error - Popped a command we shouldn't have of type : "
-                  << poppedBusPacket->busPacketType);
-            exit(0);
+        break;
+
+    case PRECHARGE:
+        setBankStates(rank, bank, Precharging, PRECHARGE, config.tRP,
+                      max(currentClockCycle + config.tRP, bankStates[rank][bank].nextActivate));
+
+        break;
+
+    case REF:
+        for (size_t i = 0; i < config.NUM_BANKS; i++)
+            setBankStates(rank, i, Refreshing, REF, config.tRFC,
+                          currentClockCycle + config.tRFC);
+
+        break;
+    default:
+        ERROR("== Error - Popped a command we shouldn't have of type : "
+              << poppedBusPacket->busPacketType);
+        exit(0);
     }
 
     // issue on bus and print debug
@@ -309,7 +309,7 @@ void MemoryController::updateTransactionQueue()
     {
         // pop off top transaction from queue assuming simple scheduling at the moment
         // will eventually add policies here
-        Transaction* transaction = transactionQueue[i];
+        Transaction *transaction = transactionQueue[i];
 
         // map address to rank,bank,row,col
         unsigned newTransactionChan, newTransactionRank, newTransactionBank, newTransactionRow,
@@ -340,7 +340,7 @@ void MemoryController::updateTransactionQueue()
             // now that we know there is room in the command queue, we can remove from
             // the transaction queue
             transactionQueue.erase(transactionQueue.begin() + i);
-            BusPacket* command;
+            BusPacket *command;
 
             // create read or write command and enqueue it
             BusPacketType bpType = transaction->getBusPacketType();
@@ -401,7 +401,7 @@ void MemoryController::printDebugOnUpate()
                 else if (bankStates[i][j].currentBankState == PowerDown)
                     PRINTN("[lowp] ");
             }
-            PRINT("");  // effectively just cout<<endl;
+            PRINT(""); // effectively just cout<<endl;
         }
     }
 
@@ -425,13 +425,13 @@ void MemoryController::updateBankState()
                 {
                     switch (bankStates[i][j].lastCommand)
                     {
-                        case REF:
-                        case RFCSB:
-                        case PRECHARGE:
-                            bankStates[i][j].currentBankState = Idle;
-                            break;
-                        default:
-                            break;
+                    case REF:
+                    case RFCSB:
+                    case PRECHARGE:
+                        bankStates[i][j].currentBankState = Idle;
+                        break;
+                    default:
+                        break;
                     }
                 }
             }
@@ -463,7 +463,7 @@ void MemoryController::update()
     if (outgoingCmdPacket != NULL)
     {
         cmdCyclesLeft--;
-        if (cmdCyclesLeft == 0)  // packet is ready to be received by rank
+        if (cmdCyclesLeft == 0) // packet is ready to be received by rank
         {
             (*ranks)[outgoingCmdPacket->rank]->receiveFromBus(outgoingCmdPacket);
             outgoingCmdPacket = NULL;
@@ -496,7 +496,8 @@ void MemoryController::update()
     // write data held in fifo vector along with countdowns
     if (writeDataCountdown.size() > 0)
     {
-        for (size_t i = 0; i < writeDataCountdown.size(); i++) writeDataCountdown[i]--;
+        for (size_t i = 0; i < writeDataCountdown.size(); i++)
+            writeDataCountdown[i]--;
 
         if (writeDataCountdown[0] == 0)
         {
@@ -577,8 +578,10 @@ void MemoryController::update()
     }
 
     // decrement refresh counters
-    for (size_t i = 0; i < config.NUM_RANKS; i++) refreshCountdown[i]--;
-    for (size_t i = 0; i < config.NUM_BANKS; i++) refreshCountdownBank[i]--;
+    for (size_t i = 0; i < config.NUM_RANKS; i++)
+        refreshCountdown[i]--;
+    for (size_t i = 0; i < config.NUM_BANKS; i++)
+        refreshCountdownBank[i]--;
 
     // print debug
     printDebugOnUpate();
@@ -592,7 +595,7 @@ bool MemoryController::WillAcceptTransaction()
 }
 
 // allows outside source to make request of memory system
-bool MemoryController::addTransaction(Transaction* trans)
+bool MemoryController::addTransaction(Transaction *trans)
 {
     if (WillAcceptTransaction())
     {
@@ -622,8 +625,10 @@ MemoryController::~MemoryController()
 {
     // ERROR("MEMORY CONTROLLER DESTRUCTOR");
     // abort();
-    for (size_t i = 0; i < pendingReadTransactions.size(); i++) delete pendingReadTransactions[i];
-    for (size_t i = 0; i < returnTransaction.size(); i++) delete returnTransaction[i];
+    for (size_t i = 0; i < pendingReadTransactions.size(); i++)
+        delete pendingReadTransactions[i];
+    for (size_t i = 0; i < returnTransaction.size(); i++)
+        delete returnTransaction[i];
     delete memoryContStats;
 }
 
@@ -707,7 +712,7 @@ void MemoryControllerStats::printStats(bool finalStats, unsigned myChannel,
                                         << averageLatency[SEQUENTIAL(r, j)] << " ns");
         }
 
-        burstPower[r] = ((double)burstEnergy[r] / (double)(cyclesElapsed)) / 1000.0;  // (pw)
+        burstPower[r] = ((double)burstEnergy[r] / (double)(cyclesElapsed)) / 1000.0; // (pw)
         actprePower[r] = ((double)actpreEnergy[r] / (double)(cyclesElapsed)) / 1000.0;
         aluPIMPower[r] = ((double)aluPIMEnergy[r] / (double)cyclesElapsed) / 1000.0;
         averagePower[r] = burstPower[r] + actprePower[r] + aluPIMPower[r];

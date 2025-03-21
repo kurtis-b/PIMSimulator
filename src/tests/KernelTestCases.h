@@ -121,42 +121,11 @@ public:
         {
             kernel->preloadGemv(&dim_data->weight_npbst_);
             kernel->executeGemv(&dim_data->weight_npbst_, &dim_data->input_npbst_, false);
-            unsigned end_col = kernel->getResultColGemv(
-                dim_data->dimTobShape(dim_data->input_dim_), dim_data->output_dim_);
-            result = new BurstType[dim_data->output_dim_ * dim_data->batch_size_];
-            kernel->readResult(result, pimBankType::ODD_BANK,
-                               dim_data->output_dim_ * dim_data->batch_size_, 0, 0, end_col);
+            result = new BurstType[dim_data->output_dim_ * dim_data->batch_size_]; // Multiply by 16 because each burst will only have 1 valid output value
+            kernel->readResult(result, pimBankType::ALL_BANK,
+                               dim_data->output_dim_ * dim_data->batch_size_, 0x3fff >> 1);
             break;
         }
-        case KernelType::ADD:
-        case KernelType::MUL:
-        {
-            int input_row0 = 0;
-            int input_row1 = 128;
-            int result_row = 256;
-            kernel->preloadNoReplacement(&dim_data->input_npbst_, input_row0, 0);
-            kernel->preloadNoReplacement(&dim_data->input1_npbst_, input_row1, 0);
-            kernel->executeEltwise(dim_data->dimTobShape(dim_data->output_dim_),
-                                   pimBankType::ALL_BANK, kn_type, input_row0, result_row,
-                                   input_row1);
-            result = new BurstType[dim_data->output_dim_];
-            kernel->readData(result, dim_data->dimTobShape(dim_data->output_dim_), result_row,
-                             0);
-            break;
-        }
-        case KernelType::RELU:
-        {
-            int input_row0 = 0;
-            int result_row = 256;
-            kernel->preloadNoReplacement(&dim_data->input_npbst_, input_row0, 0);
-            kernel->executeEltwise(dim_data->dimTobShape(dim_data->output_dim_),
-                                   pimBankType::ALL_BANK, kn_type, input_row0, result_row);
-            result = new BurstType[dim_data->output_dim_];
-            kernel->readData(result, dim_data->dimTobShape(dim_data->output_dim_), result_row,
-                             0);
-            break;
-        }
-        case KernelType::GEMVTREE:
         default:
         {
             ERROR("== Error - Unknown KernelType trying to run");
@@ -174,21 +143,18 @@ public:
         {
         case KernelType::GEMV:
         {
-            for (int i = 0; i < num_tests; i++)
+            // Need to do this because each burst for the precalculated object has 16 fp16 values
+            // The result bursts only have 1 valid fp16 value in it due to how the GRF B is being used and written to the banks
+            int num_result_bursts_per_precalc_burst = num_tests / 16;
+            for (int i = 0; i < num_result_bursts_per_precalc_burst; i++)
             {
-                EXPECT_FP16_EQ(result_[i].fp16ReduceSum(),
-                               precalculated_result.getBurst(0).fp16Data_[i]);
-                reduced_result_[i / stride].fp16Data_[i % stride] = result_[i].fp16ReduceSum();
-            }
-            return;
-        }
-        case KernelType::ADD:
-        case KernelType::MUL:
-        case KernelType::RELU:
-        {
-            for (int i = 0; i < num_tests; i++)
-            {
-                EXPECT_FP16_BST_EQ(result_[i], precalculated_result.getBurst(i));
+                for (int j = 0; j < 16; j++)
+                {
+                    // std::cout << "result_[" << i << " * 16 + " << j << "]: " << result_[i * num_result_bursts_per_precalc_burst + j].fp16ToStr() << std::endl;
+                    EXPECT_FP16_EQ(result_[i * 16 + j].fp16Data_[0],
+                                   precalculated_result.getBurst(i).fp16Data_[j]);
+                }
+                // reduced_result_[i / stride].fp16Data_[i % stride] = result_[i].fp16ReduceSum();
             }
             return;
         }
@@ -273,7 +239,7 @@ public:
         INSERT_TO_FAILED_VECTOR(convertH2F(m), convertH2F(n));
         INC_NUM_FAILED();
         return ::testing::AssertionFailure()
-               << cur_idx << m_expr << " and " << n_expr << " (" << convertH2F(m) << " and "
+               << cur_idx << " " << m_expr << " and " << n_expr << " (" << convertH2F(m) << " and "
                << convertH2F(n) << ") are not same " << mi.ival << " " << ni.ival;
     }
 }

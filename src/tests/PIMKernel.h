@@ -28,7 +28,7 @@ using namespace DRAMSim;
 
 class PIMKernel
 {
-  public:
+public:
     PIMKernel(shared_ptr<MultiChannelMemorySystem> mem, int num_pim_chan, int num_pim_rank)
         : mem_(mem),
           num_pim_chans_(num_pim_chan),
@@ -41,21 +41,20 @@ class PIMKernel
           cycle_(0)
     {
         transaction_size_ = getConfigParam(UINT, "BL") *
-                            (getConfigParam(UINT, "JEDEC_DATA_BUS_BITS") / 8);  // in byte
+                            (getConfigParam(UINT, "JEDEC_DATA_BUS_BITS") / 8); // in byte
 
         // FIXME: HARDCODED
-        // CURT'S NOTE: Looks like these are allocated to one channel, i.e. there doesn't seem to be a distinction about which 
-        // GRF A or B are used by each bank. The math will just work out since parts of the code are hardcoded
-        // such that 1 GRF A and 1 GRF B will be used by 1 PIM unit and 2 banks in the original implementation.
-        num_grfA_ = 16; 
+        num_grfA_ = 64;
         num_grf_ = num_grfB_ = 1;
         num_total_pim_blocks_ = num_pim_blocks_ * num_pim_chans_ * num_pim_ranks_;
 
         pim_chans_.clear();
-        for (int i = 0; i < num_pim_chans_; i++) pim_chans_.push_back(i);
+        for (int i = 0; i < num_pim_chans_; i++)
+            pim_chans_.push_back(i);
 
         pim_ranks_.clear();
-        for (int i = 0; i < num_pim_ranks_; i++) pim_ranks_.push_back(i);
+        for (int i = 0; i < num_pim_ranks_; i++)
+            pim_ranks_.push_back(i);
         DEBUG("pim_ranks.size: " << pim_ranks_.size());
 
         pim_addr_mgr_ = make_shared<PIMAddrManager>(num_pim_chan, num_pim_rank);
@@ -73,8 +72,8 @@ class PIMKernel
     void parkOut();
     void changePIMMode(dramMode mode1, dramMode mode2);
     void addTransactionAll(bool isWrite, int bg, int bank, int row, int col, const std::string tag,
-                           BurstType* bst, bool use_barrier = false, int num_loop = 1);
-    void addTransactionAll(bool isWrite, int bg, int bank, int row, int col, BurstType* bst,
+                           BurstType *bst, bool use_barrier = false, int num_loop = 1);
+    void addTransactionAll(bool isWrite, int bg, int bank, int row, int col, BurstType *bst,
                            bool use_barrier = false, int num_loop = 1);
     /*
     void preprocessBn(NumpyBurstType* mean_npbst, NumpyBurstType* var_npbst,
@@ -86,42 +85,43 @@ class PIMKernel
     /*
     void programSrf();
     */
-    void programCrf(vector<PIMCmd>& cmds);
-    void setControl(BurstType* bst, bool op, int crf_toggle_cond, bool grfA_zero, bool grfB_zero);
+    void programCrf(vector<PIMCmd> &cmds);
+    void setControl(BurstType *bst, bool op, int crf_toggle_cond, bool grfA_zero, bool grfB_zero);
     unsigned getResultColGemv(int input_dim, int output_dim);
-    void changeBank(pimBankType bank_types, int& cidx, int& rank, int& bg, int& bank,
-                    unsigned& startingRow, unsigned& startingCol, unsigned& row, unsigned& col);
-    void preloadGemv(NumpyBurstType* operand, unsigned starting_row = 0, unsigned starting_col = 0);
-    void preloadNoReplacement(NumpyBurstType* operand, unsigned startingRow, unsigned startingCol);
+    void changeBank(pimBankType bank_types, int &cidx, int &rank, int &bg, int &bank,
+                    unsigned &startingRow, unsigned &startingCol, unsigned &row, unsigned &col);
+    void preloadGemv(NumpyBurstType *operand, unsigned starting_row = 0, unsigned starting_col = 0);
+    void preloadNoReplacement(NumpyBurstType *operand, unsigned startingRow, unsigned startingCol);
     /*
     void preloadEltwise(NumpyBurstType* operand, pimBankType bank_types, unsigned startingRow,
                         unsigned startingCol);
     */
-    void executeGemv(NumpyBurstType* w_data, NumpyBurstType* i_data, bool is_tree);
+    void executeGemv(NumpyBurstType *w_data, NumpyBurstType *i_data, bool is_tree);
     void executeEltwise(int dim, pimBankType bank_types, KernelType ktype, int input0_row,
                         int result_row, int input1_row = 0);
-    void computeGemv(NumpyBurstType* data, int num_input_tiles, int num_output_tile, int input_tile,
+    void computeGemv(NumpyBurstType *data, int num_input_tiles, int num_output_tile, int input_tile,
                      int output_tile, int batch_idx, pimBankType bank_types);
     void computeAddOrMul(int numTile, int input0Row, int resultRow, int input1Row);
     void computeRelu(int numTile, int input0Row, int resultRow);
     // void computeBn(int numTile, int input0Row, int resultRow);
 
-    void readResult(BurstType* resultBst, pimBankType bank_types, int output_dim,
+    void readResult(BurstType *resultBst, pimBankType bank_types, int output_dim,
                     uint64_t baseAddr = 0, unsigned startingRow = 0, unsigned startingCol = 0);
-    void readData(BurstType* bst_data, size_t bst_cnt, unsigned s_row = 0, unsigned s_col = 0);
-    void adderTree(BurstType* result, int output_dim, int numTile, int step, fp16* temp);
+    void readData(BurstType *bst_data, size_t bst_cnt, unsigned s_row = 0, unsigned s_col = 0);
+    void adderTree(BurstType *result, int output_dim, int numTile, int step, fp16 *temp);
 
-  private:
+private:
     unsigned cycle_;
     unsigned num_banks_, num_pim_blocks_, num_bank_groups_, num_total_pim_blocks_;
     BurstType null_bst_, bst_hab_pim_, bst_hab_;
-    BurstType crf_bst_[4];
-    BurstType* srf_bst_;
+    BurstType crf_bst_[16];
+    BurstType *srf_bst_;
     vector<int> pim_chans_;
     vector<int> pim_ranks_;
     PIMMode mode_;
     shared_ptr<MultiChannelMemorySystem> mem_;
-    const uint32_t pim_reg_ra_ = 0x3fff;
+    const uint32_t pim_reg_ra_1 = 0x3fff;     // Control, CRF, SRF
+    const uint32_t pim_reg_ra_2 = 0x3fff - 1; // GRF A
     const uint32_t pim_abmr_ra_ = 0x27ff;
     const uint32_t pim_abmr_ca_ = 0x3d;
     const uint32_t pim_sbmr_ra_ = 0x2fff;
@@ -131,14 +131,14 @@ class PIMKernel
         // set Toggle Condition
         switch (pb_type)
         {
-            case pimBankType::EVEN_BANK:
-                return 2;
-            case pimBankType::ODD_BANK:
-                return 1;
-            case pimBankType::ALL_BANK:
-                return 0;
-            default:
-                return -1;
+        case pimBankType::EVEN_BANK:
+            return 2;
+        case pimBankType::ODD_BANK:
+            return 1;
+        case pimBankType::ALL_BANK:
+            return 0;
+        default:
+            return -1;
         }
     }
 };

@@ -61,17 +61,17 @@ void PIMBlock::mul(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst)
         dstBst = src0Bst * src1Bst;
 }
 
-void PIMBlock::mac(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst)
+void PIMBlock::mac(BurstType &dstBst, BurstType &src0Bst, BurstType &src1Bst, int pimBlockId)
 {
     if (pimPrecision_ == FP16)
     {
         for (int i = 0; i < 16; i++)
         {
-            dstBst.fp16Data_[i] = src0Bst.fp16Data_[i] * src1Bst.fp16Data_[i] + dstBst.fp16Data_[i];
+            dstBst.fp16Data_[0] = src0Bst.fp16Data_[i] * src1Bst.fp16Data_[i] + dstBst.fp16Data_[0];
         }
 
-        DEBUG("MAC " << src0Bst.hexToStr2() << "*" << src1Bst.hexToStr2() << "+="
-                     << dstBst.hexToStr2());
+        // std::cout << std::hex << "MAC " << src0Bst.fp16ToStr() << " * " << src1Bst.fp16ToStr() << " += "
+        //              << dstBst.fp16ToStr() << std::dec << std::endl;
     }
     else if (pimPrecision_ == FP32)
     {
@@ -110,7 +110,7 @@ std::string PIMBlock::print()
 {
     stringstream ss;
     ss << "[SRF]" << srf.binToStr() << endl;
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 64; i++)
         ss << "[GRF_A][" << i << "]" << grfA[i].fp16ToStr() << endl;
     ss << "[GRF_B]" << grfB.fp16ToStr() << endl;
     ss << "[M_OUT]" << mOut.binToStr() << endl;

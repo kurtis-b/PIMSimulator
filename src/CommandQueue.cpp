@@ -37,7 +37,7 @@
 
 using namespace DRAMSim;
 
-CommandQueue::CommandQueue(vector<vector<BankState>>& states, ostream& simLog)
+CommandQueue::CommandQueue(vector<vector<BankState>> &states, ostream &simLog)
     : dramsimLog(simLog),
       bankStates(states),
       nextBank(0),
@@ -131,7 +131,7 @@ CommandQueue::~CommandQueue()
 }
 
 // Adds a command to appropriate queue
-void CommandQueue::enqueue(BusPacket* newBusPacket)
+void CommandQueue::enqueue(BusPacket *newBusPacket)
 {
     unsigned rank = newBusPacket->rank;
     unsigned bank = newBusPacket->bank;
@@ -166,7 +166,7 @@ void CommandQueue::enqueue(BusPacket* newBusPacket)
     }
 }
 
-bool CommandQueue::process_refresh(BusPacket** busPacket)
+bool CommandQueue::process_refresh(BusPacket **busPacket)
 {
     if (refreshWaiting)
     {
@@ -210,7 +210,7 @@ bool CommandQueue::process_refresh(BusPacket** busPacket)
     return false;
 }
 
-bool CommandQueue::process_command(BusPacket** busPacket)
+bool CommandQueue::process_command(BusPacket **busPacket)
 {
     unsigned startingRank = nextRank;
     unsigned startingBank = nextBank;
@@ -218,10 +218,10 @@ bool CommandQueue::process_command(BusPacket** busPacket)
     //         return false;
     do
     {
-        vector<BusPacket*>& queue = getCommandQueue(nextRank, nextBank);
+        vector<BusPacket *> &queue = getCommandQueue(nextRank, nextBank);
         for (size_t i = 0; i < queue.size(); i++)
         {
-            BusPacket* packet = queue[i];
+            BusPacket *packet = queue[i];
 
             if (isIssuable(packet))
             {
@@ -263,7 +263,7 @@ bool CommandQueue::process_command(BusPacket** busPacket)
                 break;
             }
 
-            BusPacket* packet = queue[i];
+            BusPacket *packet = queue[i];
             if (bankStates[packet->rank][packet->bank].currentBankState == Idle)
             {
                 *busPacket =
@@ -289,7 +289,7 @@ bool CommandQueue::process_command(BusPacket** busPacket)
     return false;
 }
 
-bool CommandQueue::process_precharge(BusPacket** busPacket)
+bool CommandQueue::process_precharge(BusPacket **busPacket)
 {
     unsigned startingRank = nextRankPRE;
     unsigned startingBank = nextBankPRE;
@@ -297,10 +297,10 @@ bool CommandQueue::process_precharge(BusPacket** busPacket)
     do
     {
         bool found = false;
-        vector<BusPacket*>& queue = getCommandQueue(nextRankPRE, nextBankPRE);
+        vector<BusPacket *> &queue = getCommandQueue(nextRankPRE, nextBankPRE);
         for (size_t i = 0; i < queue.size(); i++)
         {
-            BusPacket* packet = queue[i];
+            BusPacket *packet = queue[i];
             if (nextRankPRE == packet->rank && nextBankPRE == packet->bank &&
                 bankStates[packet->rank][packet->bank].currentBankState == RowActive &&
                 packet->row == bankStates[packet->rank][packet->bank].openRowAddress)
@@ -324,7 +324,7 @@ bool CommandQueue::process_precharge(BusPacket** busPacket)
     return false;
 }
 
-bool CommandQueue::pop(BusPacket** busPacket)
+bool CommandQueue::pop(BusPacket **busPacket)
 {
     if (queuingStructure_ == PerRankPerBank)
     {
@@ -334,7 +334,8 @@ bool CommandQueue::pop(BusPacket** busPacket)
     for (size_t i = 0; i < num_ranks_; i++)
     {
         // decrement all the counters we have going
-        for (size_t j = 0; j < tXAWCountdown[i].size(); j++) tXAWCountdown[i][j]--;
+        for (size_t j = 0; j < tXAWCountdown[i].size(); j++)
+            tXAWCountdown[i][j]--;
         // the head will always be the smallest counter, so check if it has reached 0
         if (tXAWCountdown[i].size() > 0 && tXAWCountdown[i][0] == 0)
             tXAWCountdown[i].erase(tXAWCountdown[i].begin());
@@ -354,7 +355,7 @@ bool CommandQueue::pop(BusPacket** busPacket)
 // check if a rank/bank queue has room for a certain number of bus packets
 bool CommandQueue::hasRoomFor(unsigned numberToEnqueue, unsigned rank, unsigned bank)
 {
-    vector<BusPacket*>& queue = getCommandQueue(rank, bank);
+    vector<BusPacket *> &queue = getCommandQueue(rank, bank);
     return ((cmd_queue_depth_ - queue.size()) >= numberToEnqueue);
 }
 
@@ -363,7 +364,8 @@ void CommandQueue::print()
 {
     if (queuingStructure_ == PerRank)
     {
-        PRINT(endl << "== Printing Per Rank Queue");
+        PRINT(endl
+              << "== Printing Per Rank Queue");
         for (size_t i = 0; i < num_ranks_; i++)
         {
             PRINT(" = Rank " << i << "  size : " << queues[i][0].size());
@@ -400,7 +402,7 @@ void CommandQueue::print()
  * don't always have a per bank queuing structure, sometimes the bank
  * argument is ignored (and the 0th index is returned
  */
-vector<BusPacket*>& CommandQueue::getCommandQueue(unsigned rank, unsigned bank)
+vector<BusPacket *> &CommandQueue::getCommandQueue(unsigned rank, unsigned bank)
 {
     if (queuingStructure_ == PerRankPerBank)
         return queues[rank][bank];
@@ -414,76 +416,76 @@ vector<BusPacket*>& CommandQueue::getCommandQueue(unsigned rank, unsigned bank)
 }
 
 // checks if busPacket is allowed to be issued
-bool CommandQueue::isIssuable(BusPacket* busPacket)
+bool CommandQueue::isIssuable(BusPacket *busPacket)
 {
     switch (busPacket->busPacketType)
     {
-        case REF:
-        case RFCSB:
+    case REF:
+    case RFCSB:
+        return true;
+        break;
+    case ACTIVATE:
+
+        if ((*ranks)[busPacket->rank]->mode_ != dramMode::SB && busPacket->bank >= 2)
+        {
+            return false;
+        }
+
+        if ((bankStates[busPacket->rank][busPacket->bank].currentBankState == Idle ||
+             bankStates[busPacket->rank][busPacket->bank].currentBankState == Refreshing) &&
+            currentClockCycle >= bankStates[busPacket->rank][busPacket->bank].nextActivate &&
+            tXAWCountdown[busPacket->rank].size() < xaw_)
+        {
             return true;
-            break;
-        case ACTIVATE:
+        }
+        else
+        {
+            return false;
+        }
+        break;
 
-            if ((*ranks)[busPacket->rank]->mode_ != dramMode::SB && busPacket->bank >= 2)
-            {
-                return false;
-            }
+    case WRITE:
+        if (bankStates[busPacket->rank][busPacket->bank].currentBankState == RowActive &&
+            currentClockCycle >= bankStates[busPacket->rank][busPacket->bank].nextWrite &&
+            busPacket->row == bankStates[busPacket->rank][busPacket->bank].openRowAddress &&
+            rowAccessCounters[busPacket->rank][busPacket->bank] < total_row_accesses_)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        break;
+    case READ:
+        if (bankStates[busPacket->rank][busPacket->bank].currentBankState == RowActive &&
+            currentClockCycle >= bankStates[busPacket->rank][busPacket->bank].nextRead &&
+            busPacket->row == bankStates[busPacket->rank][busPacket->bank].openRowAddress &&
+            rowAccessCounters[busPacket->rank][busPacket->bank] < total_row_accesses_)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        break;
+    case PRECHARGE:
+        if (bankStates[busPacket->rank][busPacket->bank].currentBankState == RowActive &&
+            currentClockCycle >= bankStates[busPacket->rank][busPacket->bank].nextPrecharge)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        break;
 
-            if ((bankStates[busPacket->rank][busPacket->bank].currentBankState == Idle ||
-                 bankStates[busPacket->rank][busPacket->bank].currentBankState == Refreshing) &&
-                currentClockCycle >= bankStates[busPacket->rank][busPacket->bank].nextActivate &&
-                tXAWCountdown[busPacket->rank].size() < xaw_)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            break;
-
-        case WRITE:
-            if (bankStates[busPacket->rank][busPacket->bank].currentBankState == RowActive &&
-                currentClockCycle >= bankStates[busPacket->rank][busPacket->bank].nextWrite &&
-                busPacket->row == bankStates[busPacket->rank][busPacket->bank].openRowAddress &&
-                rowAccessCounters[busPacket->rank][busPacket->bank] < total_row_accesses_)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            break;
-        case READ:
-            if (bankStates[busPacket->rank][busPacket->bank].currentBankState == RowActive &&
-                currentClockCycle >= bankStates[busPacket->rank][busPacket->bank].nextRead &&
-                busPacket->row == bankStates[busPacket->rank][busPacket->bank].openRowAddress &&
-                rowAccessCounters[busPacket->rank][busPacket->bank] < total_row_accesses_)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            break;
-        case PRECHARGE:
-            if (bankStates[busPacket->rank][busPacket->bank].currentBankState == RowActive &&
-                currentClockCycle >= bankStates[busPacket->rank][busPacket->bank].nextPrecharge)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            break;
-
-        default:
-            ERROR("== Error - Trying to issue a crazy bus packet type : ");
-            busPacket->print();
-            exit(0);
+    default:
+        ERROR("== Error - Trying to issue a crazy bus packet type : ");
+        busPacket->print();
+        exit(0);
     }
     return false;
 }
@@ -518,7 +520,7 @@ void CommandQueue::needRefresh(unsigned rank)
     refreshRank = rank;
 }
 
-void CommandQueue::nextRankAndBank(unsigned& rank, unsigned& bank)
+void CommandQueue::nextRankAndBank(unsigned &rank, unsigned &bank)
 {
     if (schedulingPolicy_ == RankThenBankRoundRobin)
     {

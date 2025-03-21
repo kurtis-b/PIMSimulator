@@ -308,13 +308,16 @@ void Rank::readSb(BusPacket *packet)
 {
     if (DEBUG_CMD_TRACE)
     {
-        if (packet->row == config.PIM_REG_RA)
+        if (packet->row == config.PIM_REG_RA_1)
         {
-            if (0x08 <= packet->column && packet->column <= 0x018)
+            if (0x0 <= packet->column && packet->column <= 0x3f)
             {
                 PRINT(OUTLOG_GRF_A("READ_GRF_A"));
             }
-            else if (0x18 <= packet->column && packet->column <= 0x18)
+        }
+        else if (packet->row == config.PIM_REG_RA_2)
+        {
+            if (0x2 <= packet->column && packet->column <= 0x2)
             {
                 PRINT(OUTLOG_GRF_B("READ_GRF_B"));
             }
@@ -330,11 +333,16 @@ void Rank::readSb(BusPacket *packet)
     }
 
 #ifndef NO_STORAGE
-    if (packet->row == config.PIM_REG_RA)
+    if (packet->row == config.PIM_REG_RA_1)
     {
-        if (0x08 <= packet->column && packet->column <= 0x18)
-            *(packet->data) = pimRank->pimBlocks[packet->bank].grfA[packet->column - 0x8];
-        else if (0x18 <= packet->column && packet->column <= 0x18)
+        if (0x0 <= packet->column && packet->column <= 0x3f)
+            *(packet->data) = pimRank->pimBlocks[packet->bank].grfA[packet->column];
+        else
+            banks[packet->bank].read(packet);
+    }
+    else if (packet->row == config.PIM_REG_RA_2)
+    {
+        if (0x2 <= packet->column && packet->column <= 0x2)
             *(packet->data) = pimRank->pimBlocks[packet->bank].grfB;
         else
             banks[packet->bank].read(packet);
@@ -348,7 +356,7 @@ void Rank::writeSb(BusPacket *packet)
 {
     if (DEBUG_CMD_TRACE)
     {
-        if (packet->row == config.PIM_REG_RA || pimRank->isReservedRA(packet->row))
+        if (packet->row == config.PIM_REG_RA_1 || packet->row == config.PIM_REG_RA_2 || pimRank->isReservedRA(packet->row))
         {
             PRINTC(GRAY, OUTLOG_ALL("WRITE"));
         }
@@ -359,7 +367,7 @@ void Rank::writeSb(BusPacket *packet)
     }
 
 #ifndef NO_STORAGE
-    if (!(packet->row == config.PIM_REG_RA) && !pimRank->isReservedRA(packet->row))
+    if (!(packet->row == config.PIM_REG_RA_1) && !(packet->row == config.PIM_REG_RA_2) && !pimRank->isReservedRA(packet->row))
         banks[packet->bank].write(packet);
 #endif
 }
@@ -374,7 +382,11 @@ void Rank::sendToBank(BusPacket *packet)
         else if (mode_ == dramMode::HAB_PIM && pimRank->isToggleCond(packet))
             pimRank->doPIM(packet);
         else
+        {
+            // std::cout << "readHab packet->column: " << packet->column << std::endl;
+            // std::cout << "packet->data: " << packet->data->fp16ToStr() << std::endl;
             pimRank->readHab(packet);
+        }
         packet->busPacketType = DATA;
         readReturnPacket.push_back(packet);
         readReturnCountdown.push_back(config.RL);
@@ -385,7 +397,11 @@ void Rank::sendToBank(BusPacket *packet)
         else if (mode_ == dramMode::HAB_PIM && pimRank->isToggleCond(packet))
             pimRank->doPIM(packet);
         else
+        {
+            // std::cout << "writeHab packet->column: " << packet->column << std::endl;
+            // std::cout << "packet->data: " << packet->data->fp16ToStr() << std::endl;
             pimRank->writeHab(packet);
+        }
         delete (packet);
         break;
     case ACTIVATE:

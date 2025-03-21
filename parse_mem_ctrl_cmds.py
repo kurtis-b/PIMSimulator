@@ -124,7 +124,10 @@ if __name__ == "__main__":
                         elif "JUMP" in cmd:
                             total_jumps += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
                 if "GRFB_TO_BANK_" in activate_data[TAG_KEY]:    
-                    total_rdpuall += activate_data[CMDS_KEY]["WRITE"]
+                    if "WRITE" in activate_data[CMDS_KEY]: # This works for the Samsung trace
+                        total_rdpuall += activate_data[CMDS_KEY]["WRITE"]
+                    else: # This works for the SK Hynix trace
+                        total_rdpuall += activate_data[INVOKES_KEY]
                 elif "PROGRAM_CRFBAR" in activate_data[TAG_KEY]:
                     total_wrbuf += activate_data[CMDS_KEY]["BWRITE_CRF"] * buffer_length
                 elif "MAC_" in activate_data[TAG_KEY]:
@@ -135,14 +138,13 @@ if __name__ == "__main__":
                             total_rdall += activate_data[CMDS_KEY]["PU (not a command)"][cmd] * buffer_length
                     if "BWRITE_GRF_A" in activate_data[CMDS_KEY].keys():
                         total_wrbuf += activate_data[CMDS_KEY]["BWRITE_GRF_A"] * buffer_length
-                elif "WRIO_TO_GRF_" in activate_data[TAG_KEY]:
+                elif "WRIO_TO_GRF" in activate_data[TAG_KEY]:
                     if "PU (not a command)" in activate_data[CMDS_KEY].keys():
                         for cmd, count in activate_data[CMDS_KEY]["PU (not a command)"].items():
                             if "MAC" in cmd:
                                 total_comppuall += activate_data[CMDS_KEY]["PU (not a command)"][cmd]
                                 total_rdall += activate_data[CMDS_KEY]["PU (not a command)"][cmd] * buffer_length
-                    if "BWRITE_GRF_A" in activate_data[CMDS_KEY].keys():
-                        total_wrbuf += activate_data[CMDS_KEY]["BWRITE_GRF_A"] * buffer_length
+                    total_wrbuf += activate_data[CMDS_KEY]["BWRITE_GRF_A"] * buffer_length
                     total_actbuf += activate_data[INVOKES_KEY]
                 elif "PIMBAR" in activate_data[TAG_KEY]:
                     if "BWRITE_GRF_A" in activate_data[CMDS_KEY].keys():
