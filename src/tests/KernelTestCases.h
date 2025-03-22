@@ -121,7 +121,7 @@ public:
         {
             kernel->preloadGemv(&dim_data->weight_npbst_);
             kernel->executeGemv(&dim_data->weight_npbst_, &dim_data->input_npbst_, false);
-            result = new BurstType[dim_data->output_dim_ * dim_data->batch_size_]; // Multiply by 16 because each burst will only have 1 valid output value
+            result = new BurstType[dim_data->output_dim_ * dim_data->batch_size_];
             kernel->readResult(result, pimBankType::ALL_BANK,
                                dim_data->output_dim_ * dim_data->batch_size_, 0x3fff >> 1);
             break;

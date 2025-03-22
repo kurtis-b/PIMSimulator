@@ -77,8 +77,8 @@ class GemvPIMKernel : public IPIMCmd
 public:
     GemvPIMKernel(KernelType ktype) : IPIMCmd(ktype) {}
     virtual vector<PIMCmd> generateKernel(int num_mac_cmds,
-                                          int num_jump_to_be_taken_odd_bank, // These two arguments are from the original Samsung code
-                                          int num_jump_to_be_taken_even_bank) override
+                                          int num_repeat_kernel_insts,
+                                          int num_jumps_before_nop) override
     {
         vector<PIMCmd> pim_cmds;
         if (kernelType == KernelType::GEMV)
@@ -90,6 +90,16 @@ public:
                 tmp_cmds.push_back(PIMCmd(PIMCmdType::MAC, PIMOpdType::GRF_B, PIMOpdType::GRF_A, PIMOpdType::EVEN_BANK,
                                           0, 0, i, 0));
             }
+            // Handle the case where input vector is larger than global buffer
+            // Complete the accumulation before writing the output
+            if (num_jumps_before_nop > 1)
+            {
+                tmp_cmds.push_back(PIMCmd(PIMCmdType::JUMP, num_jumps_before_nop - 1, tmp_cmds.size() + 1));
+            }
+            tmp_cmds.push_back(PIMCmd(PIMCmdType::NOP, 0));
+            // Handle the case where input vector is smaller than global buffer
+            // Write the output and then re-run the kernel
+            tmp_cmds.push_back(PIMCmd(PIMCmdType::JUMP, num_repeat_kernel_insts - 1, tmp_cmds.size() + 1));
             pim_cmds.assign(tmp_cmds.begin(), tmp_cmds.end());
         }
         else

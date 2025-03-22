@@ -490,11 +490,15 @@ void PIMRank::doPIMBlock(BusPacket *packet, PIMCmd cCmd, int pimblock_id)
         // std::cout << "doPIMBlock NOP Write instance for pb: " << pimblock_id << ", and current accumulation is: "<< packet->data->fp16ToStr() << std::endl;
         *(packet->data) = pimBlocks[pimblock_id].grfB;
         rank->banks[pimblock_id].write(packet); // basically write to bank.
+        BurstType burst_zero;
+        pimBlocks[pimblock_id].grfB = burst_zero; // Clear the register
     }
-    else if (cCmd.type_ == PIMCmdType::NOP && packet->busPacketType == READ)
-    {
-        rank->banks[pimblock_id].read(packet); // basically read from bank.
-        // std::cout << "doPIMBlock NOP Read instance for pb: " << pimblock_id << ", and using packet data: " << packet->data->fp16ToStr() << std::endl;
-        pimBlocks[pimblock_id].grfB = *(packet->data);
-    }
+    // Not supporting NOP Reads because it'll rewrite the GRF B, and there's no need
+    // to rewrite this since it's supposed to be an accumulation
+    // else if (cCmd.type_ == PIMCmdType::NOP && packet->busPacketType == READ)
+    // {
+    //     rank->banks[pimblock_id].read(packet);  // basically read from bank.
+    //     std::cout << "doPIMBlock NOP Read instance for pb: " << pimblock_id << ", and using packet data: " << packet->data->fp16ToStr() << std::endl;
+    //     pimBlocks[pimblock_id].grfB = *(packet->data);
+    // }
 }

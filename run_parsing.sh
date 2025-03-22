@@ -8,7 +8,7 @@ output_dim=128
 
 # Loop through each value and run the script in the background
 for value in "${values[@]}"; do
-    python3 parse_animate_faster.py "$value" "$file_name" "$input_dim" "$output_dim" &
+    python3 parse_output_channels.py "$value" "$file_name" "$input_dim" "$output_dim" &
 done
 
 # Wait for all background processes to finish

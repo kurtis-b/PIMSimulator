@@ -383,9 +383,9 @@ void Rank::sendToBank(BusPacket *packet)
             pimRank->doPIM(packet);
         else
         {
-            // std::cout << "readHab packet->column: " << packet->column << std::endl;
-            // std::cout << "packet->data: " << packet->data->fp16ToStr() << std::endl;
+            // std::cout << "readHab packet->row: " << packet->row << ", packet->column: " << packet->column << ", packet->bank: " << packet->bank << std::endl;
             pimRank->readHab(packet);
+            // std::cout << "packet->data: " << packet->data->fp16ToStr() << std::endl;
         }
         packet->busPacketType = DATA;
         readReturnPacket.push_back(packet);

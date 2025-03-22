@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 REM List of values to pass to the script
-set input_dim=256 512 1024
+set input_dim=256 512 1024 2048
 set output_dim=64 128 256
 
 REM Loop through each value and run the script in the background

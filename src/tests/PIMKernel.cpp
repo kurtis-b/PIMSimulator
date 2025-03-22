@@ -392,56 +392,81 @@ void PIMKernel::executeGemv(NumpyBurstType *w_data, NumpyBurstType *i_data, bool
     if (is_tree)
         cerr << "Not implemented!" << std::endl;
 
-    // num_input_tiles will contain the number of MAC commands (16 fp16 macs at a time) needed for 1 output element
-    int num_input_tiles = w_data->bShape[1]; // = (# wt mtx cols * total bits per element) / (device width * burst length)
-    vector<PIMCmd> pim_cmds = PIMCmdGen::getPIMCmds(KernelType::GEMV, num_input_tiles, 0, 0);
+    // second dimension of numpy burst weight mtx shape will contain the number of MAC commands (16 fp16 macs at a time) needed for 1 output element
+    // 1 bank col = (# wt mtx cols * total bits per element) / (device width * burst length)
+    // Num pim exectuions is the number times to run PIM to use the full global buffer, basically how many output elems calculated using the full global buffer
+    int num_repeat_kernel_insts = num_grfA_ / w_data->bShape[1];
+    // Handle the case where the global buffer is larger than the weight matrix column size
+    // In this case, the input vector is copied to the global buffer more than once to fill it
+    if (num_repeat_kernel_insts == 0)
+        num_repeat_kernel_insts = 1;
+    int num_full_pim_executions = w_data->bShape[1] / num_grfA_;
+    if (num_full_pim_executions == 0)
+        num_full_pim_executions = 1;
+    int num_grfa_to_use = num_grfA_ / num_repeat_kernel_insts;
+    vector<PIMCmd> pim_cmds = PIMCmdGen::getPIMCmds(KernelType::GEMV, num_grfa_to_use, num_repeat_kernel_insts, num_full_pim_executions);
     setControl(&bst_hab_pim_, true, getToggleCond(), false, true);
     parkIn();
     changePIMMode(dramMode::SB, dramMode::HAB);
     programCrf(pim_cmds);
 
-    DEBUG("num_input_tiles: " << num_input_tiles);
     for (auto &pim_cmd : pim_cmds)
         DEBUG("pim_cmd: " << pim_cmd.toStr());
 
+    // Tile the output vector calculation across the banks across the channels, so loop below is for 1 bank/1 channel
+    int num_output_tiles = ceil(((double)w_data->bShape[0] / (num_banks_)) / num_pim_chans_);
     int num_batch = i_data->bShape[0];
-    int num_output_tiles = ceil(((double)w_data->bShape[0] / (num_banks_)) / num_pim_chans_); // Tile the output vector calculation across the banks across the channels, so this is for 1 bank/1 channel
+    int num_y_tiles = num_output_tiles / num_repeat_kernel_insts;
+    if (num_y_tiles == 0)
+        num_y_tiles = 1;
     for (int b = 0; b < num_batch; b++)
     {
-        for (int tiled_y = 0; tiled_y < num_output_tiles; tiled_y++)
+        for (int tiled_y = 0; tiled_y < num_y_tiles; tiled_y++)
         {
             changePIMMode(dramMode::HAB, dramMode::HAB_PIM); // PC reset.
-            // Input upload to GRF
-            for (int ch_idx = 0; ch_idx < num_pim_chans_; ch_idx++)
+            for (int offset = 0; offset < num_full_pim_executions; offset++)
             {
-                for (int ra_idx = 0; ra_idx < num_pim_ranks_; ra_idx++)
+                // Input upload to GRF. The below loop should fill the global buffer (all GRF A's) even if
+                // the input vector is smaller than the size of the global buffer (< 1024 fp16 elements)
+                for (int ch_idx = 0; ch_idx < num_pim_chans_; ch_idx++)
                 {
-                    for (int g_idx = 0; g_idx < w_data->bShape[1]; g_idx++) // Assuming that the input vector can fit within the GRF A's, which will act as global buffer in this SK Hynix port
+                    for (int ra_idx = 0; ra_idx < num_pim_ranks_; ra_idx++)
                     {
-                        string str = "WRIO_TO_GRFA_";
-                        // The input vector will be broadcasted to GRF A's of each pim block. This is to mimic the global buffer in SK Hynix
-                        uint64_t addr = pim_addr_mgr_->addrGen(ch_idx, ra_idx, 0, 0, pim_reg_ra_2, g_idx);
+                        for (int repeat = 0; repeat < num_repeat_kernel_insts; repeat++)
+                        {
+                            for (int inp_tile_idx = 0; inp_tile_idx < num_grfA_ / num_repeat_kernel_insts; inp_tile_idx++)
+                            {
+                                string str = "WRIO_TO_GRFA_";
+                                // The input vector will be broadcasted to GRF A's of each pim block. This is to mimic the global buffer in SK Hynix
+                                int g_idx = (repeat * w_data->bShape[1]) % num_grfA_ + inp_tile_idx;
+                                uint64_t addr = pim_addr_mgr_->addrGen(ch_idx, ra_idx, 0, 0, pim_reg_ra_2, g_idx);
 
-                        int input_idx = b * w_data->bShape[1] + g_idx;
-                        mem_->addTransaction(true, addr, str, &i_data->bData[input_idx]);
-
-                        // std::cout << "Add transaction to mem sys with addr: " << std::hex << addr << std::dec << ", input_idx: " << input_idx << std::endl;
+                                int input_idx = (offset * num_grfA_) % w_data->bShape[1] + inp_tile_idx;
+                                mem_->addTransaction(true, addr, str, &i_data->bData[input_idx]);
+                                // std::cout << "Add transaction to mem sys with addr: " << std::hex << addr << std::dec << ", input_idx: " << input_idx << std::endl;
+                            }
+                        }
+                        mem_->addBarrier(ch_idx);
                     }
                 }
-                mem_->addBarrier(ch_idx);
-            }
 
-            // Execute MACs
-            for (int x = 0; x < num_input_tiles; x++) // Each x will contain a tile of 16 fp16 that can be referenced from the operand
-            {
-                int row = tiled_y * num_input_tiles / pim_addr_mgr_->num_cols_per_bl_;
-                int col = (tiled_y * num_input_tiles) % pim_addr_mgr_->num_cols_per_bl_ + x;
-                // This runs MAC for all banks (pim blocks) with the GRF A (input vector tile) broadcasted to the banks (based on the commands in CRF),
-                // and the corresponding row/col executed for MAC. Each pim block will contain one element in its GRF B as the output element.
-                addTransactionAll(false, 0, 0, row, col, "MAC_", &null_bst_, true);
+                // Execute MACs
+                for (int tiled_mac_iter = 0; tiled_mac_iter < num_grfA_; tiled_mac_iter++) // Each x will contain a tile of 16 fp16 that can be referenced from the operand
+                {
+                    int row = tiled_y * num_full_pim_executions + offset;
+                    int col = tiled_mac_iter;
+                    // This runs MAC for all banks (pim blocks) with the GRF A (input vector tile) broadcasted to the banks (based on the commands in CRF),
+                    // and the corresponding row/col executed for MAC. Each pim block will contain one element in its GRF B as the output element.
+                    addTransactionAll(false, 0, 0, row, col, "MAC_", &null_bst_, true);
+                    // std::cout << "Add transaction for MAC with row " << row << " col " << col << std::endl;
+                    if ((offset * num_grfA_ + (tiled_mac_iter + 1)) % w_data->bShape[1] == 0)
+                    {
+                        // Column should start at 0, so not adding 1 to tiled_mac_iter when dividing
+                        // std::cout << "Writing GRFB to col " << tiled_y * num_repeat_kernel_insts + tiled_mac_iter / w_data->bShape[1] << std::endl;
+                        addTransactionAll(true, 0, 0, pim_reg_ra_1 >> 1, tiled_y * num_repeat_kernel_insts + tiled_mac_iter / w_data->bShape[1], "GRFB_TO_BANK_", &null_bst_, true);
+                    }
+                }
             }
-            // std::cout << "Writing GRF Bs to their banks at row " << (pim_reg_ra_1 >> 1) << std::endl;
-            addTransactionAll(true, 0, 0, pim_reg_ra_1 >> 1, tiled_y, "GRFB_TO_BANK_", &null_bst_, true);
             changePIMMode(dramMode::HAB_PIM, dramMode::HAB); // for grfBReset
         }
     }

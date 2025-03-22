@@ -2,10 +2,10 @@ Total counts of the commands executed after an activation with each tag for 1 ch
 
 Total activates: 119
 Total precharges: 120
-Total writes: 7
+Total writes: 23
 Total reads: 1312
-Total macs: 1024, Total jumps 7x: 0, Total nops 8x: 0
-Total PU executions: 1024
+Total macs: 1024, Total jumps 7x: 0, Total nops 8x: 16
+Total PU executions: 1152
 
 Total RD_PU_ALL: 16
 Total COMP_PU_ALL: 1024
@@ -53,8 +53,9 @@ Total WR_BUF: 16384
   READ: 64
 
 10--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 11--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -72,8 +73,9 @@ Total WR_BUF: 16384
   READ: 64
 
 14--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 15--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -91,8 +93,9 @@ Total WR_BUF: 16384
   READ: 64
 
 18--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 19--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -111,8 +114,9 @@ Total WR_BUF: 16384
   READ: 64
 
 22--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 23--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -130,8 +134,9 @@ Total WR_BUF: 16384
   READ: 64
 
 26--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 27--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -149,8 +154,9 @@ Total WR_BUF: 16384
   READ: 64
 
 30--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 31--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -168,8 +174,9 @@ Total WR_BUF: 16384
   READ: 64
 
 34--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 35--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -187,8 +194,9 @@ Total WR_BUF: 16384
   READ: 64
 
 38--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 39--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -207,8 +215,9 @@ Total WR_BUF: 16384
   READ: 64
 
 42--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 43--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -226,8 +235,9 @@ Total WR_BUF: 16384
   READ: 64
 
 46--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 47--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -245,8 +255,9 @@ Total WR_BUF: 16384
   READ: 64
 
 50--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 51--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -264,8 +275,9 @@ Total WR_BUF: 16384
   READ: 64
 
 54--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 55--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -283,8 +295,9 @@ Total WR_BUF: 16384
   READ: 64
 
 58--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 59--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -303,8 +316,9 @@ Total WR_BUF: 16384
   READ: 64
 
 62--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 63--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -322,8 +336,9 @@ Total WR_BUF: 16384
   READ: 64
 
 66--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 67--Activate tag: PIMBAR invoked 1 time
   GRF_B_ZEROIZE: 1
@@ -341,8 +356,9 @@ Total WR_BUF: 16384
   READ: 64
 
 70--Activate tag: GRFB_TO_BANK_BAR invoked 1 time
-  PIM_TO_BANK: 1
   PRECHARGE: 1
+  PU (not a command): {'[64] NOP 1x': 1}
+  WRITE: 1
 
 71--Activate tag: PIMBAR invoked 1 time
   HAB mode: 1
