@@ -426,27 +426,30 @@ void PIMKernel::executeGemv(NumpyBurstType *w_data, NumpyBurstType *i_data, bool
             changePIMMode(dramMode::HAB, dramMode::HAB_PIM); // PC reset.
             for (int offset = 0; offset < num_full_pim_executions; offset++)
             {
-                // Input upload to GRF. The below loop should fill the global buffer (all GRF A's) even if
-                // the input vector is smaller than the size of the global buffer (< 1024 fp16 elements)
-                for (int ch_idx = 0; ch_idx < num_pim_chans_; ch_idx++)
+                if (tiled_y == 0 || num_full_pim_executions > 1)
                 {
-                    for (int ra_idx = 0; ra_idx < num_pim_ranks_; ra_idx++)
+                    // Input upload to GRF. The below loop should fill the global buffer (all GRF A's) even if
+                    // the input vector is smaller than the size of the global buffer (< 1024 fp16 elements)
+                    for (int ch_idx = 0; ch_idx < num_pim_chans_; ch_idx++)
                     {
-                        for (int repeat = 0; repeat < num_repeat_kernel_insts; repeat++)
+                        for (int ra_idx = 0; ra_idx < num_pim_ranks_; ra_idx++)
                         {
-                            for (int inp_tile_idx = 0; inp_tile_idx < num_grfA_ / num_repeat_kernel_insts; inp_tile_idx++)
+                            for (int repeat = 0; repeat < num_repeat_kernel_insts; repeat++)
                             {
-                                string str = "WRIO_TO_GRFA_";
-                                // The input vector will be broadcasted to GRF A's of each pim block. This is to mimic the global buffer in SK Hynix
-                                int g_idx = (repeat * w_data->bShape[1]) % num_grfA_ + inp_tile_idx;
-                                uint64_t addr = pim_addr_mgr_->addrGen(ch_idx, ra_idx, 0, 0, pim_reg_ra_2, g_idx);
+                                for (int inp_tile_idx = 0; inp_tile_idx < num_grfA_ / num_repeat_kernel_insts; inp_tile_idx++)
+                                {
+                                    string str = "WRIO_TO_GRFA_";
+                                    // The input vector will be broadcasted to GRF A's of each pim block. This is to mimic the global buffer in SK Hynix
+                                    int g_idx = (repeat * w_data->bShape[1]) % num_grfA_ + inp_tile_idx;
+                                    uint64_t addr = pim_addr_mgr_->addrGen(ch_idx, ra_idx, 0, 0, pim_reg_ra_2, g_idx);
 
-                                int input_idx = (offset * num_grfA_) % w_data->bShape[1] + inp_tile_idx;
-                                mem_->addTransaction(true, addr, str, &i_data->bData[input_idx]);
-                                // std::cout << "Add transaction to mem sys with addr: " << std::hex << addr << std::dec << ", input_idx: " << input_idx << std::endl;
+                                    int input_idx = (offset * num_grfA_) % w_data->bShape[1] + inp_tile_idx;
+                                    mem_->addTransaction(true, addr, str, &i_data->bData[input_idx]);
+                                    // std::cout << "Add transaction to mem sys with addr: " << std::hex << addr << std::dec << ", input_idx: " << input_idx << std::endl;
+                                }
                             }
+                            mem_->addBarrier(ch_idx);
                         }
-                        mem_->addBarrier(ch_idx);
                     }
                 }
 

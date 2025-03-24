@@ -7,7 +7,7 @@ Total reads: 1192
 Total macs: 1024, Total jumps 7x: 16, Total nops 8x: 8
 Total PU executions: 1200
 
-Total RD_PU_ALL: 16
+Total RD_PU_ALL: 8
 Total COMP_PU_ALL: 1024
 Total RD_ALL: 16384
 Total ACT_BUF: 16
