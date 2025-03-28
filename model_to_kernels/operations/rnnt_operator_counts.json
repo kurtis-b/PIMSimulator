@@ -1,0 +1,645 @@
+{
+    "Constant": {
+        "dimensions": [
+            {
+                "inputs": [],
+                "outputs": [
+                    [
+                        1,
+                        1,
+                        256
+                    ]
+                ],
+                "weights": [],
+                "count": 1,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/Constant",
+                            "inputs": [],
+                            "outputs": [
+                                "/decoder/Constant_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            },
+            {
+                "inputs": [],
+                "outputs": [
+                    []
+                ],
+                "weights": [],
+                "count": 2,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/Constant_1",
+                            "inputs": [],
+                            "outputs": [
+                                "/decoder/Constant_1_output_0"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "/decoder/Constant_3",
+                            "inputs": [],
+                            "outputs": [
+                                "/decoder/Constant_3_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            },
+            {
+                "inputs": [],
+                "outputs": [
+                    [
+                        1
+                    ]
+                ],
+                "weights": [],
+                "count": 7,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "Constant_15",
+                            "inputs": [],
+                            "outputs": [
+                                "onnx::Unsqueeze_77"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "/decoder/Constant_2",
+                            "inputs": [],
+                            "outputs": [
+                                "/decoder/Constant_2_output_0"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "Constant_18",
+                            "inputs": [],
+                            "outputs": [
+                                "onnx::Concat_125"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "Constant_24",
+                            "inputs": [],
+                            "outputs": [
+                                "onnx::Unsqueeze_88"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "/decoder/Constant_4",
+                            "inputs": [],
+                            "outputs": [
+                                "/decoder/Constant_4_output_0"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "Constant_27",
+                            "inputs": [],
+                            "outputs": [
+                                "onnx::Concat_126"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "/decoder/Constant_5",
+                            "inputs": [],
+                            "outputs": [
+                                "/decoder/Constant_5_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "Transpose": {
+        "dimensions": [
+            {
+                "inputs": [],
+                "outputs": [
+                    [
+                        5,
+                        1,
+                        256
+                    ]
+                ],
+                "weights": [],
+                "count": 1,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/Transpose",
+                            "inputs": [],
+                            "outputs": [
+                                "/decoder/Transpose_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            },
+            {
+                "inputs": [
+                    [
+                        5,
+                        1,
+                        256
+                    ]
+                ],
+                "outputs": [
+                    [
+                        1,
+                        5,
+                        256
+                    ]
+                ],
+                "weights": [],
+                "count": 1,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/Transpose_1",
+                            "inputs": [
+                                "/decoder/Squeeze_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Transpose_1_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "Shape": {
+        "dimensions": [
+            {
+                "inputs": [
+                    [
+                        5,
+                        1,
+                        256
+                    ]
+                ],
+                "outputs": [
+                    [
+                        3
+                    ]
+                ],
+                "weights": [],
+                "count": 2,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/Shape",
+                            "inputs": [
+                                "/decoder/Transpose_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Shape_output_0"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "/decoder/Shape_1",
+                            "inputs": [
+                                "/decoder/Transpose_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Shape_1_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "Gather": {
+        "dimensions": [
+            {
+                "inputs": [
+                    [
+                        3
+                    ],
+                    []
+                ],
+                "outputs": [
+                    []
+                ],
+                "weights": [],
+                "count": 2,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/Gather",
+                            "inputs": [
+                                "/decoder/Shape_output_0",
+                                "/decoder/Constant_1_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Gather_output_0"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "/decoder/Gather_1",
+                            "inputs": [
+                                "/decoder/Shape_1_output_0",
+                                "/decoder/Constant_3_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Gather_1_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "Unsqueeze": {
+        "dimensions": [
+            {
+                "inputs": [
+                    [],
+                    [
+                        1
+                    ]
+                ],
+                "outputs": [
+                    [
+                        1
+                    ]
+                ],
+                "weights": [],
+                "count": 2,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "Unsqueeze_16",
+                            "inputs": [
+                                "/decoder/Gather_output_0",
+                                "onnx::Unsqueeze_77"
+                            ],
+                            "outputs": [
+                                "onnx::Concat_78"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "Unsqueeze_25",
+                            "inputs": [
+                                "/decoder/Gather_1_output_0",
+                                "onnx::Unsqueeze_88"
+                            ],
+                            "outputs": [
+                                "onnx::Concat_89"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "Concat": {
+        "dimensions": [
+            {
+                "inputs": [
+                    [
+                        1
+                    ],
+                    [
+                        1
+                    ],
+                    [
+                        1
+                    ]
+                ],
+                "outputs": [
+                    [
+                        3
+                    ]
+                ],
+                "weights": [],
+                "count": 2,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/Concat",
+                            "inputs": [
+                                "onnx::Concat_125",
+                                "onnx::Concat_78",
+                                "/decoder/Constant_2_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Concat_output_0"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "/decoder/Concat_1",
+                            "inputs": [
+                                "onnx::Concat_126",
+                                "onnx::Concat_89",
+                                "/decoder/Constant_4_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Concat_1_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "Expand": {
+        "dimensions": [
+            {
+                "inputs": [
+                    [
+                        1,
+                        1,
+                        256
+                    ],
+                    [
+                        3
+                    ]
+                ],
+                "outputs": [
+                    [
+                        0,
+                        0,
+                        256
+                    ]
+                ],
+                "weights": [],
+                "count": 2,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/Expand",
+                            "inputs": [
+                                "/decoder/Constant_output_0",
+                                "/decoder/Concat_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Expand_output_0"
+                            ],
+                            "weights": []
+                        }
+                    },
+                    {
+                        "node": {
+                            "name": "/decoder/Expand_1",
+                            "inputs": [
+                                "/decoder/Constant_output_0",
+                                "/decoder/Concat_1_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Expand_1_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "LSTM": {
+        "dimensions": [
+            {
+                "inputs": [
+                    [
+                        5,
+                        1,
+                        256
+                    ],
+                    [
+                        0,
+                        0,
+                        256
+                    ],
+                    [
+                        0,
+                        0,
+                        256
+                    ]
+                ],
+                "outputs": [
+                    [
+                        5,
+                        1,
+                        1,
+                        256
+                    ],
+                    [
+                        1,
+                        1,
+                        256
+                    ],
+                    [
+                        1,
+                        1,
+                        256
+                    ]
+                ],
+                "weights": [
+                    [
+                        1,
+                        1024,
+                        256
+                    ],
+                    [
+                        1,
+                        1024,
+                        256
+                    ],
+                    [
+                        1,
+                        2048
+                    ]
+                ],
+                "count": 1,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/LSTM",
+                            "inputs": [
+                                "/decoder/Transpose_output_0",
+                                "/decoder/Expand_output_0",
+                                "/decoder/Expand_1_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/LSTM_output_0",
+                                "/decoder/LSTM_output_1",
+                                "/decoder/LSTM_output_2"
+                            ],
+                            "weights": [
+                                "onnx::LSTM_122",
+                                "onnx::LSTM_123",
+                                "onnx::LSTM_124"
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "Squeeze": {
+        "dimensions": [
+            {
+                "inputs": [
+                    [
+                        5,
+                        1,
+                        1,
+                        256
+                    ],
+                    [
+                        1
+                    ]
+                ],
+                "outputs": [
+                    [
+                        5,
+                        1,
+                        256
+                    ]
+                ],
+                "weights": [],
+                "count": 1,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/decoder/Squeeze",
+                            "inputs": [
+                                "/decoder/LSTM_output_0",
+                                "/decoder/Constant_5_output_0"
+                            ],
+                            "outputs": [
+                                "/decoder/Squeeze_output_0"
+                            ],
+                            "weights": []
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "MatMul": {
+        "dimensions": [
+            {
+                "inputs": [
+                    [
+                        1,
+                        5,
+                        256
+                    ]
+                ],
+                "outputs": [
+                    [
+                        1,
+                        5,
+                        30
+                    ]
+                ],
+                "weights": [
+                    [
+                        256,
+                        30
+                    ]
+                ],
+                "count": 1,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/fc/MatMul",
+                            "inputs": [
+                                "/decoder/Transpose_1_output_0"
+                            ],
+                            "outputs": [
+                                "/fc/MatMul_output_0"
+                            ],
+                            "weights": [
+                                "onnx::MatMul_127"
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "Add": {
+        "dimensions": [
+            {
+                "inputs": [
+                    [
+                        1,
+                        5,
+                        30
+                    ]
+                ],
+                "outputs": [],
+                "weights": [
+                    [
+                        30
+                    ]
+                ],
+                "count": 1,
+                "node_names": [
+                    {
+                        "node": {
+                            "name": "/fc/Add",
+                            "inputs": [
+                                "/fc/MatMul_output_0"
+                            ],
+                            "outputs": [],
+                            "weights": [
+                                "fc.bias"
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

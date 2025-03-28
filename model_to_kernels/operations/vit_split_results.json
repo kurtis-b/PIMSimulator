@@ -1,0 +1,78 @@
+{
+    "Eltwise-Mul": [
+        {
+            "M": 768,
+            "batch": 0,
+            "total_invokes": 25
+        }
+    ],
+    "Eltwise-Add": [
+        {
+            "M": 1,
+            "batch": 0,
+            "total_invokes": 1
+        },
+        {
+            "M": 768,
+            "batch": 0,
+            "total_invokes": 72
+        },
+        {
+            "M": 768,
+            "batch": 1,
+            "total_invokes": 12
+        },
+        {
+            "M": 3072,
+            "batch": 0,
+            "total_invokes": 12
+        },
+        {
+            "M": 768,
+            "batch": 0,
+            "total_invokes": 1
+        }
+    ],
+    "Gemv": [
+        {
+            "M": 768,
+            "K": 197,
+            "batch": 0,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 0,
+            "total_invokes": 36
+        },
+        {
+            "M": 768,
+            "K": 197,
+            "batch": 1,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 768,
+            "total_invokes": 12
+        },
+        {
+            "M": 768,
+            "K": 197,
+            "batch": 0,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 0,
+            "total_invokes": 12
+        },
+        {
+            "M": 3072,
+            "K": 197,
+            "batch": 0,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 0,
+            "total_invokes": 12
+        },
+        {
+            "M": 768,
+            "K": 768,
+            "batch": 1,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 768,
+            "total_invokes": 1
+        }
+    ]
+}

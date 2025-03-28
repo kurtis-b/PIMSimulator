@@ -1,0 +1,20 @@
+{
+    "Gemv": [
+        {
+            "M": 20,
+            "K": 30,
+            "batch": 1,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 20,
+            "total_invokes": 12
+        },
+        {
+            "M": 5,
+            "K": 20,
+            "batch": 1,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 5,
+            "total_invokes": 1
+        }
+    ]
+}

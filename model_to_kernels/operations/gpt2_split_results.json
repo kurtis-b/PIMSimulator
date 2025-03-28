@@ -1,0 +1,50 @@
+{
+    "Eltwise-Add": [
+        {
+            "M": 768,
+            "batch": 1,
+            "total_invokes": 25
+        }
+    ],
+    "Eltwise-Mul": [
+        {
+            "M": 768,
+            "batch": 1,
+            "total_invokes": 25
+        }
+    ],
+    "Gemv": [
+        {
+            "M": 768,
+            "K": 768,
+            "batch": 10,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 7680,
+            "total_invokes": 12
+        },
+        {
+            "M": 768,
+            "K": 768,
+            "batch": 0,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 0,
+            "total_invokes": 12
+        },
+        {
+            "M": 768,
+            "K": 768,
+            "batch": 10,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 7680,
+            "total_invokes": 12
+        },
+        {
+            "M": 3072,
+            "K": 3072,
+            "batch": 10,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 30720,
+            "total_invokes": 12
+        }
+    ]
+}
