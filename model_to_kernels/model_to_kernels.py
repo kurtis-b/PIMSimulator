@@ -111,101 +111,200 @@ def process_and_split_operators(onnx_file, output_dir):
     split_results = {}
 
     for op_type, details in operator_counts.items():
-        if op_type in ["Add", "Mul", "Gemm", "MatMul"]: # TODO: Add Convs
+        if op_type in ["Add", "Mul", "Gemm", "MatMul", "Conv"]: # TODO: Add Convs
             for dimension_info in details["dimensions"]:
                 inputs = dimension_info.get("inputs", [])
                 outputs = dimension_info.get("outputs", [])
                 weights = dimension_info.get("weights", [])
 
-                if op_type == "Gemm" and len(weights) == 2:
+                if not inputs or not outputs or not weights:
+                    # Skip if any of these are empty
+                    continue
+                if op_type == "Gemm":
                     # Extract M, K, and bias dimensions
-                    batch = inputs[0][0] if len(inputs[0]) > 1 else None
-                    M = weights[0][0] if len(weights[0]) > 0 else None
-                    K = inputs[0][1] if len(inputs[0]) > 1 else None
-                    bias = weights[1][1] if len(weights[1]) > 1 else None
+                    batch = inputs[0][0] 
+                    M = outputs[0][1]
+                    K = inputs[0][1] 
+                    bias = weights[1][0] 
 
                     if M != bias:
                         print("Weight rows don't match bias size")
-                    if M and K:
-                        # Split MatMul into multiple matrix-vector multiplications along N
-                        if "Gemv" not in split_results:
-                            split_results["Gemv"] = [{
-                                "M": M, # weight rows
-                                "K": K, # weight columns
-                                "batch": batch,
-                                "reuse_type": "vector reuse",
-                                "reuse_amount": M * batch,
-                                "total_invokes": dimension_info["count"]
-                            }]
-                        else:
-                            split_results["Gemv"].append({
-                                "M": M, # weight rows
-                                "K": K, # weight columns
-                                "batch": batch,
-                                "reuse_type": "vector reuse",
-                                "reuse_amount": M * batch,
-                                "total_invokes": dimension_info["count"]
-                            })
-                elif op_type == "MatMul" and len(weights) == 1:
+                        print('Inputs:', inputs)
+                        print('Outputs:', outputs)
+                        print('Weights:', weights)
+                    # Split MatMul into multiple matrix-vector multiplications along N
+                    if "Gemv" not in split_results:
+                        split_results["Gemv"] = [{
+                            "M": M, # weight rows
+                            "K": K, # weight columns
+                            "batch": batch,
+                            "reuse_type": "vector reuse",
+                            "reuse_amount": M * batch,
+                            "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                            "total_invokes": dimension_info["count"]
+                        }]
+                        continue
+                    found_result = False
+                    for result in split_results["Gemv"]:
+                        if result["M"] == M and result["K"] == K and result["batch"] == batch:
+                            result["invokes"] += [node_name["node"]["name"] for node_name in dimension_info["node_names"]]
+                            result["total_invokes"] += dimension_info["count"]
+                            found_result = True
+                            break
+                    if not found_result:
+                        split_results["Gemv"].append({
+                        "M": M, # weight rows
+                        "K": K, # weight columns
+                        "batch": batch,
+                        "reuse_type": "vector reuse",
+                        "reuse_amount": M * batch,
+                        "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                        "total_invokes": dimension_info["count"]
+                        })
+                elif op_type == "MatMul":
                     # Extract M and K dimensions
-                    batch = inputs[0][0] if len(inputs[0]) > 1 else None
-                    M = weights[0][0] if len(weights[0]) > 0 else None
-                    K = inputs[0][1] if len(inputs[0]) > 1 else None
+                    batch = inputs[0][0] 
+                    M = outputs[0][1]
+                    K = inputs[0][1] 
 
-                    if M and K:
-                        # Split MatMul into multiple matrix-vector multiplications along N
-                        if "Gemv" not in split_results:
-                            split_results["Gemv"] = [{
-                                "M": M, # weight rows
-                                "K": K, # weight columns
-                                "batch": batch,
-                                "reuse_type": "vector reuse",
-                                "reuse_amount": M * batch,
-                                "total_invokes": dimension_info["count"]
-                            }]
-                        else:
-                            split_results["Gemv"].append({
-                                "M": M, # weight rows
-                                "K": K, # weight columns
-                                "batch": batch,
-                                "reuse_type": "vector reuse",
-                                "reuse_amount": M * batch,
-                                "total_invokes": dimension_info["count"]
-                            })
-                elif op_type == "Add" and len(weights) == 1:
+                    # Split MatMul into multiple matrix-vector multiplications along N
+                    if "Gemv" not in split_results:
+                        split_results["Gemv"] = [{
+                            "M": M, # weight rows
+                            "K": K, # weight columns
+                            "batch": batch,
+                            "reuse_type": "vector reuse",
+                            "reuse_amount": M * batch,
+                            "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                            "total_invokes": dimension_info["count"]
+                        }]
+                        continue
+                    found_result = False
+                    for result in split_results["Gemv"]:
+                        if result["M"] == M and result["K"] == K and result["batch"] == batch:
+                            result["invokes"] += [node_name["node"]["name"] for node_name in dimension_info["node_names"]]
+                            result["total_invokes"] += dimension_info["count"]
+                            found_result = True
+                            break
+                    if not found_result:
+                        split_results["Gemv"].append({
+                        "M": M, # weight rows
+                        "K": K, # weight columns
+                        "batch": batch,
+                        "reuse_type": "vector reuse",
+                        "reuse_amount": M * batch,
+                        "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                        "total_invokes": dimension_info["count"]
+                        })
+                elif op_type == "Add":
                     # Handle element-wise Add
-                    if weights: # If the weights list empty, then it's adding two inputs and there's no reuse opportunity
-                        batch = inputs[0][0] if len(inputs[0]) > 0 else None
-                        if "Eltwise-Add" not in split_results:
-                            split_results["Eltwise-Add"] = [{
-                                "M": weights[0][0],
-                                "batch": batch,
-                                "total_invokes": dimension_info["count"]
-                            }]
-                        else:
-                            split_results["Eltwise-Add"].append({
-                                "M": weights[0][0],
-                                "batch": batch,
-                                "total_invokes": dimension_info["count"]
-                            })
+                    M = weights[0][0] 
+                    batch = inputs[0][0] if len(inputs[0]) > 0 else None
+                    if "Eltwise-Add" not in split_results:
+                        split_results["Eltwise-Add"] = [{
+                            "M": M,
+                            "batch": batch,
+                            "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                            "total_invokes": dimension_info["count"]
+                        }]
+                        continue
+                    found_result = False
+                    for result in split_results["Eltwise-Add"]:
+                        if result["M"] == M and result["batch"] == batch:
+                            result["invokes"] += [node_name["node"]["name"] for node_name in dimension_info["node_names"]]
+                            result["total_invokes"] += dimension_info["count"]
+                            found_result = True
+                            break
+                    if not found_result:
+                        split_results["Eltwise-Add"].append({
+                            "M": M,
+                            "batch": batch,
+                            "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                            "total_invokes": dimension_info["count"]
+                        })
                 
-                elif op_type == "Mul" and len(weights) == 1:
+                elif op_type == "Mul":
                     # Handle element-wise Mul
-                    if weights: # If the weights list empty, then it's adding two inputs and there's no reuse opportunity
-                        batch = inputs[0][0] if len(inputs[0]) > 0 else None
-                        if "Eltwise-Mul" not in split_results:
-                            split_results["Eltwise-Mul"] = [{
-                                "M": weights[0][0],
-                                "batch": batch,
-                                "total_invokes": dimension_info["count"]
-                            }]
-                        else:
-                            split_results["Eltwise-Mul"].append({
-                                "M": weights[0][0],
-                                "batch": batch,
-                                "total_invokes": dimension_info["count"]
-                            })
+                    M = weights[0][0] 
+                    batch = inputs[0][0] if len(inputs[0]) > 0 else None
+                    if "Eltwise-Mul" not in split_results:
+                        split_results["Eltwise-Mul"] = [{
+                            "M": M,
+                            "batch": batch,
+                            "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                            "total_invokes": dimension_info["count"]
+                        }]
+                        continue
+                    found_result = False
+                    for result in split_results["Eltwise-Mul"]:
+                        if result["M"] == M and result["batch"] == batch:
+                            result["invokes"] += [node_name["node"]["name"] for node_name in dimension_info["node_names"]]
+                            result["total_invokes"] += dimension_info["count"]
+                            found_result = True
+                            break
+                    if not found_result:
+                        split_results["Eltwise-Mul"].append({
+                            "M": M,
+                            "batch": batch,
+                            "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                            "total_invokes": dimension_info["count"]
+                        })
+                elif op_type == "Conv":
+                    # Extract the batch, image height, image width, and kernel dimensions
+                    batch = inputs[0][0] 
+                    channels = inputs[0][1]
+                    image_height = inputs[0][2]
+                    image_width = inputs[0][3]
+                    num_filters = weights[0][0]
+                    kernel_channels = weights[0][1]
+                    kernel_height = weights[0][2]
+                    kernel_width = weights[0][3]
+                    
+                    if channels != kernel_channels:
+                        print("Input channels do not match kernel channels")
+                        print('Inputs:', inputs)
+                        print('Outputs:', outputs)
+                        print('Weights:', weights)
+                        continue
 
+                    # A convolution can be converted into GEMM with dimensions
+                    # PQ x CRS for the input activations, and CRS x K for the weights
+                    # P/Q are the output image dims, C is channels, R/S are the kernel dims,
+                    # and K is the number of filters
+
+                    M = (image_height - kernel_height) * (image_width - kernel_width)
+                    K = kernel_height * kernel_width * channels
+                    reuse_amt = num_filters * batch * M
+                    # Split MatMul into multiple matrix-vector multiplications along N
+                    if "Gemv" not in split_results:
+                        split_results["Gemv"] = [{
+                            "M": M, # input activation rows
+                            "K": K, # input activation columns
+                            "batch": batch,
+                            "reuse_type": "vector reuse",
+                            "reuse_amount": reuse_amt, 
+                            "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                            "total_invokes": dimension_info["count"]
+                        }]
+                        continue
+                    found_result = False
+                    for result in split_results["Gemv"]:
+                        if result["M"] == M and result["K"] == K and result["batch"] == batch:
+                            result["invokes"] += [node_name["node"]["name"] for node_name in dimension_info["node_names"]]
+                            result["total_invokes"] += dimension_info["count"]
+                            found_result = True
+                            break
+                    if not found_result:
+                        split_results["Gemv"].append({
+                        "M": M, # weight rows
+                        "K": K, # weight columns
+                        "batch": batch,
+                        "reuse_type": "vector reuse",
+                        "reuse_amount": reuse_amt,
+                        "invokes": [node_name["node"]["name"] for node_name in dimension_info["node_names"]],
+                        "total_invokes": dimension_info["count"]
+                        })
+                    
     # Save the split results to a JSON file
     split_results_file_path = os.path.join(output_dir, f"{os.path.splitext(os.path.basename(onnx_file))[0]}_split_results.json")
     with open(split_results_file_path, "w") as split_results_file:

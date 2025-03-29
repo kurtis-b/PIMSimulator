@@ -1,18 +1,14 @@
 {
     "Gemv": [
         {
-            "M": 256,
+            "M": 5,
             "K": 5,
             "batch": 1,
             "reuse_type": "vector reuse",
-            "reuse_amount": 256,
-            "total_invokes": 1
-        }
-    ],
-    "Eltwise-Add": [
-        {
-            "M": 30,
-            "batch": 1,
+            "reuse_amount": 5,
+            "invokes": [
+                "/fc/MatMul"
+            ],
             "total_invokes": 1
         }
     ]

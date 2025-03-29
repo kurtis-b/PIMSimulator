@@ -1,1 +1,70 @@
-{}
+{
+    "Gemv": [
+        {
+            "M": 14641,
+            "K": 392,
+            "batch": 1,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 937024,
+            "invokes": [
+                "/main/main.0/Conv"
+            ],
+            "total_invokes": 1
+        },
+        {
+            "M": 15376,
+            "K": 1024,
+            "batch": 1,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 1968128,
+            "invokes": [
+                "/main/main.3/Conv"
+            ],
+            "total_invokes": 1
+        },
+        {
+            "M": 3600,
+            "K": 2048,
+            "batch": 1,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 921600,
+            "invokes": [
+                "/main/main.6/Conv"
+            ],
+            "total_invokes": 1
+        },
+        {
+            "M": 841,
+            "K": 2304,
+            "batch": 1,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 215296,
+            "invokes": [
+                "/main/main.9/main/main.0/Conv",
+                "/main/main.9/main/main.3/Conv",
+                "/main/main.10/main/main.0/Conv",
+                "/main/main.10/main/main.3/Conv",
+                "/main/main.11/main/main.0/Conv",
+                "/main/main.11/main/main.3/Conv",
+                "/main/main.12/main/main.0/Conv",
+                "/main/main.12/main/main.3/Conv",
+                "/main/main.13/main/main.0/Conv",
+                "/main/main.13/main/main.3/Conv",
+                "/main/main.14/main/main.0/Conv",
+                "/main/main.14/main/main.3/Conv"
+            ],
+            "total_invokes": 12
+        },
+        {
+            "M": 14641,
+            "K": 3136,
+            "batch": 1,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 43923,
+            "invokes": [
+                "/main/main.21/Conv"
+            ],
+            "total_invokes": 1
+        }
+    ]
+}

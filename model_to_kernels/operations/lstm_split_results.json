@@ -6,15 +6,21 @@
             "batch": 1,
             "reuse_type": "vector reuse",
             "reuse_amount": 20,
+            "invokes": [
+                "/input_gate/Gemm",
+                "/forget_gate/Gemm",
+                "/cell_gate/Gemm",
+                "/output_gate/Gemm",
+                "/input_gate_1/Gemm",
+                "/forget_gate_1/Gemm",
+                "/cell_gate_1/Gemm",
+                "/output_gate_1/Gemm",
+                "/input_gate_2/Gemm",
+                "/forget_gate_2/Gemm",
+                "/cell_gate_2/Gemm",
+                "/output_gate_2/Gemm"
+            ],
             "total_invokes": 12
-        },
-        {
-            "M": 5,
-            "K": 20,
-            "batch": 1,
-            "reuse_type": "vector reuse",
-            "reuse_amount": 5,
-            "total_invokes": 1
         }
     ]
 }

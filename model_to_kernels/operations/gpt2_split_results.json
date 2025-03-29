@@ -3,6 +3,33 @@
         {
             "M": 768,
             "batch": 1,
+            "invokes": [
+                "/h.0/ln_1/Add_1",
+                "/h.0/ln_2/Add_1",
+                "/h.1/ln_1/Add_1",
+                "/h.1/ln_2/Add_1",
+                "/h.2/ln_1/Add_1",
+                "/h.2/ln_2/Add_1",
+                "/h.3/ln_1/Add_1",
+                "/h.3/ln_2/Add_1",
+                "/h.4/ln_1/Add_1",
+                "/h.4/ln_2/Add_1",
+                "/h.5/ln_1/Add_1",
+                "/h.5/ln_2/Add_1",
+                "/h.6/ln_1/Add_1",
+                "/h.6/ln_2/Add_1",
+                "/h.7/ln_1/Add_1",
+                "/h.7/ln_2/Add_1",
+                "/h.8/ln_1/Add_1",
+                "/h.8/ln_2/Add_1",
+                "/h.9/ln_1/Add_1",
+                "/h.9/ln_2/Add_1",
+                "/h.10/ln_1/Add_1",
+                "/h.10/ln_2/Add_1",
+                "/h.11/ln_1/Add_1",
+                "/h.11/ln_2/Add_1",
+                "/ln_f/Add_1"
+            ],
             "total_invokes": 25
         }
     ],
@@ -10,16 +37,57 @@
         {
             "M": 768,
             "batch": 1,
+            "invokes": [
+                "/h.0/ln_1/Mul",
+                "/h.0/ln_2/Mul",
+                "/h.1/ln_1/Mul",
+                "/h.1/ln_2/Mul",
+                "/h.2/ln_1/Mul",
+                "/h.2/ln_2/Mul",
+                "/h.3/ln_1/Mul",
+                "/h.3/ln_2/Mul",
+                "/h.4/ln_1/Mul",
+                "/h.4/ln_2/Mul",
+                "/h.5/ln_1/Mul",
+                "/h.5/ln_2/Mul",
+                "/h.6/ln_1/Mul",
+                "/h.6/ln_2/Mul",
+                "/h.7/ln_1/Mul",
+                "/h.7/ln_2/Mul",
+                "/h.8/ln_1/Mul",
+                "/h.8/ln_2/Mul",
+                "/h.9/ln_1/Mul",
+                "/h.9/ln_2/Mul",
+                "/h.10/ln_1/Mul",
+                "/h.10/ln_2/Mul",
+                "/h.11/ln_1/Mul",
+                "/h.11/ln_2/Mul",
+                "/ln_f/Mul"
+            ],
             "total_invokes": 25
         }
     ],
     "Gemv": [
         {
-            "M": 768,
+            "M": 2304,
             "K": 768,
             "batch": 10,
             "reuse_type": "vector reuse",
-            "reuse_amount": 7680,
+            "reuse_amount": 23040,
+            "invokes": [
+                "/h.0/attn/c_attn/Gemm",
+                "/h.1/attn/c_attn/Gemm",
+                "/h.2/attn/c_attn/Gemm",
+                "/h.3/attn/c_attn/Gemm",
+                "/h.4/attn/c_attn/Gemm",
+                "/h.5/attn/c_attn/Gemm",
+                "/h.6/attn/c_attn/Gemm",
+                "/h.7/attn/c_attn/Gemm",
+                "/h.8/attn/c_attn/Gemm",
+                "/h.9/attn/c_attn/Gemm",
+                "/h.10/attn/c_attn/Gemm",
+                "/h.11/attn/c_attn/Gemm"
+            ],
             "total_invokes": 12
         },
         {
@@ -28,22 +96,64 @@
             "batch": 0,
             "reuse_type": "vector reuse",
             "reuse_amount": 0,
-            "total_invokes": 12
-        },
-        {
-            "M": 768,
-            "K": 768,
-            "batch": 10,
-            "reuse_type": "vector reuse",
-            "reuse_amount": 7680,
+            "invokes": [
+                "/h.0/attn/c_proj/Gemm",
+                "/h.1/attn/c_proj/Gemm",
+                "/h.2/attn/c_proj/Gemm",
+                "/h.3/attn/c_proj/Gemm",
+                "/h.4/attn/c_proj/Gemm",
+                "/h.5/attn/c_proj/Gemm",
+                "/h.6/attn/c_proj/Gemm",
+                "/h.7/attn/c_proj/Gemm",
+                "/h.8/attn/c_proj/Gemm",
+                "/h.9/attn/c_proj/Gemm",
+                "/h.10/attn/c_proj/Gemm",
+                "/h.11/attn/c_proj/Gemm"
+            ],
             "total_invokes": 12
         },
         {
             "M": 3072,
-            "K": 3072,
+            "K": 768,
             "batch": 10,
             "reuse_type": "vector reuse",
             "reuse_amount": 30720,
+            "invokes": [
+                "/h.0/mlp/c_fc/Gemm",
+                "/h.1/mlp/c_fc/Gemm",
+                "/h.2/mlp/c_fc/Gemm",
+                "/h.3/mlp/c_fc/Gemm",
+                "/h.4/mlp/c_fc/Gemm",
+                "/h.5/mlp/c_fc/Gemm",
+                "/h.6/mlp/c_fc/Gemm",
+                "/h.7/mlp/c_fc/Gemm",
+                "/h.8/mlp/c_fc/Gemm",
+                "/h.9/mlp/c_fc/Gemm",
+                "/h.10/mlp/c_fc/Gemm",
+                "/h.11/mlp/c_fc/Gemm"
+            ],
+            "total_invokes": 12
+        },
+        {
+            "M": 768,
+            "K": 3072,
+            "batch": 10,
+            "reuse_type": "vector reuse",
+            "reuse_amount": 7680,
+            "invokes": [
+                "/h.0/mlp/c_proj/Gemm",
+                "/h.1/mlp/c_proj/Gemm",
+                "/h.2/mlp/c_proj/Gemm",
+                "/h.3/mlp/c_proj/Gemm",
+                "/h.4/mlp/c_proj/Gemm",
+                "/h.5/mlp/c_proj/Gemm",
+                "/h.6/mlp/c_proj/Gemm",
+                "/h.7/mlp/c_proj/Gemm",
+                "/h.8/mlp/c_proj/Gemm",
+                "/h.9/mlp/c_proj/Gemm",
+                "/h.10/mlp/c_proj/Gemm",
+                "/h.11/mlp/c_proj/Gemm"
+            ],
             "total_invokes": 12
         }
     ]
