@@ -1,0 +1,888 @@
+{
+    "Gemv": [
+        {
+            "M": 49601,
+            "K": 27,
+            "reuse_type": "matrix",
+            "reuse_amount": 64
+        },
+        {
+            "M": 49601,
+            "K": 576,
+            "reuse_type": "matrix",
+            "reuse_amount": 64
+        },
+        {
+            "M": 49601,
+            "K": 576,
+            "reuse_type": "matrix",
+            "reuse_amount": 128
+        },
+        {
+            "M": 12513,
+            "K": 128,
+            "reuse_type": "matrix",
+            "reuse_amount": 64
+        },
+        {
+            "M": 12513,
+            "K": 576,
+            "reuse_type": "matrix",
+            "reuse_amount": 64
+        },
+        {
+            "M": 12513,
+            "K": 64,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 12513,
+            "K": 128,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 12513,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 64
+        },
+        {
+            "M": 12513,
+            "K": 576,
+            "reuse_type": "matrix",
+            "reuse_amount": 64
+        },
+        {
+            "M": 12513,
+            "K": 64,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 12513,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 64
+        },
+        {
+            "M": 12513,
+            "K": 576,
+            "reuse_type": "matrix",
+            "reuse_amount": 64
+        },
+        {
+            "M": 12513,
+            "K": 64,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 12513,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 128
+        },
+        {
+            "M": 3185,
+            "K": 1152,
+            "reuse_type": "matrix",
+            "reuse_amount": 128
+        },
+        {
+            "M": 3185,
+            "K": 128,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 128
+        },
+        {
+            "M": 3185,
+            "K": 1152,
+            "reuse_type": "matrix",
+            "reuse_amount": 128
+        },
+        {
+            "M": 3185,
+            "K": 128,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 128
+        },
+        {
+            "M": 3185,
+            "K": 1152,
+            "reuse_type": "matrix",
+            "reuse_amount": 128
+        },
+        {
+            "M": 3185,
+            "K": 128,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 128
+        },
+        {
+            "M": 3185,
+            "K": 1152,
+            "reuse_type": "matrix",
+            "reuse_amount": 128
+        },
+        {
+            "M": 3185,
+            "K": 128,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 2304,
+            "reuse_type": "matrix",
+            "reuse_amount": 256
+        },
+        {
+            "M": 3185,
+            "K": 256,
+            "reuse_type": "matrix",
+            "reuse_amount": 1024
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 4608,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 2048
+        },
+        {
+            "M": 3185,
+            "K": 1024,
+            "reuse_type": "matrix",
+            "reuse_amount": 2048
+        },
+        {
+            "M": 3185,
+            "K": 2048,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 4608,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 2048
+        },
+        {
+            "M": 3185,
+            "K": 2048,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 4608,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 2048
+        },
+        {
+            "M": 1,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 512,
+            "reuse_type": "matrix",
+            "reuse_amount": 512
+        },
+        {
+            "M": 3185,
+            "K": 2560,
+            "reuse_type": "matrix",
+            "reuse_amount": 2048
+        },
+        {
+            "M": 3185,
+            "K": 2048,
+            "reuse_type": "matrix",
+            "reuse_amount": 160
+        },
+        {
+            "M": 1,
+            "K": 1,
+            "reuse_type": "vector",
+            "reuse_amount": 512
+        }
+    ],
+    "EltwiseAdd": [
+        {
+            "M": 1,
+            "K": 256,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 256,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 256,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 512,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 512,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 512,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 512,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 1024,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 2048,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 2048,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 2048,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        }
+    ]
+}

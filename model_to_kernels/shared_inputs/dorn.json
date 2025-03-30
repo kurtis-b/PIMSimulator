@@ -1,0 +1,422 @@
+{
+    "shared_inputs": {
+        "/resnet101/backbone/layer4/layer4.2/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/scene_understanding_module/aspp1/aspp1.0/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/scene_understanding_module/aspp2/aspp2.0/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/scene_understanding_module/aspp3/aspp3.0/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/scene_understanding_module/aspp4/aspp4.0/Conv",
+                    "op_type": "Conv"
+                }
+            ]
+        }
+    },
+    "skipped_inputs": {
+        "/resnet101/backbone/maxpool/MaxPool_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer1/layer1.0/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer1/layer1.0/downsample/downsample.0/Conv",
+                    "op_type": "Conv"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer1/layer1.0/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer1/layer1.1/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer1/layer1.1/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer1/layer1.1/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer1/layer1.2/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer1/layer1.2/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer1/layer1.2/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer2/layer2.0/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer2/layer2.0/downsample/downsample.0/Conv",
+                    "op_type": "Conv"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer2/layer2.0/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer2/layer2.1/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer2/layer2.1/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer2/layer2.1/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer2/layer2.2/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer2/layer2.2/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer2/layer2.2/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer2/layer2.3/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer2/layer2.3/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer2/layer2.3/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.0/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.0/downsample/downsample.0/Conv",
+                    "op_type": "Conv"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.0/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.1/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.1/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.1/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.2/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.2/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.2/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.3/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.3/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.3/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.4/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.4/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.4/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.5/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.5/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.5/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.6/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.6/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.6/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.7/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.7/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.7/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.8/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.8/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.8/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.9/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.9/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.9/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.10/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.10/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.10/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.11/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.11/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.11/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.12/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.12/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.12/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.13/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.13/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.13/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.14/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.14/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.14/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.15/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.15/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.15/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.16/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.16/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.16/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.17/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.17/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.17/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.18/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.18/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.18/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.19/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.19/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.19/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.20/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.20/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.20/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.21/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.21/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.21/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.22/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer3/layer3.22/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer3/layer3.22/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer4/layer4.0/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer4/layer4.0/downsample/downsample.0/Conv",
+                    "op_type": "Conv"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer4/layer4.0/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer4/layer4.1/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer4/layer4.1/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/resnet101/backbone/layer4/layer4.1/relu_inplace/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/resnet101/backbone/layer4/layer4.2/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/resnet101/backbone/layer4/layer4.2/Add",
+                    "op_type": "Add"
+                }
+            ]
+        }
+    }
+}

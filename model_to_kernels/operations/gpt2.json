@@ -27443,7 +27443,14 @@
                 ]
             }
         ],
-        "outputs": [],
+        "outputs": [
+            {
+                "name": "output",
+                "dims": [
+                    2
+                ]
+            }
+        ],
         "weights": []
     }
 }

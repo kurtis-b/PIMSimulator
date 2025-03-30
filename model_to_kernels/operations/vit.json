@@ -12,7 +12,12 @@
     },
     "/embeddings/patch_embeddings/projection/Conv": {
         "op_type": "Conv",
-        "inputs": [],
+        "inputs": [
+            {
+                "name": "input",
+                "dims": []
+            }
+        ],
         "outputs": [
             {
                 "name": "/embeddings/patch_embeddings/projection/Conv_output_0",
@@ -22652,7 +22657,12 @@
                 ]
             }
         ],
-        "outputs": [],
+        "outputs": [
+            {
+                "name": "output",
+                "dims": []
+            }
+        ],
         "weights": [
             {
                 "name": "layernorm.bias",

@@ -1,16 +1,25 @@
 import torch
-from transformers import ViTModel
+from transformers import ViTModel, ViTImageProcessor
 import onnx
 from onnx import shape_inference
+from PIL import Image
+import requests
 
 def vit_to_onnx(directory):
     # Load a pretrained Vision Transformer (ViT) model
-    model_name = "google/vit-base-patch16-224-in21k"
-    model = ViTModel.from_pretrained(model_name)
+    model = ViTModel.from_pretrained('google/vit-base-patch16-224-in21k')
     model.eval()
 
-    # Dummy input for the model
-    dummy_input = torch.randn(1, 3, 224, 224)  # Batch size 1, 3 color channels, 224x224 image
+    # Load the feature extractor for preprocessing
+    processor = ViTImageProcessor.from_pretrained('google/vit-base-patch16-224-in21k')
+
+    # Download a sample image from ILSVRC/imagenet-1k
+    url = 'http://images.cocodataset.org/val2017/000000039769.jpg'
+    image = Image.open(requests.get(url, stream=True).raw)
+
+    # Preprocess the image
+    inputs = processor(images=image, return_tensors="pt")
+    dummy_input = inputs["pixel_values"] 
 
     # Export the model to ONNX format
     onnx_file_path = f"{directory}/vit.onnx"

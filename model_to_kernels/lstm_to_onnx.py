@@ -1,5 +1,6 @@
+import os
+import json
 import torch
-
 import torch.nn as nn
 import torch.onnx
 import onnx
@@ -41,18 +42,21 @@ class LSTMModel(nn.Module):
         output = self.fc(h_t)
         return output
 
+
 def lstm_to_onnx(directory):
     # Hyperparameters
-    input_size = 10
-    hidden_size = 20
-    output_size = 5
-    num_layers = 1
+    input_size = 160
+    hidden_size = 320
+    output_size = 320
+    num_layers = 4
 
     # Instantiate the model
     model = LSTMModel(input_size, hidden_size, output_size, num_layers)
 
     # Dummy input for tracing
-    dummy_input = torch.randn(1, 3, input_size)  # Batch size = 1, Sequence length = 3
+    batch_size = 8  # Example batch size
+    sequence_length = 10  # Example sequence length
+    dummy_input = torch.randn(batch_size, sequence_length, input_size)
 
     # Save the model to ONNX format
     onnx_file_path = f"{directory}/lstm.onnx"

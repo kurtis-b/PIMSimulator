@@ -1,0 +1,1032 @@
+{
+    "EltwiseAdd": [
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 12,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        }
+    ],
+    "Gemv": [
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 0,
+            "K": 0,
+            "reuse_type": "vector",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 768
+        },
+        {
+            "M": 10,
+            "K": 10,
+            "reuse_type": "matrix",
+            "reuse_amount": 3072
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        },
+        {
+            "M": 1,
+            "K": 10,
+            "reuse_type": "vector",
+            "reuse_amount": 10
+        }
+    ]
+}

@@ -1,0 +1,197 @@
+{
+    "shared_inputs": {},
+    "skipped_inputs": {
+        "/maxpool/MaxPool_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer1/layer1.0/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer1/layer1.0/downsample/downsample.0/Conv",
+                    "op_type": "Conv"
+                }
+            ]
+        },
+        "/layer1/layer1.0/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer1/layer1.1/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer1/layer1.1/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer1/layer1.1/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer1/layer1.2/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer1/layer1.2/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer1/layer1.2/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer2/layer2.0/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer2/layer2.0/downsample/downsample.0/Conv",
+                    "op_type": "Conv"
+                }
+            ]
+        },
+        "/layer2/layer2.0/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer2/layer2.1/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer2/layer2.1/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer2/layer2.1/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer2/layer2.2/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer2/layer2.2/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer2/layer2.2/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer2/layer2.3/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer2/layer2.3/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer2/layer2.3/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer3/layer3.0/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer3/layer3.0/downsample/downsample.0/Conv",
+                    "op_type": "Conv"
+                }
+            ]
+        },
+        "/layer3/layer3.0/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer3/layer3.1/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer3/layer3.1/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer3/layer3.1/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer3/layer3.2/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer3/layer3.2/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer3/layer3.2/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer3/layer3.3/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer3/layer3.3/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer3/layer3.3/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer3/layer3.4/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer3/layer3.4/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer3/layer3.4/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer3/layer3.5/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer3/layer3.5/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer3/layer3.5/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer4/layer4.0/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer4/layer4.0/downsample/downsample.0/Conv",
+                    "op_type": "Conv"
+                }
+            ]
+        },
+        "/layer4/layer4.0/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer4/layer4.1/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer4/layer4.1/Add",
+                    "op_type": "Add"
+                }
+            ]
+        },
+        "/layer4/layer4.1/relu_2/Relu_output_0": {
+            "nodes": [
+                {
+                    "name": "/layer4/layer4.2/conv1/Conv",
+                    "op_type": "Conv"
+                },
+                {
+                    "name": "/layer4/layer4.2/Add",
+                    "op_type": "Add"
+                }
+            ]
+        }
+    }
+}

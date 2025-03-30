@@ -1,0 +1,23 @@
+Operator,M,N,Reuse Type,Reuse Amount
+Gemv,16384,392,matrix,64
+Gemv,4096,1024,matrix,128
+Gemv,1024,2048,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,1024,2304,matrix,256
+Gemv,16384,3136,matrix,3
+EltwiseAdd,1,256,vector,1
+EltwiseAdd,1,256,vector,1
+EltwiseAdd,1,256,vector,1
+EltwiseAdd,1,256,vector,1
+EltwiseAdd,1,256,vector,1
+EltwiseAdd,1,256,vector,1

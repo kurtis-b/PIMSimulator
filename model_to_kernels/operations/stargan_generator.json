@@ -11618,7 +11618,14 @@
                 ]
             }
         ],
-        "outputs": [],
+        "outputs": [
+            {
+                "name": "output",
+                "dims": [
+                    64
+                ]
+            }
+        ],
         "weights": []
     }
 }

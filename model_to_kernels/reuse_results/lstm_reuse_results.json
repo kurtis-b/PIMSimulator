@@ -1,0 +1,132 @@
+{
+    "Gemv": [
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 480,
+            "reuse_type": "matrix",
+            "reuse_amount": 1280
+        },
+        {
+            "M": 8,
+            "K": 8,
+            "reuse_type": "matrix",
+            "reuse_amount": 320
+        }
+    ],
+    "EltwiseAdd": [
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        },
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        },
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        },
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        },
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        },
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        },
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        },
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        },
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        },
+        {
+            "M": 8,
+            "K": 320,
+            "reuse_type": "matrix",
+            "reuse_amount": 1
+        }
+    ]
+}

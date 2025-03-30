@@ -1,0 +1,197 @@
+{
+    "shared_inputs": {
+        "/encoder/layer.0/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.0/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.0/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.0/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.1/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.1/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.1/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.1/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.2/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.2/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.2/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.2/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.3/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.3/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.3/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.3/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.4/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.4/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.4/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.4/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.5/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.5/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.5/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.5/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.6/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.6/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.6/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.6/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.7/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.7/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.7/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.7/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.8/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.8/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.8/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.8/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.9/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.9/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.9/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.9/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.10/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.10/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.10/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.10/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        },
+        "/encoder/layer.11/layernorm_before/Add_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/encoder/layer.11/attention/attention/query/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.11/attention/attention/key/MatMul",
+                    "op_type": "MatMul"
+                },
+                {
+                    "name": "/encoder/layer.11/attention/attention/value/MatMul",
+                    "op_type": "MatMul"
+                }
+            ]
+        }
+    },
+    "skipped_inputs": {}
+}

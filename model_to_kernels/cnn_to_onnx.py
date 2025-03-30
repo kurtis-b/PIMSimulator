@@ -10,8 +10,8 @@ def cnn_to_onnx(directory):
     model = models.resnet50(weights='DEFAULT')
     model.eval()  # Set the model to evaluation mode
 
-    # Dummy input for the model (batch size: 1, 3 color channels, 224x224 image)
-    dummy_input = torch.randn(1, 3, 224, 224)
+    # Dummy input for the model (batch size: 8, 3 color channels, 224x224 image)
+    dummy_input = torch.randn(8, 3, 224, 224)
 
     # Export the model to ONNX format
     onnx_file_path = f"{directory}/resnet50.onnx"

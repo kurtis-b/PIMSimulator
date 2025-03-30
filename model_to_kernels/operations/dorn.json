@@ -2012,7 +2012,14 @@
     },
     "/resnet101/backbone/conv1/Conv": {
         "op_type": "Conv",
-        "inputs": [],
+        "inputs": [
+            {
+                "name": "input",
+                "dims": [
+                    2048
+                ]
+            }
+        ],
         "outputs": [
             {
                 "name": "/resnet101/backbone/conv1/Conv_output_0",
