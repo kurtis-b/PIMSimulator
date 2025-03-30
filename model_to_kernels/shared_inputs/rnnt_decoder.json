@@ -1,0 +1,558 @@
+{
+    "shared_inputs": {
+        "/Concat_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "/Concat_1_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_1/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "/Concat_2_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_2/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "/Concat_3_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_3/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "/Concat_4_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_4/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "/Concat_5_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_5/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "/Concat_6_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_6/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "/Concat_7_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_7/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "/Concat_8_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_8/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "/Concat_9_output_0": {
+            "nodes": [
+                {
+                    "name": "/input_gate_9/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_9/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_9/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_9/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        }
+    },
+    "skipped_inputs": {
+        "input_gate.weight": {
+            "nodes": [
+                {
+                    "name": "/input_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_9/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "input_gate.bias": {
+            "nodes": [
+                {
+                    "name": "/input_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/input_gate_9/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "forget_gate.weight": {
+            "nodes": [
+                {
+                    "name": "/forget_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_9/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "forget_gate.bias": {
+            "nodes": [
+                {
+                    "name": "/forget_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/forget_gate_9/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "cell_gate.weight": {
+            "nodes": [
+                {
+                    "name": "/cell_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_9/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "cell_gate.bias": {
+            "nodes": [
+                {
+                    "name": "/cell_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/cell_gate_9/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "output_gate.weight": {
+            "nodes": [
+                {
+                    "name": "/output_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_9/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        },
+        "output_gate.bias": {
+            "nodes": [
+                {
+                    "name": "/output_gate/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_1/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_2/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_3/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_4/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_5/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_6/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_7/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_8/Gemm",
+                    "op_type": "Gemm"
+                },
+                {
+                    "name": "/output_gate_9/Gemm",
+                    "op_type": "Gemm"
+                }
+            ]
+        }
+    }
+}

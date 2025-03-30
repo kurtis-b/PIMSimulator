@@ -79,3 +79,35 @@ def lstm_to_onnx(directory):
 
     print(f"Model has been converted to ONNX format and saved at {onnx_file_path}")
     return onnx_file_path
+
+def lstm_to_onnx(directory, input_size, hidden_size, output_size, num_layers, file_name):
+
+    # Instantiate the model
+    model = LSTMModel(input_size, hidden_size, output_size, num_layers)
+
+    # Dummy input for tracing
+    batch_size = 8  # Example batch size
+    sequence_length = 10  # Example sequence length
+    dummy_input = torch.randn(batch_size, sequence_length, input_size)
+
+    # Save the model to ONNX format
+    onnx_file_path = f"{directory}/{file_name}.onnx"
+    torch.onnx.export(
+        model, 
+        dummy_input, 
+        onnx_file_path, 
+        input_names=["input"], 
+        output_names=["output"], 
+        # dynamic_axes={"input": {0: "batch_size", 1: "sequence_length"}, "output": {0: "batch_size"}},
+        opset_version=14
+    )
+
+    # Perform shape inference on the ONNX model
+    onnx_model = onnx.load(onnx_file_path)
+    inferred_model = shape_inference.infer_shapes(onnx_model)
+
+    # Save the inferred model back to the same path
+    onnx.save(inferred_model, onnx_file_path)
+
+    print(f"Model has been converted to ONNX format and saved at {onnx_file_path}")
+    return onnx_file_path

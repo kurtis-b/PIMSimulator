@@ -451,7 +451,7 @@ def main():
     args = parser.parse_args()
 
     try:
-        for model_name in ["ViT", "LSTM", "GPT-2", "ResNet-50", "Star-GAN", "DORN"]: # Removed RNN-T for now because errors pop up one after another
+        for model_name in ["ViT", "LSTM", "RNN-T", "GPT-2", "ResNet-50", "Star-GAN", "DORN"]: # Removed RNN-T for now because errors pop up one after another
             if args.model == "All" or args.model == model_name:
                 onnx_models_dir = "onnx_models"
                 operations_dir = "operations"
@@ -462,22 +462,41 @@ def main():
                 # Create directories if they don't exist
                 for directory in directories:
                     os.makedirs(directory, exist_ok=True)
-                onnx_file = model_to_onnx(model_name, onnx_models_dir)
-                ops_tree = list_operations(onnx_file)
-                # print("Listing operations in the ONNX model...")
-                # for op in operations:
-                #     print(op)
-                # Save the tree to the operations directory
-                json_file_path = os.path.join(operations_dir, f"{os.path.splitext(os.path.basename(onnx_file))[0]}.json")
-                with open(json_file_path, "w") as json_file:
-                    json.dump(ops_tree, json_file, indent=4)
-                    
-                operator_counts_file_path = save_operations_with_dimensions(onnx_file, ops_tree, operations_dir)
-                # Find nodes with outputs that are shared across multiple GEMM, MatMul, Add, or Conv nodes
-                shared_inputs_file_path = find_shared_inputs(ops_tree, onnx_file, shared_inputs_dir)
-                reuse_results_file_path = find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_file_path, reuse_results_dir)
-                csv_file_path = reuse_results_to_csv(onnx_file, reuse_results_file_path, cost_model_input_dir)
-                print(f"CSV file with reuse results for ONNX file {onnx_file} saved at: {csv_file_path}")
+                if model_name == "RNN-T": # Generate the LSTMs for the RNN-T since ONNX exports them as operators in the graph
+                    onnx_files = model_to_onnx(model_name, onnx_models_dir)
+                    for onnx_file in reversed(onnx_files):  
+                        ops_tree = list_operations(onnx_file)
+                        # print("Listing operations in the ONNX model...")
+                        # for op in operations:
+                        #     print(op)
+                        # Save the tree to the operations directory
+                        json_file_path = os.path.join(operations_dir, f"{os.path.splitext(os.path.basename(onnx_file))[0]}.json")
+                        with open(json_file_path, "w") as json_file:
+                            json.dump(ops_tree, json_file, indent=4)
+                            
+                        operator_counts_file_path = save_operations_with_dimensions(onnx_file, ops_tree, operations_dir)
+                        # Find nodes with outputs that are shared across multiple GEMM, MatMul, Add, or Conv nodes
+                        shared_inputs_file_path = find_shared_inputs(ops_tree, onnx_file, shared_inputs_dir)
+                        reuse_results_file_path = find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_file_path, reuse_results_dir)
+                        csv_file_path = reuse_results_to_csv(onnx_file, reuse_results_file_path, cost_model_input_dir)
+                        print(f"CSV file with reuse results for ONNX file {onnx_file} saved at: {csv_file_path}")
+                else:
+                    onnx_file = model_to_onnx(model_name, onnx_models_dir)
+                    ops_tree = list_operations(onnx_file)
+                    # print("Listing operations in the ONNX model...")
+                    # for op in operations:
+                    #     print(op)
+                    # Save the tree to the operations directory
+                    json_file_path = os.path.join(operations_dir, f"{os.path.splitext(os.path.basename(onnx_file))[0]}.json")
+                    with open(json_file_path, "w") as json_file:
+                        json.dump(ops_tree, json_file, indent=4)
+                        
+                    operator_counts_file_path = save_operations_with_dimensions(onnx_file, ops_tree, operations_dir)
+                    # Find nodes with outputs that are shared across multiple GEMM, MatMul, Add, or Conv nodes
+                    shared_inputs_file_path = find_shared_inputs(ops_tree, onnx_file, shared_inputs_dir)
+                    reuse_results_file_path = find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_file_path, reuse_results_dir)
+                    csv_file_path = reuse_results_to_csv(onnx_file, reuse_results_file_path, cost_model_input_dir)
+                    print(f"CSV file with reuse results for ONNX file {onnx_file} saved at: {csv_file_path}")
     except NotImplementedError as e:
         print(e)
     except Exception as e:

@@ -1,0 +1,3872 @@
+{
+    "/encoder/Shape": {
+        "op_type": "Shape",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/Shape_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Constant": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Gather": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/encoder/Shape_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Gather_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/TopK": {
+        "op_type": "TopK",
+        "inputs": [
+            {
+                "name": "/encoder/Gather_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/TopK_output_0",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/TopK_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Gather_1": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/encoder/TopK_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Gather_1_output_0",
+                "dims": [
+                    0,
+                    500,
+                    160
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Cast": {
+        "op_type": "Cast",
+        "inputs": [
+            {
+                "name": "/encoder/TopK_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Cast_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Transpose": {
+        "op_type": "Transpose",
+        "inputs": [
+            {
+                "name": "/encoder/Gather_1_output_0",
+                "dims": [
+                    0,
+                    500,
+                    160
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Transpose_output_0",
+                "dims": [
+                    500,
+                    0,
+                    160
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Shape_1": {
+        "op_type": "Shape",
+        "inputs": [
+            {
+                "name": "/encoder/Transpose_output_0",
+                "dims": [
+                    500,
+                    0,
+                    160
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Shape_1_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Cast_1": {
+        "op_type": "Cast",
+        "inputs": [
+            {
+                "name": "/encoder/Cast_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Cast_1_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Constant_1": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/Constant_1_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Gather": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/encoder/Shape_1_output_0",
+                "dims": [
+                    3
+                ]
+            },
+            {
+                "name": "/encoder/Constant_1_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Gather_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "Constant_83": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "onnx::Unsqueeze_65",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Unsqueeze": {
+        "op_type": "Unsqueeze",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Gather_output_0",
+                "dims": []
+            },
+            {
+                "name": "onnx::Unsqueeze_65",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Unsqueeze_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_1": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_1_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Concat": {
+        "op_type": "Concat",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Unsqueeze_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_1_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Concat_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/ConstantOfShape": {
+        "op_type": "ConstantOfShape",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Concat_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_2": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_3": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_3_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_4": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_4_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Slice": {
+        "op_type": "Slice",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_3_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_4_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Slice_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_5": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_5_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_6": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_6_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_7": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_7_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Slice_1": {
+        "op_type": "Slice",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_6_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_7_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_5_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Slice_1_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/LSTM": {
+        "op_type": "LSTM",
+        "inputs": [
+            {
+                "name": "/encoder/Transpose_output_0",
+                "dims": [
+                    500,
+                    0,
+                    160
+                ]
+            },
+            {
+                "name": "/encoder/Cast_1_output_0",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Slice_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Slice_1_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/LSTM_output_0",
+                "dims": [
+                    500,
+                    2,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/LSTM_output_1",
+                "dims": [
+                    2,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/LSTM_output_2",
+                "dims": [
+                    2,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "onnx::LSTM_848",
+                "dims": [
+                    2,
+                    2560
+                ]
+            },
+            {
+                "name": "onnx::LSTM_849",
+                "dims": [
+                    2,
+                    1280,
+                    160
+                ]
+            },
+            {
+                "name": "onnx::LSTM_850",
+                "dims": [
+                    2,
+                    1280,
+                    320
+                ]
+            }
+        ]
+    },
+    "/encoder/lstm/Transpose": {
+        "op_type": "Transpose",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/LSTM_output_0",
+                "dims": [
+                    500,
+                    2,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Transpose_output_0",
+                "dims": [
+                    500,
+                    0,
+                    2,
+                    320
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_8": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_8_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Reshape": {
+        "op_type": "Reshape",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Transpose_output_0",
+                "dims": [
+                    500,
+                    0,
+                    2,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_8_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Reshape_output_0",
+                "dims": [
+                    500,
+                    0,
+                    640
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_9": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_9_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_10": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_10_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_11": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_11_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Slice_2": {
+        "op_type": "Slice",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_10_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_11_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_9_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Slice_2_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_12": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_12_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_13": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_13_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_14": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_14_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Slice_3": {
+        "op_type": "Slice",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_13_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_14_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_12_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Slice_3_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/LSTM_1": {
+        "op_type": "LSTM",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Reshape_output_0",
+                "dims": [
+                    500,
+                    0,
+                    640
+                ]
+            },
+            {
+                "name": "/encoder/Cast_1_output_0",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Slice_2_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Slice_3_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/LSTM_1_output_0",
+                "dims": [
+                    500,
+                    2,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/LSTM_1_output_1",
+                "dims": [
+                    2,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/LSTM_1_output_2",
+                "dims": [
+                    2,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "onnx::LSTM_891",
+                "dims": [
+                    2,
+                    2560
+                ]
+            },
+            {
+                "name": "onnx::LSTM_892",
+                "dims": [
+                    2,
+                    1280,
+                    640
+                ]
+            },
+            {
+                "name": "onnx::LSTM_893",
+                "dims": [
+                    2,
+                    1280,
+                    320
+                ]
+            }
+        ]
+    },
+    "/encoder/lstm/Transpose_1": {
+        "op_type": "Transpose",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/LSTM_1_output_0",
+                "dims": [
+                    500,
+                    2,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Transpose_1_output_0",
+                "dims": [
+                    500,
+                    0,
+                    2,
+                    320
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_15": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_15_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Reshape_1": {
+        "op_type": "Reshape",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Transpose_1_output_0",
+                "dims": [
+                    500,
+                    0,
+                    2,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_15_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Reshape_1_output_0",
+                "dims": [
+                    500,
+                    0,
+                    640
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_16": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_16_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_17": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_17_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_18": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_18_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Slice_4": {
+        "op_type": "Slice",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_17_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_18_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_16_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Slice_4_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_19": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_19_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_20": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_20_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_21": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_21_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Slice_5": {
+        "op_type": "Slice",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_20_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_21_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_19_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Slice_5_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/LSTM_2": {
+        "op_type": "LSTM",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Reshape_1_output_0",
+                "dims": [
+                    500,
+                    0,
+                    640
+                ]
+            },
+            {
+                "name": "/encoder/Cast_1_output_0",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Slice_4_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Slice_5_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/LSTM_2_output_0",
+                "dims": [
+                    500,
+                    2,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/LSTM_2_output_1",
+                "dims": [
+                    2,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/LSTM_2_output_2",
+                "dims": [
+                    2,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "onnx::LSTM_934",
+                "dims": [
+                    2,
+                    2560
+                ]
+            },
+            {
+                "name": "onnx::LSTM_935",
+                "dims": [
+                    2,
+                    1280,
+                    640
+                ]
+            },
+            {
+                "name": "onnx::LSTM_936",
+                "dims": [
+                    2,
+                    1280,
+                    320
+                ]
+            }
+        ]
+    },
+    "/encoder/lstm/Transpose_2": {
+        "op_type": "Transpose",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/LSTM_2_output_0",
+                "dims": [
+                    500,
+                    2,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Transpose_2_output_0",
+                "dims": [
+                    500,
+                    0,
+                    2,
+                    320
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_22": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_22_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Reshape_2": {
+        "op_type": "Reshape",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Transpose_2_output_0",
+                "dims": [
+                    500,
+                    0,
+                    2,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_22_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Reshape_2_output_0",
+                "dims": [
+                    500,
+                    0,
+                    640
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_23": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_23_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_24": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_24_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_25": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_25_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Slice_6": {
+        "op_type": "Slice",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_24_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_25_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_23_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Slice_6_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_26": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_26_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_27": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_27_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_28": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_28_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Slice_7": {
+        "op_type": "Slice",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_27_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_28_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_26_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Slice_7_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/LSTM_3": {
+        "op_type": "LSTM",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Reshape_2_output_0",
+                "dims": [
+                    500,
+                    0,
+                    640
+                ]
+            },
+            {
+                "name": "/encoder/Cast_1_output_0",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Slice_6_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Slice_7_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/LSTM_3_output_0",
+                "dims": [
+                    500,
+                    2,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/LSTM_3_output_1",
+                "dims": [
+                    2,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/LSTM_3_output_2",
+                "dims": [
+                    2,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "onnx::LSTM_977",
+                "dims": [
+                    2,
+                    2560
+                ]
+            },
+            {
+                "name": "onnx::LSTM_978",
+                "dims": [
+                    2,
+                    1280,
+                    640
+                ]
+            },
+            {
+                "name": "onnx::LSTM_979",
+                "dims": [
+                    2,
+                    1280,
+                    320
+                ]
+            }
+        ]
+    },
+    "/encoder/lstm/Transpose_3": {
+        "op_type": "Transpose",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/LSTM_3_output_0",
+                "dims": [
+                    500,
+                    2,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Transpose_3_output_0",
+                "dims": [
+                    500,
+                    0,
+                    2,
+                    320
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Constant_29": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Constant_29_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/lstm/Reshape_3": {
+        "op_type": "Reshape",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Transpose_3_output_0",
+                "dims": [
+                    500,
+                    0,
+                    2,
+                    320
+                ]
+            },
+            {
+                "name": "/encoder/lstm/Constant_29_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/lstm/Reshape_3_output_0",
+                "dims": [
+                    500,
+                    0,
+                    640
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Shape_2": {
+        "op_type": "Shape",
+        "inputs": [
+            {
+                "name": "/encoder/TopK_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Shape_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Constant_2": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/encoder/Constant_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Gather_2": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/encoder/Shape_2_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/encoder/Constant_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Gather_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/TopK_1": {
+        "op_type": "TopK",
+        "inputs": [
+            {
+                "name": "/encoder/TopK_output_1",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/Gather_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/TopK_1_output_0",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/encoder/TopK_1_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Transpose_1": {
+        "op_type": "Transpose",
+        "inputs": [
+            {
+                "name": "/encoder/lstm/Reshape_3_output_0",
+                "dims": [
+                    500,
+                    0,
+                    640
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Transpose_1_output_0",
+                "dims": [
+                    0,
+                    500,
+                    640
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/Gather_3": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/encoder/Transpose_1_output_0",
+                "dims": [
+                    0,
+                    500,
+                    640
+                ]
+            },
+            {
+                "name": "/encoder/TopK_1_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/Gather_3_output_0",
+                "dims": [
+                    0,
+                    500,
+                    640
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/encoder/output_proj/MatMul": {
+        "op_type": "MatMul",
+        "inputs": [
+            {
+                "name": "/encoder/Gather_3_output_0",
+                "dims": [
+                    0,
+                    500,
+                    640
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/output_proj/MatMul_output_0",
+                "dims": [
+                    0,
+                    500,
+                    320
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "onnx::MatMul_980",
+                "dims": [
+                    640,
+                    320
+                ]
+            }
+        ]
+    },
+    "/encoder/output_proj/Add": {
+        "op_type": "Add",
+        "inputs": [
+            {
+                "name": "/encoder/output_proj/MatMul_output_0",
+                "dims": [
+                    0,
+                    500,
+                    320
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/encoder/output_proj/Add_output_0",
+                "dims": [
+                    0,
+                    500,
+                    320
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "encoder.output_proj.bias",
+                "dims": [
+                    320
+                ]
+            }
+        ]
+    },
+    "/Constant": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Constant_1": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_1_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/ConstantOfShape": {
+        "op_type": "ConstantOfShape",
+        "inputs": [
+            {
+                "name": "/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/ConstantOfShape_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Concat": {
+        "op_type": "Concat",
+        "inputs": [
+            {
+                "name": "/Constant_1_output_0",
+                "dims": [
+                    4
+                ]
+            },
+            {
+                "name": "/ConstantOfShape_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/Concat_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Constant_2": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_2_output_0",
+                "dims": [
+                    2
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Reshape": {
+        "op_type": "Reshape",
+        "inputs": [
+            {
+                "name": "/Concat_output_0",
+                "dims": [
+                    4
+                ]
+            },
+            {
+                "name": "/Constant_2_output_0",
+                "dims": [
+                    2
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/Reshape_output_0",
+                "dims": [
+                    2,
+                    2
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Constant_3": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_3_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Constant_4": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_4_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Constant_5": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_5_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Constant_6": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_6_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Slice": {
+        "op_type": "Slice",
+        "inputs": [
+            {
+                "name": "/Reshape_output_0",
+                "dims": [
+                    2,
+                    2
+                ]
+            },
+            {
+                "name": "/Constant_4_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/Constant_5_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/Constant_3_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/Constant_6_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/Slice_output_0",
+                "dims": [
+                    2,
+                    2
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Transpose": {
+        "op_type": "Transpose",
+        "inputs": [
+            {
+                "name": "/Slice_output_0",
+                "dims": [
+                    2,
+                    2
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/Transpose_output_0",
+                "dims": [
+                    2,
+                    2
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Constant_7": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_7_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Reshape_1": {
+        "op_type": "Reshape",
+        "inputs": [
+            {
+                "name": "/Transpose_output_0",
+                "dims": [
+                    2,
+                    2
+                ]
+            },
+            {
+                "name": "/Constant_7_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/Reshape_1_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Cast": {
+        "op_type": "Cast",
+        "inputs": [
+            {
+                "name": "/Reshape_1_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/Cast_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Constant_8": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_8_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/Pad": {
+        "op_type": "Pad",
+        "inputs": [
+            {
+                "name": "/Cast_output_0",
+                "dims": [
+                    4
+                ]
+            },
+            {
+                "name": "/Constant_8_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/Pad_output_0",
+                "dims": [
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/Constant_9": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/Constant_9_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/Add": {
+        "op_type": "Add",
+        "inputs": [
+            {
+                "name": "/Constant_9_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/Add_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/embedding/Gather": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/Pad_output_0",
+                "dims": [
+                    0,
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/embedding/Gather_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "decoder.embedding.weight",
+                "dims": [
+                    4232,
+                    512
+                ]
+            }
+        ]
+    },
+    "/decoder/Shape": {
+        "op_type": "Shape",
+        "inputs": [
+            {
+                "name": "/Add_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Shape_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Constant": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/decoder/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Gather": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/decoder/Shape_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/decoder/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Gather_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/TopK": {
+        "op_type": "TopK",
+        "inputs": [
+            {
+                "name": "/Add_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/decoder/Gather_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/TopK_output_0",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/decoder/TopK_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Gather_1": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/decoder/embedding/Gather_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            },
+            {
+                "name": "/decoder/TopK_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Gather_1_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Cast": {
+        "op_type": "Cast",
+        "inputs": [
+            {
+                "name": "/decoder/TopK_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Cast_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Transpose": {
+        "op_type": "Transpose",
+        "inputs": [
+            {
+                "name": "/decoder/Gather_1_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Transpose_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Shape_1": {
+        "op_type": "Shape",
+        "inputs": [
+            {
+                "name": "/decoder/Transpose_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Shape_1_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Cast_1": {
+        "op_type": "Cast",
+        "inputs": [
+            {
+                "name": "/decoder/Cast_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Cast_1_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Constant_1": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/decoder/Constant_1_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/lstm/Gather": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/decoder/Shape_1_output_0",
+                "dims": [
+                    3
+                ]
+            },
+            {
+                "name": "/decoder/Constant_1_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/lstm/Gather_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/lstm/Constant": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/decoder/lstm/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "Constant_176": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "onnx::Unsqueeze_664",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/lstm/Unsqueeze": {
+        "op_type": "Unsqueeze",
+        "inputs": [
+            {
+                "name": "/decoder/lstm/Gather_output_0",
+                "dims": []
+            },
+            {
+                "name": "onnx::Unsqueeze_664",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/lstm/Unsqueeze_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/lstm/Constant_1": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/decoder/lstm/Constant_1_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/lstm/Concat": {
+        "op_type": "Concat",
+        "inputs": [
+            {
+                "name": "/decoder/lstm/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/decoder/lstm/Unsqueeze_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/decoder/lstm/Constant_1_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/lstm/Concat_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/lstm/ConstantOfShape": {
+        "op_type": "ConstantOfShape",
+        "inputs": [
+            {
+                "name": "/decoder/lstm/Concat_output_0",
+                "dims": [
+                    3
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/lstm/LSTM": {
+        "op_type": "LSTM",
+        "inputs": [
+            {
+                "name": "/decoder/Transpose_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            },
+            {
+                "name": "/decoder/Cast_1_output_0",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/decoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            },
+            {
+                "name": "/decoder/lstm/ConstantOfShape_output_0",
+                "dims": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/lstm/LSTM_output_0",
+                "dims": [
+                    0,
+                    1,
+                    0,
+                    512
+                ]
+            },
+            {
+                "name": "/decoder/lstm/LSTM_output_1",
+                "dims": [
+                    1,
+                    0,
+                    512
+                ]
+            },
+            {
+                "name": "/decoder/lstm/LSTM_output_2",
+                "dims": [
+                    1,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "onnx::LSTM_1005",
+                "dims": [
+                    1,
+                    2048,
+                    512
+                ]
+            },
+            {
+                "name": "onnx::LSTM_1006",
+                "dims": [
+                    1,
+                    2048,
+                    512
+                ]
+            },
+            {
+                "name": "onnx::LSTM_1007",
+                "dims": [
+                    1,
+                    4096
+                ]
+            }
+        ]
+    },
+    "/decoder/lstm/Constant_2": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/decoder/lstm/Constant_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/lstm/Squeeze": {
+        "op_type": "Squeeze",
+        "inputs": [
+            {
+                "name": "/decoder/lstm/LSTM_output_0",
+                "dims": [
+                    0,
+                    1,
+                    0,
+                    512
+                ]
+            },
+            {
+                "name": "/decoder/lstm/Constant_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/lstm/Squeeze_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Shape_2": {
+        "op_type": "Shape",
+        "inputs": [
+            {
+                "name": "/decoder/TopK_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Shape_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Constant_2": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/decoder/Constant_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Gather_2": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/decoder/Shape_2_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/decoder/Constant_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Gather_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/TopK_1": {
+        "op_type": "TopK",
+        "inputs": [
+            {
+                "name": "/decoder/TopK_output_1",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/decoder/Gather_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/TopK_1_output_0",
+                "dims": [
+                    0
+                ]
+            },
+            {
+                "name": "/decoder/TopK_1_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Transpose_1": {
+        "op_type": "Transpose",
+        "inputs": [
+            {
+                "name": "/decoder/lstm/Squeeze_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Transpose_1_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/Gather_3": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/decoder/Transpose_1_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            },
+            {
+                "name": "/decoder/TopK_1_output_1",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/Gather_3_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/decoder/output_proj/MatMul": {
+        "op_type": "MatMul",
+        "inputs": [
+            {
+                "name": "/decoder/Gather_3_output_0",
+                "dims": [
+                    0,
+                    0,
+                    512
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/output_proj/MatMul_output_0",
+                "dims": [
+                    0,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "onnx::MatMul_1008",
+                "dims": [
+                    512,
+                    320
+                ]
+            }
+        ]
+    },
+    "/decoder/output_proj/Add": {
+        "op_type": "Add",
+        "inputs": [
+            {
+                "name": "/decoder/output_proj/MatMul_output_0",
+                "dims": [
+                    0,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/decoder/output_proj/Add_output_0",
+                "dims": [
+                    0,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "decoder.output_proj.bias",
+                "dims": [
+                    320
+                ]
+            }
+        ]
+    },
+    "/joint/Constant": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Unsqueeze": {
+        "op_type": "Unsqueeze",
+        "inputs": [
+            {
+                "name": "/decoder/output_proj/Add_output_0",
+                "dims": [
+                    0,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/joint/Constant_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Unsqueeze_output_0",
+                "dims": [
+                    0,
+                    1,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_1": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_1_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Unsqueeze_1": {
+        "op_type": "Unsqueeze",
+        "inputs": [
+            {
+                "name": "/encoder/output_proj/Add_output_0",
+                "dims": [
+                    0,
+                    500,
+                    320
+                ]
+            },
+            {
+                "name": "/joint/Constant_1_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Unsqueeze_1_output_0",
+                "dims": [
+                    0,
+                    500,
+                    1,
+                    320
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Shape": {
+        "op_type": "Shape",
+        "inputs": [
+            {
+                "name": "/joint/Unsqueeze_1_output_0",
+                "dims": [
+                    0,
+                    500,
+                    1,
+                    320
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Shape_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_2": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_2_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Gather": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/joint/Shape_output_0",
+                "dims": [
+                    4
+                ]
+            },
+            {
+                "name": "/joint/Constant_2_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Gather_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Shape_1": {
+        "op_type": "Shape",
+        "inputs": [
+            {
+                "name": "/joint/Unsqueeze_output_0",
+                "dims": [
+                    0,
+                    1,
+                    0,
+                    320
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Shape_1_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_3": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_3_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Gather_1": {
+        "op_type": "Gather",
+        "inputs": [
+            {
+                "name": "/joint/Shape_1_output_0",
+                "dims": [
+                    4
+                ]
+            },
+            {
+                "name": "/joint/Constant_3_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Gather_1_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_4": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_4_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_5": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_5_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "Constant_204": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "onnx::Unsqueeze_758",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Unsqueeze_2": {
+        "op_type": "Unsqueeze",
+        "inputs": [
+            {
+                "name": "/joint/Gather_1_output_0",
+                "dims": []
+            },
+            {
+                "name": "onnx::Unsqueeze_758",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Unsqueeze_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_6": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_6_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Concat": {
+        "op_type": "Concat",
+        "inputs": [
+            {
+                "name": "/joint/Constant_4_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Constant_5_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Unsqueeze_2_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Constant_6_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Concat_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_7": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_7_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_8": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_8_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "Constant_210": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "onnx::Unsqueeze_767",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Unsqueeze_3": {
+        "op_type": "Unsqueeze",
+        "inputs": [
+            {
+                "name": "/joint/Gather_1_output_0",
+                "dims": []
+            },
+            {
+                "name": "onnx::Unsqueeze_767",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Unsqueeze_3_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_9": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_9_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Concat_1": {
+        "op_type": "Concat",
+        "inputs": [
+            {
+                "name": "/joint/Constant_7_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Constant_8_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Unsqueeze_3_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Constant_9_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Concat_1_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Shape_2": {
+        "op_type": "Shape",
+        "inputs": [
+            {
+                "name": "/joint/Concat_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Shape_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/ConstantOfShape": {
+        "op_type": "ConstantOfShape",
+        "inputs": [
+            {
+                "name": "/joint/Shape_2_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/ConstantOfShape_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Expand": {
+        "op_type": "Expand",
+        "inputs": [
+            {
+                "name": "/joint/Unsqueeze_1_output_0",
+                "dims": [
+                    0,
+                    500,
+                    1,
+                    320
+                ]
+            },
+            {
+                "name": "/joint/ConstantOfShape_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Expand_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Tile": {
+        "op_type": "Tile",
+        "inputs": [
+            {
+                "name": "/joint/Expand_output_0",
+                "dims": []
+            },
+            {
+                "name": "/joint/Concat_1_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Tile_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_10": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_10_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "Constant_219": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "onnx::Unsqueeze_778",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Unsqueeze_4": {
+        "op_type": "Unsqueeze",
+        "inputs": [
+            {
+                "name": "/joint/Gather_output_0",
+                "dims": []
+            },
+            {
+                "name": "onnx::Unsqueeze_778",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Unsqueeze_4_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_11": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_11_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_12": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_12_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Concat_2": {
+        "op_type": "Concat",
+        "inputs": [
+            {
+                "name": "/joint/Constant_10_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Unsqueeze_4_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Constant_11_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Constant_12_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Concat_2_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_13": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_13_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "Constant_225": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "onnx::Unsqueeze_787",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Unsqueeze_5": {
+        "op_type": "Unsqueeze",
+        "inputs": [
+            {
+                "name": "/joint/Gather_output_0",
+                "dims": []
+            },
+            {
+                "name": "onnx::Unsqueeze_787",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Unsqueeze_5_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_14": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_14_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Constant_15": {
+        "op_type": "Constant",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "/joint/Constant_15_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Concat_3": {
+        "op_type": "Concat",
+        "inputs": [
+            {
+                "name": "/joint/Constant_13_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Unsqueeze_5_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Constant_14_output_0",
+                "dims": [
+                    1
+                ]
+            },
+            {
+                "name": "/joint/Constant_15_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Concat_3_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Shape_3": {
+        "op_type": "Shape",
+        "inputs": [
+            {
+                "name": "/joint/Concat_2_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Shape_3_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/ConstantOfShape_1": {
+        "op_type": "ConstantOfShape",
+        "inputs": [
+            {
+                "name": "/joint/Shape_3_output_0",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/ConstantOfShape_1_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Expand_1": {
+        "op_type": "Expand",
+        "inputs": [
+            {
+                "name": "/joint/Unsqueeze_output_0",
+                "dims": [
+                    0,
+                    1,
+                    0,
+                    320
+                ]
+            },
+            {
+                "name": "/joint/ConstantOfShape_1_output_0",
+                "dims": [
+                    0
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Expand_1_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Tile_1": {
+        "op_type": "Tile",
+        "inputs": [
+            {
+                "name": "/joint/Expand_1_output_0",
+                "dims": []
+            },
+            {
+                "name": "/joint/Concat_3_output_0",
+                "dims": [
+                    4
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Tile_1_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/Concat_4": {
+        "op_type": "Concat",
+        "inputs": [
+            {
+                "name": "/joint/Tile_output_0",
+                "dims": []
+            },
+            {
+                "name": "/joint/Tile_1_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/Concat_4_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/forward_layer/MatMul": {
+        "op_type": "MatMul",
+        "inputs": [
+            {
+                "name": "/joint/Concat_4_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/forward_layer/MatMul_output_0",
+                "dims": []
+            }
+        ],
+        "weights": [
+            {
+                "name": "onnx::MatMul_1021",
+                "dims": [
+                    640,
+                    512
+                ]
+            }
+        ]
+    },
+    "/joint/forward_layer/Add": {
+        "op_type": "Add",
+        "inputs": [
+            {
+                "name": "/joint/forward_layer/MatMul_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/forward_layer/Add_output_0",
+                "dims": []
+            }
+        ],
+        "weights": [
+            {
+                "name": "joint.forward_layer.bias",
+                "dims": [
+                    512
+                ]
+            }
+        ]
+    },
+    "/joint/tanh/Tanh": {
+        "op_type": "Tanh",
+        "inputs": [
+            {
+                "name": "/joint/forward_layer/Add_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/tanh/Tanh_output_0",
+                "dims": []
+            }
+        ],
+        "weights": []
+    },
+    "/joint/project_layer/MatMul": {
+        "op_type": "MatMul",
+        "inputs": [
+            {
+                "name": "/joint/tanh/Tanh_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "/joint/project_layer/MatMul_output_0",
+                "dims": []
+            }
+        ],
+        "weights": [
+            {
+                "name": "onnx::MatMul_1022",
+                "dims": [
+                    512,
+                    4232
+                ]
+            }
+        ]
+    },
+    "/joint/project_layer/Add": {
+        "op_type": "Add",
+        "inputs": [
+            {
+                "name": "/joint/project_layer/MatMul_output_0",
+                "dims": []
+            }
+        ],
+        "outputs": [
+            {
+                "name": "output",
+                "dims": [
+                    1
+                ]
+            }
+        ],
+        "weights": [
+            {
+                "name": "joint.project_layer.bias",
+                "dims": [
+                    4232
+                ]
+            }
+        ]
+    }
+}

@@ -7,6 +7,7 @@ import torch.nn.functional as F
 import torch.onnx
 
 import numpy as np
+from lstm_to_onnx import lstm_to_onnx
 
 class BaseDecoder(nn.Module):
     def __init__(self, hidden_size, vocab_size, output_size, n_layers, dropout=0.2, share_weight=False):
@@ -217,5 +218,7 @@ def rnnt_to_onnx(directory):
     # Save the inferred model back to the same path
     onnx.save(inferred_model, onnx_file_path)
 
+    rnnt_encoder_path = lstm_to_onnx(directory, 160, 320, 320, 4, "rnnt_encoder")
+    rnnt_decoder_path = lstm_to_onnx(directory, 4232, 512, 320, 1, "rnnt_decoder")
     print(f"Model has been converted to ONNX format and saved at {onnx_file_path}")
-    return onnx_file_path
+    return [onnx_file_path, rnnt_encoder_path, rnnt_decoder_path]
