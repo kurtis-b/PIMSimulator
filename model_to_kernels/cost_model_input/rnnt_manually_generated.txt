@@ -9,7 +9,7 @@ Gemv,8,4744,matrix,2048
 Gemv,8,4744,matrix,2048
 Gemv,8,4744,matrix,2048
 Gemv,8,4744,matrix,2048
-Gemv,8,8,matrix,320
+Gemv,8,320,matrix,320
 EltwiseAdd,8,512,matrix,1
 EltwiseAdd,8,512,matrix,1
 EltwiseAdd,8,512,matrix,1
@@ -30,7 +30,7 @@ Gemv,8,480,matrix,1280
 Gemv,8,480,matrix,1280
 Gemv,8,480,matrix,1280
 Gemv,8,480,matrix,1280
-Gemv,8,8,matrix,320
+Gemv,8,320,matrix,320
 EltwiseAdd,8,320,matrix,1
 EltwiseAdd,8,320,matrix,1
 EltwiseAdd,8,320,matrix,1

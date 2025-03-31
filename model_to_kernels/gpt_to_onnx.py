@@ -14,14 +14,6 @@ def gpt_to_onnx(directory):
     # Set the model to evaluation mode
     model.eval()
 
-    # Load a dataset from Hugging Face and use a sample as dummy input
-    dataset = load_dataset("wikitext", "wikitext-2-raw-v1", split="test")
-    # Calculate the median sequence length of the dataset
-    sequence_lengths = [len(sample["text"].split()) for sample in dataset]
-    median_length = sorted(sequence_lengths)[len(sequence_lengths) // 2]
-
-    # Find the sample with length closest to the median
-    closest_sample = min(dataset, key=lambda sample: abs(len(sample["text"].split()) - median_length))
     sample_text = "Test"  # Extract the text of the closest sample)
     dummy_input = tokenizer(sample_text, return_tensors="pt")["input_ids"]
 
