@@ -408,31 +408,17 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                         input_channels = weights[0][1]
                         kernel_height = weights[0][2]
                         kernel_width = weights[0][3]
-                        # Weight vector reuse calculation through the batch below
-                        M = 1 # The vector reuse will be across batches
-                        K = kernel_height * kernel_width * input_channels # The size of the reused vector is the column size of the weight matrix
-                        reuse_type = "vector"
-                        reuse_amount = batch
-                        reuse_results["Gemv"].append({
-                            "M": M,
-                            "K": K,
-                            "reuse_type": reuse_type,
-                            "reuse_amount": reuse_amount,
-                        })
 
-                        # Input matrix reuse calculation with one sample below
                         # The M, K here are the matrix dimensions of the input activation matrix 
                         M = output_height * output_width
                         K = kernel_height * kernel_width * input_channels
-                        reuse_type = "matrix"
-                        # Since the input activation matrix is being reused, the filters are split into vectors, and
-                        # so part of the reuse amount is the number of filters
-                        reuse_amount = output_channels
                         reuse_results["Gemv"].append({
                             "M": M,
                             "K": K,
-                            "reuse_type": reuse_type,
-                            "reuse_amount": reuse_amount,
+                            "reuse_type_1": "matrix",
+                            "reuse_amount_1": output_channels,
+                            "reuse_type_2": "vector",
+                            "reuse_amount_2": batch,
                         })
 
     # Save the split results to a JSON file
@@ -444,16 +430,23 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
 def reuse_results_to_csv(onnx_file, reuse_results_file_path, operations_dir):
     csv_file_path = os.path.join(operations_dir, f"{os.path.splitext(os.path.basename(onnx_file))[0]}.txt")
     with open(csv_file_path, "w") as csv_file:
-        csv_file.write("Operator,M,N,Reuse Type,Reuse Amount\n")  # Write CSV header
+        csv_file.write("Operator,M,N,Reuse Type 1,Reuse Amount 1,Reuse Type 2,Reuse Amount 2\n")  # Write CSV header
         with open(reuse_results_file_path, "r") as json_file:
             split_results = json.load(json_file)
             for op_type, details in split_results.items():
                 for item in details:
                     M = item.get("M", "")
                     K = item.get("K", "")
-                    reuse_type = item.get("reuse_type", "")
-                    reuse_amount = item.get("reuse_amount", "")
-                    csv_file.write(f"{op_type},{M},{K},{reuse_type},{reuse_amount}\n")
+                    reuse_type_non_conv = item.get("reuse_type", "")
+                    reuse_amount_non_conv = item.get("reuse_amount", "")
+                    reuse_type_conv_1 = item.get("reuse_type_1", "")
+                    reuse_amount_conv_1 = item.get("reuse_amount_1", "")
+                    reuse_type_conv_2 = item.get("reuse_type_2", "")
+                    reuse_amount_conv_2 = item.get("reuse_amount_2", "")
+                    if reuse_type_non_conv and reuse_amount_non_conv:
+                        csv_file.write(f"{op_type},{M},{K},{reuse_type_non_conv},{reuse_amount_non_conv}\n")
+                    else:
+                        csv_file.write(f"{op_type},{M},{K},{reuse_type_conv_1},{reuse_amount_conv_1},{reuse_type_conv_2},{reuse_amount_conv_2}\n")
     return csv_file_path
 
 def main():
@@ -463,7 +456,7 @@ def main():
     args = parser.parse_args()
 
     try:
-        for model_name in ["ViT", "LSTM", "RNN-T", "GPT-2", "ResNet-50", "Star-GAN", "DORN"]: # Removed RNN-T for now because errors pop up one after another
+        for model_name in ["ViT", "LSTM", "GPT-2", "ResNet-50", "Star-GAN", "DORN", "RNN-T"]: # Removed RNN-T for now because errors pop up one after another
             if args.model == "All" or args.model == model_name:
                 onnx_models_dir = "onnx_models"
                 operations_dir = "operations"

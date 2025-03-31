@@ -1,4 +1,4 @@
-Operator,M,N,Reuse Type,Reuse Amount
+Operator,M,N,Reuse Type 1,Reuse Amount 1,Reuse Type 2,Reuse Amount 2
 Gemv,8,4744,matrix,2048
 Gemv,8,4744,matrix,2048
 Gemv,8,4744,matrix,2048

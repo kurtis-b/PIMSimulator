@@ -3,98 +3,130 @@
         {
             "M": 16384,
             "K": 392,
-            "reuse_type": "matrix",
-            "reuse_amount": 64
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 64,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 4096,
             "K": 1024,
-            "reuse_type": "matrix",
-            "reuse_amount": 128
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 128,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2048,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 1024,
             "K": 2304,
-            "reuse_type": "matrix",
-            "reuse_amount": 256
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 256,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         },
         {
             "M": 16384,
             "K": 3136,
-            "reuse_type": "matrix",
-            "reuse_amount": 3
+            "reuse_type_1": "matrix",
+            "reuse_amount_1": 3,
+            "reuse_type_2": "vector",
+            "reuse_amount_2": 1
         }
     ],
     "EltwiseAdd": [
