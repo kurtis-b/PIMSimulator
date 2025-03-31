@@ -1,75 +1,75 @@
 {
     "Gemv": [
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
             "reuse_amount": 2304
         },
         {
@@ -81,368 +81,368 @@
             "reuse_amount_2": 1
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
-            "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
         },
         {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
         },
         {
-            "M": 1,
-            "K": 197,
+            "M": 197,
+            "K": 64,
             "reuse_type": "vector",
             "reuse_amount": 197
         },
         {
-            "M": 1,
+            "M": 197,
             "K": 197,
             "reuse_type": "vector",
             "reuse_amount": 64
         },
         {
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
+        },
+        {
+            "M": 197,
+            "K": 768,
+            "reuse_type": "matrix",
+            "reuse_amount": 294912
+        },
+        {
+            "M": 197,
+            "K": 3072,
+            "reuse_type": "matrix",
+            "reuse_amount": 73728
+        },
+        {
             "M": 1,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
-        },
-        {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 768
-        },
-        {
-            "M": 0,
-            "K": 197,
-            "reuse_type": "vector",
-            "reuse_amount": 3072
-        },
-        {
-            "M": 1,
-            "K": 1,
+            "K": 768,
             "reuse_type": "vector",
             "reuse_amount": 768
         }

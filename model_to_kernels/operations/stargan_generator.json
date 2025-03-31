@@ -1256,6 +1256,13 @@
         "op_type": "Reshape",
         "inputs": [
             {
+                "name": "input_c",
+                "dims": [
+                    1,
+                    5
+                ]
+            },
+            {
                 "name": "/Constant_output_0",
                 "dims": [
                     4
@@ -1388,6 +1395,15 @@
     "/Concat": {
         "op_type": "Concat",
         "inputs": [
+            {
+                "name": "input_x",
+                "dims": [
+                    1,
+                    3,
+                    128,
+                    128
+                ]
+            },
             {
                 "name": "/Tile_output_0",
                 "dims": [
@@ -11622,7 +11638,10 @@
             {
                 "name": "output",
                 "dims": [
-                    64
+                    1,
+                    3,
+                    128,
+                    128
                 ]
             }
         ],

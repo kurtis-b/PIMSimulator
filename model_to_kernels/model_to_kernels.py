@@ -40,6 +40,21 @@ def list_operations(onnx_file):
     tree = {}
 
     # Create a tree structure showing how nodes lead to other ones
+    # Save the main graph's inputs and outputs
+    graph_inputs = [
+        {
+            "name": graph_inp.name,
+            "node": graph_inp
+        }
+        for graph_inp in model.graph.input
+    ]
+    graph_outputs = [
+        {
+            "name": graph_outp.name,
+            "node": graph_outp
+        }
+        for graph_outp in model.graph.output
+    ]
     for node in model.graph.node:
         tree[node.name] = {
             "op_type": node.op_type,
@@ -47,19 +62,35 @@ def list_operations(onnx_file):
             "outputs": [],
             "weights": []
         }
+            
         # Collect input dimensions
         for input_name in node.input:
             for value_info in model.graph.value_info:
-                if value_info.name == input_name or input_name == "input":
+                if value_info.name == input_name:
                     dims = [dim.dim_value for dim in value_info.type.tensor_type.shape.dim]
+                    tree[node.name]["inputs"].append({"name": input_name, "dims": dims})
+                    break
+            for graph_inp in graph_inputs:
+                if graph_inp["name"] == input_name:
+                    dims = [dim.dim_value for dim in graph_inp["node"].type.tensor_type.shape.dim]
+                    tree[node.name]["inputs"].append({"name": input_name, "dims": dims})
+                    break
+            for graph_outp in graph_outputs:
+                if graph_outp["name"] == input_name:
+                    dims = [dim.dim_value for dim in graph_outp["node"].type.tensor_type.shape.dim]
                     tree[node.name]["inputs"].append({"name": input_name, "dims": dims})
                     break
 
         # Collect output dimensions
         for output_name in node.output:
             for value_info in model.graph.value_info:
-                if value_info.name == output_name or output_name == "output":
+                if value_info.name == output_name:
                     dims = [dim.dim_value for dim in value_info.type.tensor_type.shape.dim]
+                    tree[node.name]["outputs"].append({"name": output_name, "dims": dims})
+                    break
+            for graph_outp in graph_outputs:
+                if graph_outp["name"] == output_name:
+                    dims = [dim.dim_value for dim in graph_outp["node"].type.tensor_type.shape.dim]
                     tree[node.name]["outputs"].append({"name": output_name, "dims": dims})
                     break
 
@@ -77,16 +108,17 @@ def save_operations_with_dimensions(onnx_file, ops_tree, output_dir):
     for node_name, details in ops_tree.items():
         if details["inputs"] or details["outputs"] or details["weights"]:
             op_type = details["op_type"]
-            # Collect occurrences of each operator type with dimensions
-            if op_type not in operator_counts:
-                operator_counts[op_type] = []
-            unique_node = {
-                "inputs": [i["dims"] for i in details["inputs"]],
-                "outputs": [o["dims"] for o in details["outputs"]],
-                "weights": [w["dims"] for w in details["weights"]],
-                "node_info": {"name": node_name, "inputs": [i["name"] for i in details["inputs"]], "outputs": [o["name"] for o in details["outputs"]], "weights": [w["name"] for w in details["weights"]]}
-            }
-            operator_counts[op_type].append(unique_node)
+            if op_type in KERNELS_TO_CHECK:
+                # Collect occurrences of each operator type with dimensions
+                if op_type not in operator_counts:
+                    operator_counts[op_type] = []
+                unique_node = {
+                    "inputs": [i["dims"] for i in details["inputs"]],
+                    "outputs": [o["dims"] for o in details["outputs"]],
+                    "weights": [w["dims"] for w in details["weights"]],
+                    "node_info": {"name": node_name, "inputs": [i["name"] for i in details["inputs"]], "outputs": [o["name"] for o in details["outputs"]], "weights": [w["name"] for w in details["weights"]]}
+                }
+                operator_counts[op_type].append(unique_node)
 
     # Save the operator counts to a JSON file
     operator_counts_file_path = os.path.join(output_dir, f"{os.path.splitext(os.path.basename(onnx_file))[0]}_operator_groupings.json")
@@ -167,7 +199,7 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
             reuse_results = {}
             skipped_iterations = []
             for input_name, details in shared_inputs.items():
-                # print("Processing shared input:", input_name)
+                print("Processing shared input:", input_name)
                 nodes = details.get("nodes", [])
                 if nodes[0]["op_type"] not in kernels_to_check:
                     print(f"Skipping input {input_name} as it is not in the kernels to check: {kernels_to_check}")
@@ -193,113 +225,97 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                 dimensions_match = True
                 for dim_list in dimensions.values():
                     if len(dim_list) > 1 and not all(dim == dim_list[0] for dim in dim_list):
-                        skipped_iterations.append(input_name)
+                        skipped_iterations.append(nodes)
                         dimensions_match = False
                         break
                         # raise ValueError(f"Currenly expecting dimensions to match for shared inputs' nodes. Shared input: {input_name}, nodes: {nodes}")
                 if not dimensions_match:
                     print(f"Dimensions do not match for shared input: {input_name}. Skipping...")
+                    skipped_iterations.append(nodes)
                     continue
 
                 # Only need to check one node that's using the shared input since we expect the rest that share the same input
                 # should have the same dimensions
-                inputs_0 = dimensions["inputs"][0] if dimensions["inputs"] else []
-                if not dimensions["weights"] and not dimensions["inputs"][0]:
-                    print("No weights or first input found for shared input:", input_name)
-                    continue
-                if not dimensions["weights"] and not len(dimensions["inputs"]) > 1:
-                    print("No weights or second input found for shared input:", input_name)
-                    continue
-                if not dimensions["inputs"][0] and not dimensions["outputs"][0]:
-                    print("No inputs or outputs found for shared input:", input_name)
-                    continue
-                if dimensions["weights"]:
-                    inputs_1 = dimensions["weights"][0]
-                else: 
-                    if dimensions["inputs"][1]: 
-                        inputs_1 = dimensions["inputs"][1]
-                    else:
-                        inputs_1 = [[dimensions["outputs"][-1], dimensions["outputs"][-2]]] # Guess from the output
+                inputs = dimensions["inputs"][0] if dimensions["inputs"] else []
+                weights = dimensions["weights"][0] if dimensions["weights"] else []
                 outputs = dimensions["outputs"][0] if dimensions["outputs"] else []
                 op_type = nodes[0]["op_type"]
+                node_name = nodes[0]["name"]
                 if op_type == "Gemm":
                     if "Gemv" not in reuse_results:
                         reuse_results["Gemv"] = []
-                    batch = inputs_0[0][0]
-                    input_size = inputs_0[0][1]
-                    output_size = inputs_1[0][0]
-                    # If batching, then the reused input is a matrix, otherwise it's a vector
-                    reuse_type = "matrix" if batch > 1 else "vector"
-                    # For Gemm, the reuse amount is the number of nodes that share the input matrix times the output size
-                    # since the input matrix is being reused
-                    reuse_amount = len(nodes) * output_size
+                    if len(weights) == 2 and len(inputs) == 1:
+                        batch = inputs[0][0]
+                        M = batch
+                        N = inputs[0][1]
+                        # If batching, then the reused input is a matrix, otherwise it's a vector
+                        reuse_type = "matrix" if batch > 1 else "vector"
+                        reuse_amount = len(nodes) * weights[0][1] if weights[0][1] != N else len(nodes) * weights[0][0]
 
-                    reuse_results["Gemv"].append({
-                        "M": batch,
-                        "K": input_size,
-                        "reuse_type": reuse_type,
-                        "reuse_amount": reuse_amount,
-                    })
+                        reuse_results["Gemv"].append({
+                            "M": M,
+                            "K": N,
+                            "reuse_type": reuse_type,
+                            "reuse_amount": reuse_amount,
+                        })
+                    else:
+                        print("Unexpected number of inputs or outputs for Gemm node", node_name, "using shared input")
                 elif op_type == "MatMul":
                     if "Gemv" not in reuse_results:
                         reuse_results["Gemv"] = []
-                    batch = inputs_0[0][0]
-                    input_size = inputs_0[0][1]
-                    output_size = inputs_1[0][0]
-                    # If batching, then the reused input is a matrix, otherwise it's a vector
-                    reuse_type = "matrix" if batch > 1 else "vector"
-                    # For Gemm, the reuse amount is the number of nodes that share the input matrix times the output size
-                    # since the input matrix is being reused
-                    reuse_amount = len(nodes) * output_size
+                    if len(inputs) == 1 and len(weights) == 1:
+                        M = inputs[0][1]
+                        N = inputs[0][2]
+                        # If batching, then the reused input is a matrix, otherwise it's a vector
+                        reuse_type = "matrix"
+                        reuse_amount = len(nodes) * weights[0][1]
 
-                    reuse_results["Gemv"].append({
-                        "M": batch,
-                        "K": input_size,
-                        "reuse_type": reuse_type,
-                        "reuse_amount": reuse_amount,
-                    })
+                        reuse_results["Gemv"].append({
+                            "M": M,
+                            "K": N,
+                            "reuse_type": reuse_type,
+                            "reuse_amount": reuse_amount,
+                        })
+                    elif len(inputs) == 2 and len(outputs) == 1:
+                        batch = inputs[0][0]
+                        M = inputs[0][2]
+                        N = inputs[0][3]
+                        # If batching, then the reused input is a matrix, otherwise it's a vector
+                        reuse_type = "matrix" if batch > 1 else "vector"
+                        reuse_amount = len(nodes) * outputs[0][3]
+
+                        reuse_results["Gemv"].append({
+                            "M": M,
+                            "K": N,
+                            "reuse_type": reuse_type,
+                            "reuse_amount": reuse_amount,
+                        })
+                    else:
+                        print("Unexpected number of inputs or outputs for MatMul node", node_name, "using shared input")
                 elif op_type == "Add":
                     if "EltwiseAdd" not in reuse_results:
                         reuse_results["EltwiseAdd"] = []
-                    batch = inputs_0[0][0]
-                    input_size = inputs_0[0][1]
-                    reuse_type = "matrix" if batch > 1 else "vector"
-                    # For element-wise add, the reuse amount is the number of nodes that share the input matrix
-                    # The batch size and vector size of the input will have the same dimensions as the 
-                    # weight and output matrices
-                    reuse_amount = len(nodes)
+                    if (len(inputs) == 1 or len(inputs) == 2) and len(outputs) == 1:
+                        batch = inputs[0][0]
+                        input_size = inputs[0][1]
+                        reuse_type = "matrix" if batch > 1 else "vector"
+                        # For element-wise add, there's no reuse amount
+                        # The batch size and vector size of the input will have the same dimensions as the 
+                        # weight and output matrices
+                        reuse_amount = len(nodes)
 
-                    reuse_results["EltwiseAdd"].append({
-                        "M": batch,
-                        "K": input_size,
-                        "reuse_type": reuse_type,
-                        "reuse_amount": reuse_amount,
-                    })
+                        reuse_results["EltwiseAdd"].append({
+                            "M": batch,
+                            "K": input_size,
+                            "reuse_type": reuse_type,
+                            "reuse_amount": reuse_amount,
+                        })
+                    else:
+                        print("Unexpected number of inputs or outputs for Add node", node_name, "using shared input")
                 elif op_type == "Conv":
-                    if "Gemv" not in reuse_results:
-                        reuse_results["Gemv"] = []
-                    batch = outputs[0][0]
-                    output_height = outputs[0][2]
-                    output_width = outputs[0][3]
-                    output_channels = weights[0][0]
-                    input_channels = weights[0][1]
-                    kernel_height = weights[0][2]
-                    kernel_width = weights[0][3]
-                    # The M, K here are the matrix dimensions of the input activation matrix 
-                    M = batch * output_height * output_width
-                    K = kernel_height * kernel_width * input_channels
-                    reuse_type = "matrix"
-
-                    # Since the input activation matrix is being reused, the filters are split into vectors, and
-                    # so part of the reuse amount is the number of filters
-                    reuse_amount = output_channels
-
-                    reuse_results["Gemv"].append({
-                        "M": M,
-                        "K": K,
-                        "reuse_type": "matrix",
-                        "reuse_amount": reuse_amount,
-                    })
+                    skipped_iterations.append(nodes)
+                    print("Skipping Conv nodes with shared input:", input_name)
+                    continue
             # Collect all node names in shared inputs. This will be used to find nodes that don't have shared input
             # but still can be considered for other reuse opportunities
             all_node_names = []
@@ -320,106 +336,108 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                     node_name = node["node_info"]["name"]
                     if node_name in all_node_names:
                         continue  # Skip nodes already processed in shared inputs
-                    # print("Processing node:", node_name)
+                    print("Processing node:", node_name)
 
                     inputs = node.get("inputs", [])
                     outputs = node.get("outputs", [])
                     weights = node.get("weights", [])
-                    if not weights and not inputs[0]:
-                        print("No weights or first input found for:", node_name)
-                        continue
-                    if not weights and not len(inputs) > 1:
-                        print("No weights or second input found for:", node_name)
-                        continue
-                    if not inputs[0] and not outputs[0]:
-                        print("No inputs or outputs found for:", node_name)
-                        continue
 
                     if op_type == "Gemm":
                         if "Gemv" not in reuse_results:
                             reuse_results["Gemv"] = []
-                        batch = inputs[0][0]
-                        input_size = inputs[0][-2]
-                        if weights:
-                            output_size = weights[0][0]
-                        else:
-                            if inputs[1]:
-                                output_size = inputs[1][-1]
-                            else:
-                                output_size = outputs[0][-1]
-                        # If batching, then the reused input is a matrix, otherwise it's a vector
-                        reuse_type = "matrix" if batch > 1 else "vector"
-                        # For Gemm, the reuse amount is the output size since the input matrix is being reused
-                        reuse_amount = output_size
+                        if len(weights) == 2 and len(inputs) == 1:
+                            batch = inputs[0][0]
+                            M = batch
+                            N = inputs[0][1]
+                            # If batching, then the reused input is a matrix, otherwise it's a vector
+                            reuse_type = "matrix" if batch > 1 else "vector"
+                            reuse_amount = weights[0][1] if weights[0][1] != N else weights[0][0]
 
-                        reuse_results["Gemv"].append({
-                            "M": batch,
-                            "K": input_size,
-                            "reuse_type": reuse_type,
-                            "reuse_amount": reuse_amount,
-                        })
+                            reuse_results["Gemv"].append({
+                                "M": M,
+                                "K": N,
+                                "reuse_type": reuse_type,
+                                "reuse_amount": reuse_amount,
+                            })
+                        else:
+                            print("Unexpected number of weights or inputs for Gemm node:", node_name)
                     elif op_type == "MatMul":
                         if "Gemv" not in reuse_results:
                             reuse_results["Gemv"] = []
-                        batch = inputs[0][0]
-                        input_size = inputs[0][-2]
-                        if weights:
-                            output_size = weights[0][0]
-                        else:
-                            if inputs[1]:
-                                output_size = inputs[1][-1]
-                            else:
-                                output_size = outputs[0][-1]
-                        # If batching, then the reused input is a matrix, otherwise it's a vector
-                        reuse_type = "matrix" if batch > 1 else "vector"
-                        # For Gemm, the reuse amount is the output size since the input matrix is being reused
-                        reuse_amount = output_size
+                        if len(inputs) == 1 and len(weights) == 1:
+                            M = inputs[0][1]
+                            N = inputs[0][2]
+                            # If batching, then the reused input is a matrix, otherwise it's a vector
+                            reuse_type = "matrix"
+                            reuse_amount = len(nodes) * weights[0][1]
 
-                        reuse_results["Gemv"].append({
-                            "M": batch,
-                            "K": input_size,
-                            "reuse_type": reuse_type,
-                            "reuse_amount": reuse_amount,
-                        })
+                            reuse_results["Gemv"].append({
+                                "M": M,
+                                "K": N,
+                                "reuse_type": reuse_type,
+                                "reuse_amount": reuse_amount,
+                            })
+                        elif len(inputs) == 2 and len(outputs) == 1:
+                            batch = inputs[0][0]
+                            M = inputs[0][2]
+                            N = inputs[0][3]
+                            # If batching, then the reused input is a matrix, otherwise it's a vector
+                            reuse_type = "matrix" if batch > 1 else "vector"
+                            reuse_amount = outputs[0][3]
+
+                            reuse_results["Gemv"].append({
+                                "M": M,
+                                "K": N,
+                                "reuse_type": reuse_type,
+                                "reuse_amount": reuse_amount,
+                            })
+                        else:
+                            print("Unexpected number of inputs or outputs for MatMul node:", node_name)
                     elif op_type == "Add":
                         if "EltwiseAdd" not in reuse_results:
                             reuse_results["EltwiseAdd"] = []
-                        batch = inputs[0][0]
-                        input_size = inputs[0][1]
-                        reuse_type = "matrix" if batch > 1 else "vector"
-                        # For element-wise add, there's no reuse amount
-                        # The batch size and vector size of the input will have the same dimensions as the 
-                        # weight and output matrices
-                        reuse_amount = 1
+                        if (len(inputs) == 1 or len(inputs) == 2) and len(outputs) == 1:
+                            batch = inputs[0][0]
+                            input_size = inputs[0][1]
+                            reuse_type = "matrix" if batch > 1 else "vector"
+                            # For element-wise add, there's no reuse amount
+                            # The batch size and vector size of the input will have the same dimensions as the 
+                            # weight and output matrices
+                            reuse_amount = 1
 
-                        reuse_results["EltwiseAdd"].append({
-                            "M": batch,
-                            "K": input_size,
-                            "reuse_type": reuse_type,
-                            "reuse_amount": reuse_amount,
-                        })
+                            reuse_results["EltwiseAdd"].append({
+                                "M": batch,
+                                "K": input_size,
+                                "reuse_type": reuse_type,
+                                "reuse_amount": reuse_amount,
+                            })
+                        else:
+                            print("Unexpected number of inputs or outputs for Add node:", node_name)
                     elif op_type == "Conv":
                         if "Gemv" not in reuse_results:
                             reuse_results["Gemv"] = []
-                        batch = outputs[0][0]
-                        output_height = outputs[0][2]
-                        output_width = outputs[0][3]
-                        output_channels = weights[0][0]
-                        input_channels = weights[0][1]
-                        kernel_height = weights[0][2]
-                        kernel_width = weights[0][3]
+                        if len(outputs) == 1 and (len(weights) == 1 or len(weights) == 2):
+                            batch = outputs[0][0]
+                            output_height = outputs[0][2]
+                            output_width = outputs[0][3]
+                            output_channels = weights[0][0]
+                            input_channels = weights[0][1]
+                            kernel_height = weights[0][2]
+                            kernel_width = weights[0][3]
 
-                        # The M, K here are the matrix dimensions of the input activation matrix 
-                        M = output_height * output_width
-                        K = kernel_height * kernel_width * input_channels
-                        reuse_results["Gemv"].append({
-                            "M": M,
-                            "K": K,
-                            "reuse_type_1": "matrix",
-                            "reuse_amount_1": output_channels,
-                            "reuse_type_2": "vector",
-                            "reuse_amount_2": batch,
-                        })
+                            # The M, K here are the matrix dimensions of the input activation matrix 
+                            M = output_height * output_width
+                            K = kernel_height * kernel_width * input_channels
+                            reuse_results["Gemv"].append({
+                                "M": M,
+                                "K": K,
+                                "reuse_type_1": "matrix",
+                                "reuse_amount_1": output_channels,
+                                "reuse_type_2": "vector",
+                                "reuse_amount_2": batch,
+                            })
+                        else:
+                            print("Unexpected number of outputs or weights for Conv node:", node_name)
 
     # Save the split results to a JSON file
     reuse_results_file_path = os.path.join(output_dir, f"{os.path.splitext(os.path.basename(onnx_file))[0]}_reuse_results.json")

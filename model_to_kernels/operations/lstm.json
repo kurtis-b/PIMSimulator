@@ -37,7 +37,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_output_0",
@@ -487,7 +491,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_2_output_0",
@@ -920,7 +928,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_5_output_0",
@@ -1353,7 +1365,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_6_output_0",
@@ -1786,7 +1802,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_7_output_0",
@@ -2219,7 +2239,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_8_output_0",
@@ -2641,7 +2665,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_1_output_0",
@@ -3074,7 +3102,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_9_output_0",
@@ -3507,7 +3539,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_10_output_0",
@@ -3940,7 +3976,11 @@
         "inputs": [
             {
                 "name": "input",
-                "dims": []
+                "dims": [
+                    8,
+                    10,
+                    160
+                ]
             },
             {
                 "name": "/Constant_11_output_0",
@@ -4371,7 +4411,10 @@
         "outputs": [
             {
                 "name": "output",
-                "dims": []
+                "dims": [
+                    8,
+                    320
+                ]
             }
         ],
         "weights": [

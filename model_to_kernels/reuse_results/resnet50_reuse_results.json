@@ -426,7 +426,7 @@
         },
         {
             "M": 8,
-            "K": 8,
+            "K": 2048,
             "reuse_type": "matrix",
             "reuse_amount": 1000
         }

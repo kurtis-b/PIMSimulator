@@ -52,7 +52,7 @@ Gemv,49,512,matrix,2048,vector,8
 Gemv,49,2048,matrix,512,vector,8
 Gemv,49,4608,matrix,512,vector,8
 Gemv,49,512,matrix,2048,vector,8
-Gemv,8,8,matrix,1000
+Gemv,8,2048,matrix,1000
 EltwiseAdd,8,256,matrix,1
 EltwiseAdd,8,256,matrix,1
 EltwiseAdd,8,256,matrix,1

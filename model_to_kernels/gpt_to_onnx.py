@@ -22,7 +22,7 @@ def gpt_to_onnx(directory):
 
     # Find the sample with length closest to the median
     closest_sample = min(dataset, key=lambda sample: abs(len(sample["text"].split()) - median_length))
-    sample_text = closest_sample["text"]  # Extract the text of the closest sample)
+    sample_text = "Test"  # Extract the text of the closest sample)
     dummy_input = tokenizer(sample_text, return_tensors="pt")["input_ids"]
 
     # Define ONNX output path

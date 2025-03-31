@@ -62,7 +62,7 @@
         },
         {
             "M": 8,
-            "K": 8,
+            "K": 320,
             "reuse_type": "matrix",
             "reuse_amount": 320
         }
