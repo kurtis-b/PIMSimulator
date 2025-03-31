@@ -167,7 +167,7 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
             reuse_results = {}
             skipped_iterations = []
             for input_name, details in shared_inputs.items():
-                print("Processing shared input:", input_name)
+                # print("Processing shared input:", input_name)
                 nodes = details.get("nodes", [])
                 if nodes[0]["op_type"] not in kernels_to_check:
                     print(f"Skipping input {input_name} as it is not in the kernels to check: {kernels_to_check}")
@@ -223,6 +223,8 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                 outputs = dimensions["outputs"][0] if dimensions["outputs"] else []
                 op_type = nodes[0]["op_type"]
                 if op_type == "Gemm":
+                    if "Gemv" not in reuse_results:
+                        reuse_results["Gemv"] = []
                     batch = inputs_0[0][0]
                     input_size = inputs_0[0][1]
                     output_size = inputs_1[0][0]
@@ -232,8 +234,6 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                     # since the input matrix is being reused
                     reuse_amount = len(nodes) * output_size
 
-                    if "Gemv" not in reuse_results:
-                        reuse_results["Gemv"] = []
                     reuse_results["Gemv"].append({
                         "M": batch,
                         "K": input_size,
@@ -241,6 +241,8 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                         "reuse_amount": reuse_amount,
                     })
                 elif op_type == "MatMul":
+                    if "Gemv" not in reuse_results:
+                        reuse_results["Gemv"] = []
                     batch = inputs_0[0][0]
                     input_size = inputs_0[0][1]
                     output_size = inputs_1[0][0]
@@ -250,8 +252,6 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                     # since the input matrix is being reused
                     reuse_amount = len(nodes) * output_size
 
-                    if "Gemv" not in reuse_results:
-                        reuse_results["Gemv"] = []
                     reuse_results["Gemv"].append({
                         "M": batch,
                         "K": input_size,
@@ -259,6 +259,8 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                         "reuse_amount": reuse_amount,
                     })
                 elif op_type == "Add":
+                    if "EltwiseAdd" not in reuse_results:
+                        reuse_results["EltwiseAdd"] = []
                     batch = inputs_0[0][0]
                     input_size = inputs_0[0][1]
                     reuse_type = "matrix" if batch > 1 else "vector"
@@ -267,8 +269,6 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                     # weight and output matrices
                     reuse_amount = len(nodes)
 
-                    if "EltwiseAdd" not in reuse_results:
-                        reuse_results["EltwiseAdd"] = []
                     reuse_results["EltwiseAdd"].append({
                         "M": batch,
                         "K": input_size,
@@ -276,6 +276,8 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                         "reuse_amount": reuse_amount,
                     })
                 elif op_type == "Conv":
+                    if "Gemv" not in reuse_results:
+                        reuse_results["Gemv"] = []
                     batch = outputs[0][0]
                     output_height = outputs[0][2]
                     output_width = outputs[0][3]
@@ -292,8 +294,6 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                     # so part of the reuse amount is the number of filters
                     reuse_amount = output_channels
 
-                    if "Gemv" not in reuse_results:
-                        reuse_results["Gemv"] = []
                     reuse_results["Gemv"].append({
                         "M": M,
                         "K": K,
@@ -320,7 +320,7 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                     node_name = node["node_info"]["name"]
                     if node_name in all_node_names:
                         continue  # Skip nodes already processed in shared inputs
-                    print("Processing node:", node_name)
+                    # print("Processing node:", node_name)
 
                     inputs = node.get("inputs", [])
                     outputs = node.get("outputs", [])
@@ -336,6 +336,8 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                         continue
 
                     if op_type == "Gemm":
+                        if "Gemv" not in reuse_results:
+                            reuse_results["Gemv"] = []
                         batch = inputs[0][0]
                         input_size = inputs[0][-2]
                         if weights:
@@ -350,8 +352,6 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                         # For Gemm, the reuse amount is the output size since the input matrix is being reused
                         reuse_amount = output_size
 
-                        if "Gemv" not in reuse_results:
-                            reuse_results["Gemv"] = []
                         reuse_results["Gemv"].append({
                             "M": batch,
                             "K": input_size,
@@ -359,6 +359,8 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                             "reuse_amount": reuse_amount,
                         })
                     elif op_type == "MatMul":
+                        if "Gemv" not in reuse_results:
+                            reuse_results["Gemv"] = []
                         batch = inputs[0][0]
                         input_size = inputs[0][-2]
                         if weights:
@@ -373,8 +375,6 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                         # For Gemm, the reuse amount is the output size since the input matrix is being reused
                         reuse_amount = output_size
 
-                        if "Gemv" not in reuse_results:
-                            reuse_results["Gemv"] = []
                         reuse_results["Gemv"].append({
                             "M": batch,
                             "K": input_size,
@@ -382,6 +382,8 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                             "reuse_amount": reuse_amount,
                         })
                     elif op_type == "Add":
+                        if "EltwiseAdd" not in reuse_results:
+                            reuse_results["EltwiseAdd"] = []
                         batch = inputs[0][0]
                         input_size = inputs[0][1]
                         reuse_type = "matrix" if batch > 1 else "vector"
@@ -390,8 +392,6 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                         # weight and output matrices
                         reuse_amount = 1
 
-                        if "EltwiseAdd" not in reuse_results:
-                            reuse_results["EltwiseAdd"] = []
                         reuse_results["EltwiseAdd"].append({
                             "M": batch,
                             "K": input_size,
@@ -399,6 +399,8 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                             "reuse_amount": reuse_amount,
                         })
                     elif op_type == "Conv":
+                        if "Gemv" not in reuse_results:
+                            reuse_results["Gemv"] = []
                         batch = outputs[0][0]
                         output_height = outputs[0][2]
                         output_width = outputs[0][3]
@@ -406,23 +408,33 @@ def find_reuse(model_name, onnx_file, shared_inputs_file_path, operator_counts_f
                         input_channels = weights[0][1]
                         kernel_height = weights[0][2]
                         kernel_width = weights[0][3]
-                        # The M, K here are the matrix dimensions of the input activation matrix 
-                        M = batch * output_height * output_width
-                        K = kernel_height * kernel_width * input_channels
-                        reuse_type = "matrix"
-
-                        # Since the input activation matrix is being reused, the filters are split into vectors, and
-                        # so part of the reuse amount is the number of filters
-                        reuse_amount = output_channels
-
-                        if "Gemv" not in reuse_results:
-                            reuse_results["Gemv"] = []
+                        # Weight vector reuse calculation through the batch below
+                        M = 1 # The vector reuse will be across batches
+                        K = kernel_height * kernel_width * input_channels # The size of the reused vector is the column size of the weight matrix
+                        reuse_type = "vector"
+                        reuse_amount = batch
                         reuse_results["Gemv"].append({
                             "M": M,
                             "K": K,
                             "reuse_type": reuse_type,
                             "reuse_amount": reuse_amount,
                         })
+
+                        # Input matrix reuse calculation with one sample below
+                        # The M, K here are the matrix dimensions of the input activation matrix 
+                        M = output_height * output_width
+                        K = kernel_height * kernel_width * input_channels
+                        reuse_type = "matrix"
+                        # Since the input activation matrix is being reused, the filters are split into vectors, and
+                        # so part of the reuse amount is the number of filters
+                        reuse_amount = output_channels
+                        reuse_results["Gemv"].append({
+                            "M": M,
+                            "K": K,
+                            "reuse_type": reuse_type,
+                            "reuse_amount": reuse_amount,
+                        })
+
     # Save the split results to a JSON file
     reuse_results_file_path = os.path.join(output_dir, f"{os.path.splitext(os.path.basename(onnx_file))[0]}_reuse_results.json")
     with open(reuse_results_file_path, "w") as reuse_results_file:

@@ -11,6 +11,7 @@ Gemv,0,197,vector,2304
 Gemv,0,197,vector,2304
 Gemv,0,197,vector,2304
 Gemv,0,197,vector,2304
+Gemv,1,768,vector,1
 Gemv,196,768,matrix,768
 Gemv,1,197,vector,197
 Gemv,1,197,vector,64

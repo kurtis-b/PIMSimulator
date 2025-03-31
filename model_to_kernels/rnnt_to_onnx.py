@@ -218,7 +218,7 @@ def rnnt_to_onnx(directory):
     # Save the inferred model back to the same path
     onnx.save(inferred_model, onnx_file_path)
 
-    rnnt_encoder_path = lstm_to_onnx(directory, 160, 320, 320, 4, "rnnt_encoder")
-    rnnt_decoder_path = lstm_to_onnx(directory, 4232, 512, 320, 1, "rnnt_decoder")
+    rnnt_encoder_path = lstm_to_onnx(directory, 160, 320, 320, 4, "rnnt_encoder_part")
+    rnnt_decoder_path = lstm_to_onnx(directory, 4232, 512, 320, 1, "rnnt_decoder_part")
     print(f"Model has been converted to ONNX format and saved at {onnx_file_path}")
     return [onnx_file_path, rnnt_encoder_path, rnnt_decoder_path]

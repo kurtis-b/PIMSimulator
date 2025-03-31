@@ -73,6 +73,12 @@
             "reuse_amount": 2304
         },
         {
+            "M": 1,
+            "K": 768,
+            "reuse_type": "vector",
+            "reuse_amount": 1
+        },
+        {
             "M": 196,
             "K": 768,
             "reuse_type": "matrix",
