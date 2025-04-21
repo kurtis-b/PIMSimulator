@@ -1,0 +1,3 @@
+Number of sets is too small: 
+ Need to either increase cache size, or decrease associativity or block size
+ (or use fully associative cache)
