@@ -6,7 +6,7 @@ Write only ports              : 0
 Read write ports              : 1
 Single ended read ports       : 0
 Cache banks (UCA)             : 4
-Technology                    : 0.05
+Technology                    : 0.022
 Temperature                   : 350
 Tag size                      : 42
 array type                    : Scratch RAM
@@ -48,5 +48,4 @@ IO Timing Margin (ps) = 35.8333
 IO Votlage Margin (V) = 0.155
 IO Dynamic Power (mW) = 1282.42 PHY Power (mW) = 232.752 PHY Wakeup Time (us) = 27.503
 IO Termination and Bias Power (mW) = 3136.7
-cacti: decoder.cc:469: void PredecBlk::compute_widths(): Assertion `0' failed.
 cacti: decoder.cc:469: void PredecBlk::compute_widths(): Assertion `0' failed.

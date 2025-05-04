@@ -1,8 +1,8 @@
 Cache size                    : 64
 Block size                    : 64
 Associativity                 : 0
-Read only ports               : 1
-Write only ports              : 1
+Read only ports               : 0
+Write only ports              : 0
 Read write ports              : 1
 Single ended read ports       : 0
 Search ports                  : 1

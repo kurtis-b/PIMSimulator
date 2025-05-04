@@ -6,7 +6,7 @@ Write only ports              : 0
 Read write ports              : 1
 Single ended read ports       : 0
 Cache banks (UCA)             : 4
-Technology                    : 0.08
+Technology                    : 0.022
 Temperature                   : 350
 Tag size                      : 42
 array type                    : Scratch RAM
@@ -53,7 +53,7 @@ IO Termination and Bias Power (mW) = 3136.7
 Memory Parameters:
 	Total memory size (Gb): 2
 	Number of banks: 4
-	Technology size (nm): 80
+	Technology size (nm): 22
 	Page size (bits): 8192
 	Burst depth: 4
 	Chip IO width: 4
@@ -64,23 +64,23 @@ Memory Parameters:
 
 Results:
 Timing Components:
-	   t_RCD (Row to column command delay): 12.0335 ns
-	   t_RAS (Row access strobe latency): 91.2003 ns
-	   t_RC (Row cycle): 167.399 ns
-	   t_CAS (Column access strobe latency): 26.6302 ns
-	   t_RP (Row precharge latency): 76.1989 ns
-	   t_RRD (Row activation to row activation delay): 4.3601 ns
+	   t_RCD (Row to column command delay): 6.78507 ns
+	   t_RAS (Row access strobe latency): 29.1555 ns
+	   t_RC (Row cycle): 51.4527 ns
+	   t_CAS (Column access strobe latency): 8.63273 ns
+	   t_RP (Row precharge latency): 22.2972 ns
+	   t_RRD (Row activation to row activation delay): 1.52593 ns
 Power Components:
-	   Activation energy: 6.95258 nJ
-	   Read energy: 3.27879 nJ
-	   Write energy: 3.2788 nJ
-	   Precharge energy: 6.56524 nJ
+	   Activation energy: 0.881773 nJ
+	   Read energy: 0.376593 nJ
+	   Write energy: 0.376593 nJ
+	   Precharge energy: 0.846421 nJ
 Area Components:
-	   DRAM core area: 132.837 mm2
-	   DRAM area per die: 187.694 mm2
-	   Area efficiency: 44.9647%
-	   DRAM die width: 5.63886 mm
-	   DRAM die height: 33.2858 mm
+	   DRAM core area: 21.8859 mm2
+	   DRAM area per die: 24.5883 mm2
+	   Area efficiency: 16.9086%
+	   DRAM die width: 4.00449 mm
+	   DRAM die height: 6.14018 mm
 
 
 3D DRAM Detail Components:
@@ -88,115 +88,114 @@ Area Components:
 
 Time Components:
 
-	 row activation bus delay (ns): 4.3601
-	 row predecoder delay (ns): 1.2802
-	 row decoder delay (ns): 2.74797
-	 local wordline delay (ns): 0.953454
-	 bitline delay (ns): 8.2885
-	 sense amp delay (ns): 0.0436015
-	 column access bus delay (ns): 4.3601
-	 column predecoder delay (ns): 0.691675
-	 column decoder delay (ns): 2.80223
-	 datapath bus delay (ns): 4.3601
-	 global dataline delay (ns): 5.42135
-	 local dataline delay (ns): 0.43698
-	 data buffer delay (ns): 7.5188
-	 subarray output driver delay (ns): 0.417985
+	 row activation bus delay (ns): 1.52593
+	 row predecoder delay (ns): 0.302378
+	 row decoder delay (ns): 2.35164
+	 local wordline delay (ns): 0.363678
+	 bitline delay (ns): 4.06104
+	 sense amp delay (ns): 0.00870536
+	 column access bus delay (ns): 1.52593
+	 column predecoder delay (ns): 0.16723
+	 column decoder delay (ns): 0.768064
+	 datapath bus delay (ns): 1.52593
+	 global dataline delay (ns): 2.04525
+	 local dataline delay (ns): 0.129695
+	 data buffer delay (ns): 2
+	 subarray output driver delay (ns): 0.206726
 
 Energy Components:
 
-	 row activation bus energy (nJ): 0.396212
-	 row predecoder energy (nJ): 0.00165848
-	 row decoder energy (nJ): 0.00806013
-	 local wordline energy (nJ): 0.00508349
-	 bitline energy (nJ): 6.4178
-	 sense amp energy (nJ): 0.123766
-	 column access bus energy (nJ): 0.321922
-	 column predecoder energy (nJ): 0.000154111
-	 column decoder energy (nJ): 0.000749965
-	 column selectline energy (nJ): 1.80575
-	 datapath bus energy (nJ): 0.396212
-	 global dataline energy (nJ): 0.0132007
-	 local dataline energy (nJ): 0.00601094
-	 data buffer energy (nJ): 0.000252473
+	 row activation bus energy (nJ): 0.0230936
+	 row predecoder energy (nJ): 9.47756e-05
+	 row decoder energy (nJ): 0.000647457
+	 local wordline energy (nJ): 0.00133068
+	 bitline energy (nJ): 0.838725
+	 sense amp energy (nJ): 0.0178821
+	 column access bus energy (nJ): 0.0187636
+	 column predecoder energy (nJ): 8.82933e-06
+	 column decoder energy (nJ): 4.8117e-05
+	 column selectline energy (nJ): 0.127807
+	 datapath bus energy (nJ): 0.0230936
+	 global dataline energy (nJ): 0.00409891
+	 local dataline energy (nJ): 0.000739943
+	 data buffer energy (nJ): 3.31074e-05
 
 Area Components:
 
-	 DRAM cell area (mm2): 84.3961
-	 local WL driver area (mm2): 40.9221
-	 subarray sense amp area (mm2): 3.45695
-	 row predecoder/decoder area (mm2): 0.623375
-	 column predecoder/decoder area (mm2): 0.0102895
-	 center stripe bus area (mm2): 0.955191
-	 address bus area (mm2): 0.423239
-	 data bus area (mm2): 0.0517647
-	 data driver area (mm2): 0.00319826
-	 IO secondary sense amp area (mm2): 0.0011264
-	 TSV area (mm2): 0.0025
+	 DRAM cell area (mm2): 4.15753
+	 local WL driver area (mm2): 17.1715
+	 subarray sense amp area (mm2): 0.243139
+	 row predecoder/decoder area (mm2): 0.0660138
+	 column predecoder/decoder area (mm2): 0.00107541
+	 center stripe bus area (mm2): 0.0484322
+	 address bus area (mm2): 0.0260592
+	 data bus area (mm2): 0.00323195
+	 data driver area (mm2): 0.000197331
+	 IO secondary sense amp area (mm2): 8.5184e-05
+	 TSV area (mm2): 0.000225
 
 Wire Properties:
 
   Delay Optimal
-	Repeater size - 205.609 
-	Repeater spacing - 1.01751 (mm) 
-	Delay - 0.125276 (ns/mm) 
-	PowerD - 0.001089 (nJ/mm) 
-	PowerL - 2.5552e-06 (mW/mm) 
-	PowerLgate - 3.42574e-06 (mW/mm)
-	Wire width - 0.16 microns
-	Wire spacing - 0.16 microns
+	Repeater size - 190.85 
+	Repeater spacing - 0.154916 (mm) 
+	Delay - 0.237668 (ns/mm) 
+	PowerD - 0.00038463 (nJ/mm) 
+	PowerL - 3.77111e-05 (mW/mm) 
+	PowerLgate - 2.20022e-05 (mW/mm)
+	Wire width - 0.044 microns
+	Wire spacing - 0.044 microns
 
   5% Overhead
-	Repeater size - 122.609 
-	Repeater spacing - 1.31751 (mm) 
-	Delay - 0.131462 (ns/mm) 
-	PowerD - 0.000746637 (nJ/mm) 
-	PowerL - 1.17677e-06 (mW/mm) 
-	PowerLgate - 1.57768e-06 (mW/mm)
-	Wire width - 0.16 microns
-	Wire spacing - 0.16 microns
+	Repeater size - 103.85 
+	Repeater spacing - 0.254916 (mm) 
+	Delay - 0.249531 (ns/mm) 
+	PowerD - 0.000236028 (nJ/mm) 
+	PowerL - 1.24705e-05 (mW/mm) 
+	PowerLgate - 7.27578e-06 (mW/mm)
+	Wire width - 0.044 microns
+	Wire spacing - 0.044 microns
 
   10% Overhead
-	Repeater size - 109.609 
-	Repeater spacing - 1.51751 (mm) 
-	Delay - 0.137583 (ns/mm) 
-	PowerD - 0.000693739 (nJ/mm) 
-	PowerL - 9.13349e-07 (mW/mm) 
-	PowerLgate - 1.22452e-06 (mW/mm)
-	Wire width - 0.16 microns
-	Wire spacing - 0.16 microns
+	Repeater size - 82.8497 
+	Repeater spacing - 0.254916 (mm) 
+	Delay - 0.260833 (ns/mm) 
+	PowerD - 0.000214758 (nJ/mm) 
+	PowerL - 9.94874e-06 (mW/mm) 
+	PowerLgate - 5.8045e-06 (mW/mm)
+	Wire width - 0.044 microns
+	Wire spacing - 0.044 microns
 
   20% Overhead
-	Repeater size - 91.6091 
-	Repeater spacing - 1.81751 (mm) 
-	Delay - 0.150274 (ns/mm) 
-	PowerD - 0.000634792 (nJ/mm) 
-	PowerL - 6.37358e-07 (mW/mm) 
-	PowerLgate - 8.545e-07 (mW/mm)
-	Wire width - 0.16 microns
-	Wire spacing - 0.16 microns
+	Repeater size - 62.8497 
+	Repeater spacing - 0.254916 (mm) 
+	Delay - 0.28447 (ns/mm) 
+	PowerD - 0.000195502 (nJ/mm) 
+	PowerL - 7.5471e-06 (mW/mm) 
+	PowerLgate - 4.40329e-06 (mW/mm)
+	Wire width - 0.044 microns
+	Wire spacing - 0.044 microns
 
   30% Overhead
-	Repeater size - 75.6091 
-	Repeater spacing - 1.91751 (mm) 
-	Delay - 0.162837 (ns/mm) 
-	PowerD - 0.000592787 (nJ/mm) 
-	PowerL - 4.98607e-07 (mW/mm) 
-	PowerLgate - 6.68477e-07 (mW/mm)
-	Wire width - 0.16 microns
-	Wire spacing - 0.16 microns
+	Repeater size - 51.8497 
+	Repeater spacing - 0.254916 (mm) 
+	Delay - 0.308193 (ns/mm) 
+	PowerD - 0.000185327 (nJ/mm) 
+	PowerL - 6.2262e-06 (mW/mm) 
+	PowerLgate - 3.63262e-06 (mW/mm)
+	Wire width - 0.044 microns
+	Wire spacing - 0.044 microns
 
   Low-swing wire (1 mm) - Note: Unlike repeated wires, 
 	delay and power values of low-swing wires do not
 	have a linear relationship with length. 
-	delay - 0.882916 (ns) 
-	powerD - 1.63431e-05 (nJ) 
-	PowerL - 1.25953e-10 (mW) 
-	PowerLgate - 3.08753e-10 (mW)
-	Wire width - 3.2e-07 microns
-	Wire spacing - 3.2e-07 microns
+	delay - 0.223825 (ns) 
+	powerD - 2.87775e-06 (nJ) 
+	PowerL - 3.12026e-10 (mW) 
+	PowerLgate - 3.21473e-10 (mW)
+	Wire width - 8.8e-08 microns
+	Wire spacing - 8.8e-08 microns
 
 
-NOTE: Skipping memcad optimization
 =============================================
 
