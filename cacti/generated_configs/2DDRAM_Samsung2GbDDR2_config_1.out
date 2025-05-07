@@ -1,4 +1,4 @@
-Cache size                    : 2
+Cache size                    : 0
 Block size                    : 128
 Associativity                 : 1
 Read only ports               : 0
@@ -48,4 +48,4 @@ IO Timing Margin (ps) = 35.8333
 IO Votlage Margin (V) = 0.155
 IO Dynamic Power (mW) = 1282.42 PHY Power (mW) = 232.752 PHY Wakeup Time (us) = 27.503
 IO Termination and Bias Power (mW) = 3136.7
-cacti: decoder.cc:469: void PredecBlk::compute_widths(): Assertion `0' failed.
+log0?

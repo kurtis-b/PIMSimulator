@@ -5,7 +5,7 @@ Read only ports               : 0
 Write only ports              : 0
 Read write ports              : 1
 Single ended read ports       : 0
-Cache banks (UCA)             : 16
+Cache banks (UCA)             : 4
 Technology                    : 0.022
 Temperature                   : 350
 Tag size                      : 42
@@ -28,7 +28,7 @@ Interconnect projection       : 1
 Wire signaling               : 1
 Print level                   : 1
 ECC overhead                  : 0
-Page size                     : 32768
+Page size                     : 8192
 Burst length                  : 4
 Internal prefetch width       : 1
 Force cache config            : 1
@@ -52,35 +52,35 @@ IO Termination and Bias Power (mW) = 3136.7
 
 Memory Parameters:
 	Total memory size (Gb): 2
-	Number of banks: 16
+	Number of banks: 4
 	Technology size (nm): 22
-	Page size (bits): 32768
+	Page size (bits): 8192
 	Burst depth: 4
 	Chip IO width: 4
 	Best Ndwl: 128
 	Best Ndbl: 32
-	# rows in subarray: 128
-	# columns in subarray: 256
+	# rows in subarray: 2048
+	# columns in subarray: 64
 
 Results:
 Timing Components:
-	   t_RCD (Row to column command delay): 12.455 ns
-	   t_RAS (Row access strobe latency): 14.3992 ns
-	   t_RC (Row cycle): 16.388 ns
-	   t_CAS (Column access strobe latency): 5.82952 ns
-	   t_RP (Row precharge latency): 1.98881 ns
-	   t_RRD (Row activation to row activation delay): 0.932075 ns
+	   t_RCD (Row to column command delay): 6.78507 ns
+	   t_RAS (Row access strobe latency): 29.1555 ns
+	   t_RC (Row cycle): 51.4527 ns
+	   t_CAS (Column access strobe latency): 8.63273 ns
+	   t_RP (Row precharge latency): 22.2972 ns
+	   t_RRD (Row activation to row activation delay): 1.52593 ns
 Power Components:
-	   Activation energy: 0.357296 nJ
-	   Read energy: 0.606064 nJ
-	   Write energy: 0.606064 nJ
-	   Precharge energy: 0.294346 nJ
+	   Activation energy: 0.881773 nJ
+	   Read energy: 0.376593 nJ
+	   Write energy: 0.376593 nJ
+	   Precharge energy: 0.846421 nJ
 Area Components:
-	   DRAM core area: 16.0446 mm2
-	   DRAM area per die: 18.747 mm2
-	   Area efficiency: 22.177%
-	   DRAM die width: 11.6778 mm
-	   DRAM die height: 1.60536 mm
+	   DRAM core area: 21.8859 mm2
+	   DRAM area per die: 24.5883 mm2
+	   Area efficiency: 16.9086%
+	   DRAM die width: 4.00449 mm
+	   DRAM die height: 6.14018 mm
 
 
 3D DRAM Detail Components:
@@ -88,51 +88,51 @@ Area Components:
 
 Time Components:
 
-	 row activation bus delay (ns): 0.932075
-	 row predecoder delay (ns): 0.188973
-	 row decoder delay (ns): 8.24661
-	 local wordline delay (ns): 0.725772
-	 bitline delay (ns): 3.4795
-	 sense amp delay (ns): 0.00310214
-	 column access bus delay (ns): 0.932075
-	 column predecoder delay (ns): 0.201781
-	 column decoder delay (ns): 0.753285
-	 datapath bus delay (ns): 0.932075
-	 global dataline delay (ns): 0.337357
-	 local dataline delay (ns): 0.269166
+	 row activation bus delay (ns): 1.52593
+	 row predecoder delay (ns): 0.302378
+	 row decoder delay (ns): 2.35164
+	 local wordline delay (ns): 0.363678
+	 bitline delay (ns): 4.06104
+	 sense amp delay (ns): 0.00870536
+	 column access bus delay (ns): 1.52593
+	 column predecoder delay (ns): 0.16723
+	 column decoder delay (ns): 0.768064
+	 datapath bus delay (ns): 1.52593
+	 global dataline delay (ns): 2.04525
+	 local dataline delay (ns): 0.129695
 	 data buffer delay (ns): 2
-	 subarray output driver delay (ns): 0.212673
+	 subarray output driver delay (ns): 0.206726
 
 Energy Components:
 
-	 row activation bus energy (nJ): 0.0105796
-	 row predecoder energy (nJ): 2.41447e-05
-	 row decoder energy (nJ): 0.00208792
-	 local wordline energy (nJ): 0.00369349
-	 bitline energy (nJ): 0.269382
-	 sense amp energy (nJ): 0.0715282
-	 column access bus energy (nJ): 0.0132245
-	 column predecoder energy (nJ): 1.78007e-05
+	 row activation bus energy (nJ): 0.0230936
+	 row predecoder energy (nJ): 9.47756e-05
+	 row decoder energy (nJ): 0.000647457
+	 local wordline energy (nJ): 0.00133068
+	 bitline energy (nJ): 0.838725
+	 sense amp energy (nJ): 0.0178821
+	 column access bus energy (nJ): 0.0187636
+	 column predecoder energy (nJ): 8.82933e-06
 	 column decoder energy (nJ): 4.8117e-05
-	 column selectline energy (nJ): 0.370216
-	 datapath bus energy (nJ): 0.0141062
-	 global dataline energy (nJ): 0.00381994
-	 local dataline energy (nJ): 0.00259586
-	 data buffer energy (nJ): 3.53356e-05
+	 column selectline energy (nJ): 0.127807
+	 datapath bus energy (nJ): 0.0230936
+	 global dataline energy (nJ): 0.00409891
+	 local dataline energy (nJ): 0.000739943
+	 data buffer energy (nJ): 3.31074e-05
 
 Area Components:
 
 	 DRAM cell area (mm2): 4.15753
-	 local WL driver area (mm2): 6.46615
-	 subarray sense amp area (mm2): 5.0121
-	 row predecoder/decoder area (mm2): 0.0175756
-	 column predecoder/decoder area (mm2): 0.0171691
-	 center stripe bus area (mm2): 0.0120951
-	 address bus area (mm2): 0.0711721
-	 data bus area (mm2): 0.00627629
-	 data driver area (mm2): 0.000789325
-	 IO secondary sense amp area (mm2): 0.000340736
-	 TSV area (mm2): 0.00021825
+	 local WL driver area (mm2): 17.1715
+	 subarray sense amp area (mm2): 0.243139
+	 row predecoder/decoder area (mm2): 0.0660138
+	 column predecoder/decoder area (mm2): 0.00107541
+	 center stripe bus area (mm2): 0.0484322
+	 address bus area (mm2): 0.0260592
+	 data bus area (mm2): 0.00323195
+	 data driver area (mm2): 0.000197331
+	 IO secondary sense amp area (mm2): 8.5184e-05
+	 TSV area (mm2): 0.000225
 
 Wire Properties:
 

@@ -9,6 +9,7 @@ input_files = [
         "modifications": {
             "-UCA bank count": [4, 8, 16, 32],
             "-page size (bits)": [1024, 2048, 4096, 8192, 16384, 32768], # in bits
+            "-size (Gb)": [2, 4, 8, 16, 32], # in Gb
         },
     },
     {
@@ -16,6 +17,7 @@ input_files = [
         "modifications": {
             "-UCA bank count": [4, 8, 16, 32],
             "-page size (bits)": [1024, 2048, 4096, 8192, 16384, 32768], # in bits
+            "-size (Gb)": [0.5, 1, 2, 4, 8], # in Gb
         },
     },
     {

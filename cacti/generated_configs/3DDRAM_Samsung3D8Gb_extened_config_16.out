@@ -1,11 +1,11 @@
-Cache size                    : 8
+Cache size                    : 2
 Block size                    : 128
 Associativity                 : 1
 Read only ports               : 0
 Write only ports              : 0
 Read write ports              : 1
 Single ended read ports       : 0
-Cache banks (UCA)             : 16
+Cache banks (UCA)             : 4
 Technology                    : 0.022
 Temperature                   : 350
 Tag size                      : 42
@@ -51,10 +51,10 @@ IO Termination and Bias Power (mW) = 3136.7
 -------  CACTI (version 7.0.3DD Prerelease of Aug, 2012) 3D DRAM Main Memory  -------
 
 Memory Parameters:
-	Total memory size (Gb): 8
+	Total memory size (Gb): 2
 	Stacked die count: 4
 	TSV projection: industrial conservative
-	Number of banks: 16
+	Number of banks: 4
 	Technology size (nm): 22
 	Page size (bits): 8192
 	Burst depth: 8
@@ -78,11 +78,11 @@ Power Components:
 	   Write energy: 8.91215e+54 nJ
 	   Precharge energy: 8.91215e+54 nJ
 Area Components:
-	   DRAM core area: 9.82296 mm2
-	   DRAM area per die: 12.8632 mm2
-	   Area efficiency: 36.3614%
-	   DRAM die width: 3.38774 mm
-	   DRAM die height: 3.7935 mm
+	   DRAM core area: 2.48808 mm2
+	   DRAM area per die: 3.24813 mm2
+	   Area efficiency: 35.9994%
+	   DRAM die width: 1.69696 mm
+	   DRAM die height: 1.90716 mm
 TSV Components:
 	   TSV area overhead: 0.011745 mm2
 	   TSV latency overhead: 2.06044e+107 ns
@@ -94,16 +94,16 @@ TSV Components:
 
 Time Components:
 
-	 row activation bus delay (ns): 1.16542
+	 row activation bus delay (ns): 0.582712
 	 row predecoder delay (ns): 0.269719
 	 row decoder delay (ns): 2.09978
 	 local wordline delay (ns): 0.713489
-	 bitline delay (ns): 3.00995
+	 bitline delay (ns): 2.79591
 	 sense amp delay (ns): 0.005342
-	 column access bus delay (ns): 1.16542
+	 column access bus delay (ns): 0.582712
 	 column predecoder delay (ns): 0.152618
 	 column decoder delay (ns): 0.732672
-	 datapath bus delay (ns): 1.16542
+	 datapath bus delay (ns): 0.582712
 	 global dataline delay (ns): 0.50052
 	 local dataline delay (ns): 0.476458
 	 data buffer delay (ns): 6.66667
@@ -111,33 +111,33 @@ Time Components:
 
 Energy Components:
 
-	 row activation bus energy (nJ): 0.00981134
+	 row activation bus energy (nJ): 0.00490567
 	 row predecoder energy (nJ): 4.50047e-05
 	 row decoder energy (nJ): 0.000569718
 	 local wordline energy (nJ): 0.000802068
 	 bitline energy (nJ): 0.249324
 	 sense amp energy (nJ): 0.0201173
-	 column access bus energy (nJ): 0.00911053
+	 column access bus energy (nJ): 0.00455527
 	 column predecoder energy (nJ): 7.16021e-06
 	 column decoder energy (nJ): 4.60532e-05
 	 column selectline energy (nJ): 0.0298524
-	 datapath bus energy (nJ): 0.0224259
+	 datapath bus energy (nJ): 0.011213
 	 global dataline energy (nJ): 0.00739892
 	 local dataline energy (nJ): 0.0101408
 	 data buffer energy (nJ): 7.13901e-05
 
 Area Components:
 
-	 DRAM cell area (mm2): 4.67722
-	 local WL driver area (mm2): 3.23307
-	 subarray sense amp area (mm2): 1.42273
-	 row predecoder/decoder area (mm2): 0.0679615
-	 column predecoder/decoder area (mm2): 0.00223209
-	 center stripe bus area (mm2): 0.0392668
-	 address bus area (mm2): 0.0584718
-	 data bus area (mm2): 0.022052
-	 data driver area (mm2): 0.00157865
-	 IO secondary sense amp area (mm2): 0.000681472
+	 DRAM cell area (mm2): 1.1693
+	 local WL driver area (mm2): 0.808268
+	 subarray sense amp area (mm2): 0.355682
+	 row predecoder/decoder area (mm2): 0.0169904
+	 column predecoder/decoder area (mm2): 0.000558024
+	 center stripe bus area (mm2): 0.0196334
+	 address bus area (mm2): 0.014618
+	 data bus area (mm2): 0.00817082
+	 data driver area (mm2): 0.000394662
+	 IO secondary sense amp area (mm2): 0.000170368
 	 TSV area (mm2): 0.011745
 
 Wire Properties:

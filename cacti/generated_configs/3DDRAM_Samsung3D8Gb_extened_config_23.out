@@ -5,7 +5,7 @@ Read only ports               : 0
 Write only ports              : 0
 Read write ports              : 1
 Single ended read ports       : 0
-Cache banks (UCA)             : 32
+Cache banks (UCA)             : 4
 Technology                    : 0.022
 Temperature                   : 350
 Tag size                      : 42
@@ -54,14 +54,14 @@ Memory Parameters:
 	Total memory size (Gb): 8
 	Stacked die count: 4
 	TSV projection: industrial conservative
-	Number of banks: 32
+	Number of banks: 4
 	Technology size (nm): 22
 	Page size (bits): 16384
 	Burst depth: 8
 	Chip IO width: 4
 	Best Ndwl: 16
 	Best Ndbl: 32
-	# rows in subarray: 128
+	# rows in subarray: 1024
 	# columns in subarray: 1024
 
 Results:
@@ -73,20 +73,20 @@ Timing Components:
 	   t_RP (Row precharge latency): 2.06044e+107 ns
 	   t_RRD (Row activation to row activation delay): 2.06044e+107 ns
 Power Components:
-	   Activation energy: 8.77504e+54 nJ
-	   Read energy: 8.77504e+54 nJ
-	   Write energy: 8.77504e+54 nJ
-	   Precharge energy: 8.77504e+54 nJ
+	   Activation energy: 9.18637e+54 nJ
+	   Read energy: 9.18637e+54 nJ
+	   Write energy: 9.18637e+54 nJ
+	   Precharge energy: 9.18637e+54 nJ
 Area Components:
-	   DRAM core area: 14.3737 mm2
-	   DRAM area per die: 17.4139 mm2
-	   Area efficiency: 26.8591%
-	   DRAM die width: 9.25433 mm
-	   DRAM die height: 1.88044 mm
+	   DRAM core area: 7.5269 mm2
+	   DRAM area per die: 10.5671 mm2
+	   Area efficiency: 44.2621%
+	   DRAM die width: 3.03711 mm
+	   DRAM die height: 3.47537 mm
 TSV Components:
-	   TSV area overhead: 0.011664 mm2
+	   TSV area overhead: 0.011988 mm2
 	   TSV latency overhead: 2.06044e+107 ns
-	   TSV energy overhead per access: 8.77504e+54 nJ
+	   TSV energy overhead per access: 9.18637e+54 nJ
 
 
 3D DRAM Detail Components:
@@ -94,35 +94,35 @@ TSV Components:
 
 Time Components:
 
-	 row activation bus delay (ns): 1.08773
-	 row predecoder delay (ns): 0.188973
-	 row decoder delay (ns): 4.12107
-	 local wordline delay (ns): 1.7773
-	 bitline delay (ns): 2.93367
-	 sense amp delay (ns): 0.00310214
-	 column access bus delay (ns): 1.08773
+	 row activation bus delay (ns): 1.066
+	 row predecoder delay (ns): 0.291684
+	 row decoder delay (ns): 4.12554
+	 local wordline delay (ns): 1.77742
+	 bitline delay (ns): 4.46767
+	 sense amp delay (ns): 0.0069232
+	 column access bus delay (ns): 1.066
 	 column predecoder delay (ns): 0.16723
 	 column decoder delay (ns): 0.739731
-	 datapath bus delay (ns): 1.08773
-	 global dataline delay (ns): 0.353372
+	 datapath bus delay (ns): 1.066
+	 global dataline delay (ns): 1.06404
 	 local dataline delay (ns): 0.97087
 	 data buffer delay (ns): 6.66667
 	 subarray output driver delay (ns): 0.221701
 
 Energy Components:
 
-	 row activation bus energy (nJ): 0.00784909
-	 row predecoder energy (nJ): 2.41447e-05
-	 row decoder energy (nJ): 0.00110641
+	 row activation bus energy (nJ): 0.00961533
+	 row predecoder energy (nJ): 7.16532e-05
+	 row decoder energy (nJ): 0.00110676
 	 local wordline energy (nJ): 0.00148283
-	 bitline energy (nJ): 0.151528
+	 bitline energy (nJ): 0.961476
 	 sense amp energy (nJ): 0.0402346
-	 column access bus energy (nJ): 0.00915727
+	 column access bus energy (nJ): 0.00897431
 	 column predecoder energy (nJ): 8.82933e-06
 	 column decoder energy (nJ): 4.60532e-05
-	 column selectline energy (nJ): 0.0590952
-	 datapath bus energy (nJ): 0.0209309
-	 global dataline energy (nJ): 0.00735997
+	 column selectline energy (nJ): 0.113667
+	 datapath bus energy (nJ): 0.0205127
+	 global dataline energy (nJ): 0.0075663
 	 local dataline energy (nJ): 0.020039
 	 data buffer energy (nJ): 7.80223e-05
 
@@ -130,15 +130,15 @@ Area Components:
 
 	 DRAM cell area (mm2): 4.67722
 	 local WL driver area (mm2): 1.61654
-	 subarray sense amp area (mm2): 7.347
-	 row predecoder/decoder area (mm2): 0.0351511
-	 column predecoder/decoder area (mm2): 0.00860329
-	 center stripe bus area (mm2): 0.0381863
-	 address bus area (mm2): 0.112242
-	 data bus area (mm2): 0.0775407
-	 data driver area (mm2): 0.0031573
-	 IO secondary sense amp area (mm2): 0.00136294
-	 TSV area (mm2): 0.011664
+	 subarray sense amp area (mm2): 0.918375
+	 row predecoder/decoder area (mm2): 0.0334938
+	 column predecoder/decoder area (mm2): 0.00107541
+	 center stripe bus area (mm2): 0.0371344
+	 address bus area (mm2): 0.0295166
+	 data bus area (mm2): 0.0160008
+	 data driver area (mm2): 0.000394662
+	 IO secondary sense amp area (mm2): 0.000170368
+	 TSV area (mm2): 0.011988
 
 Wire Properties:
 
